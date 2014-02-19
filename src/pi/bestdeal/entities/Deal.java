@@ -6,12 +6,9 @@
 package pi.bestdeal.entities;
 
 import java.util.Date;
-import java.util.logging.Logger;
 
-/**
- *
- * @author Internet
- */
+
+
 public class Deal {
 
     private int idDeal;
