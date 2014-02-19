@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class MySQLConnection {
 
     private static final String driver = "com.mysql.jdbc.Driver";
-    private static final String mysqlurl = "jdbc:mysql://localhost:3308/pi_dev";
+    private static final String mysqlurl = "jdbc:mysql://localhost:3306/pi_dev";
     private static final String login = "root";
     private static final String pwd = "root";
     private static Connection con;
