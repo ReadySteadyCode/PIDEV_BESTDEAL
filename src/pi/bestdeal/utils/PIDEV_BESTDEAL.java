@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package pidev_bestdeal;
+package pi.bestdeal.utils;
 
 /**
  *
