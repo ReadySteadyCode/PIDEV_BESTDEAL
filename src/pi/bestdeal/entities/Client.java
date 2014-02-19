@@ -12,4 +12,5 @@ package pi.bestdeal.entities;
  */
 public class Client {
     
+    
 }
