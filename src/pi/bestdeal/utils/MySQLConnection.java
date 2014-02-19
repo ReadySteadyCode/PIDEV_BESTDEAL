@@ -39,4 +39,10 @@ public class MySQLConnection {
 
         return con;
     }
+    public static Connection getInstance(){
+       if (con==null){
+           new MySQLConnection().DataBaseConnection();
+       }
+   return con;
+   }
 }
