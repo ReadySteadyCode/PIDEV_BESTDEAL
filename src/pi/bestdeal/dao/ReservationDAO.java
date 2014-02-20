@@ -11,5 +11,6 @@ package pi.bestdeal.dao;
  * @author Internet
  */
 public class ReservationDAO {
+    String a;
     
 }
