@@ -6,10 +6,48 @@
 
 package pi.bestdeal.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import pi.bestdeal.entities.Administrateur;
+import pi.bestdeal.utils.MySQLConnection;
+
 /**
  *
  * @author Internet
  */
 public class AdministrateurDAO {
     
+    public void  verfication(String login, String paswd){
+    Administrateur adm = new Administrateur();
+     String requete = "select login from administrateur  where  login='"+login+"' and password='"+paswd+"'";
+        try {
+            PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
+            
+            ResultSet resultat = ps.executeQuery();
+            int i=0;
+            while (resultat.next())
+            {
+               adm.setLogin(resultat.getString("login"));
+               i++;
+            }
+            if(i==0)
+                JOptionPane.showMessageDialog(null, "verifier login et mot de passe", "Message", JOptionPane.ERROR_MESSAGE);
+            else 
+                JOptionPane.showMessageDialog(null, "ok c'est ", "Message", JOptionPane.ERROR_MESSAGE);
+             
+        } catch (SQLException ex) {
+           //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors de la verfication "+ex.getMessage());
+            
+        }
+    }
+    
+    public static void main(String[] args) {
+        AdministrateurDAO ad= new AdministrateurDAO() ; 
+        ad.verfication("nour", "nour");
+        
+    }
 }
+
