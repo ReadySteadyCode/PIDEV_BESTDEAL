@@ -5,6 +5,8 @@
  */
 package pi.bestdeal.dao;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,6 +22,31 @@ import pi.bestdeal.utils.MySQLConnection;
  * @author Internet
  */
 public class DealDAO {
+     public void updateStock(Deal dl){
+        String requete = "update deal set titreDeal=?, descDeal=?, prixDeal=?, nbrachatactuel=?, nbrAchatValidation=?,etatDeal=?, StatutDeal=?, dateDebut=?, dateFin=?, nbrAffichage=?, idVendeur=? where idDeal=?";
+        
+        try {
+            PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
+            ps.setString(1, dl.getTitreDeal_Deal());
+            ps.setString(2, dl.getDescDeal_Deal());
+            ps.setDouble(3, dl.getPrixDeal_Deal());
+            ps.setInt(4, dl.getNbrAchatActuelDeal_Deal());
+            ps.setInt(5, dl.getNbrAchatValidation());
+            ps.setString(6, dl.getEtatDeal_Deal());
+            ps.setBoolean(7, dl.isStatutDeal());
+            ps.setDate(8, (Date) dl.getDateDebutDeal_Deal());
+            ps.setDate(9, (Date) dl.getDateFinDeal_Deal());
+            ps.setInt(10,  dl.getNbrAffichage_Deal());
+            ps.setInt(11, dl.getIdVendeur_Deal());
+            ps.setInt(12, dl.getIdDeal_Deal());
+            ps.executeUpdate();
+            System.out.println("Mise à jour effectuée avec succès");
+        } catch (SQLException ex) {
+           //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors de la mise à jour "+ex.getMessage());
+        }
+
+    }
 
     public List<Deal> displayDeal() {
         List<Deal> dealListe = new ArrayList<Deal>();
