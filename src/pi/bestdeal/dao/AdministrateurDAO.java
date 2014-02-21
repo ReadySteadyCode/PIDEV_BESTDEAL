@@ -43,11 +43,10 @@ public class AdministrateurDAO {
             
         }
     }
-    
-    public static void main(String[] args) {
-        AdministrateurDAO ad= new AdministrateurDAO() ; 
-        ad.verfication("nour", "nour");
-        
+
+    public AdministrateurDAO() {
     }
+    
+    
 }
 

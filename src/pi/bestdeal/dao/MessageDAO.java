@@ -71,7 +71,6 @@ public class MessageDAO {
         return MessageListe;
     }
     
-    
     public List<Message> displayMessagesByStatut(boolean statutLivraison) {
         List<Message> MessageListe = new ArrayList<Message>();
         String sqlrequest = "SELECT * FROM pi_dev.message where statutLivraison=?";
@@ -97,4 +96,8 @@ public class MessageDAO {
         return MessageListe;
     }
 
+    public MessageDAO() {
+    }
+
+    
 }
