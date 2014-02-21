@@ -19,11 +19,13 @@ import pi.bestdeal.utils.MySQLConnection;
  */
 public class AdministrateurDAO {
     
-    public void  verfication(String login, String paswd){
+    public void  verification(String login, String password){
     Administrateur adm = new Administrateur();
-     String requete = "select login from administrateur  where  login='"+login+"' and password='"+paswd+"'";
+     String requete = "select login from administrateur  where  login=? and password=?";
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
+            ps.setString(1, login);
+            ps.setString(2, password);
             
             ResultSet resultat = ps.executeQuery();
             int i=0;
