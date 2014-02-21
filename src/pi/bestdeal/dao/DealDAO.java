@@ -23,29 +23,30 @@ import pi.bestdeal.utils.MySQLConnection;
  */
 public class DealDAO {
 
-    public void updateStock(Deal dl) {
+    public int updateStock(Deal deal) {
         String requete = "update deal set titreDeal=?, descDeal=?, prixDeal=?, nbrachatactuel=?, nbrAchatValidation=?,etatDeal=?, StatutDeal=?, dateDebut=?, dateFin=?, nbrAffichage=?, idVendeur=? where idDeal=?";
-
+        int a=0;
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
-            ps.setString(1, dl.getTitreDeal_Deal());
-            ps.setString(2, dl.getDescDeal_Deal());
-            ps.setDouble(3, dl.getPrixDeal_Deal());
-            ps.setInt(4, dl.getNbrAchatActuelDeal_Deal());
-            ps.setInt(5, dl.getNbrAchatValidation());
-            ps.setString(6, dl.getEtatDeal_Deal());
-            ps.setBoolean(7, dl.isStatutDeal());
-            ps.setDate(8, (Date) dl.getDateDebutDeal_Deal());
-            ps.setDate(9, (Date) dl.getDateFinDeal_Deal());
-            ps.setInt(10, dl.getNbrAffichage_Deal());
-            ps.setInt(11, dl.getIdVendeur_Deal());
-            ps.setInt(12, dl.getIdDeal_Deal());
-            ps.executeUpdate();
+            ps.setString(1, deal.getTitreDeal_Deal());
+            ps.setString(2, deal.getDescDeal_Deal());
+            ps.setDouble(3, deal.getPrixDeal_Deal());
+            ps.setInt(4, deal.getNbrAchatActuelDeal_Deal());
+            ps.setInt(5, deal.getNbrAchatValidation());
+            ps.setString(6, deal.getEtatDeal_Deal());
+            ps.setBoolean(7, deal.isStatutDeal());
+            ps.setDate(8, (Date) deal.getDateDebutDeal_Deal());
+            ps.setDate(9, (Date) deal.getDateFinDeal_Deal());
+            ps.setInt(10, deal.getNbrAffichage_Deal());
+            ps.setInt(11, deal.getIdVendeur_Deal());
+            ps.setInt(12, deal.getIdDeal_Deal());
+            a = ps.executeUpdate();
             System.out.println("Mise à jour effectuée avec succès");
         } catch (SQLException ex) {
             //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("erreur lors de la mise à jour " + ex.getMessage());
         }
+        return a;
 
     }
 
@@ -82,29 +83,30 @@ public class DealDAO {
 
     }
     
-    public void insertDepot(Deal dl) {
-
+    public int insertDeal(Deal deal) {
+        int a = 0;
         String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage, idVendeur) values (?,?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
-            ps.setString(1, dl.getTitreDeal_Deal());
-            ps.setString(2, dl.getDescDeal_Deal());
-            ps.setDouble(3, dl.getPrixDeal_Deal());
-            ps.setInt(4, dl.getNbrAchatActuelDeal_Deal());
-            ps.setInt(5, dl.getNbrAchatValidation());
-            ps.setString(6, dl.getEtatDeal_Deal());
-            ps.setBoolean(7, dl.isStatutDeal());
-            ps.setDate(8, (Date) dl.getDateDebutDeal_Deal());
-            ps.setDate(9, (Date) dl.getDateFinDeal_Deal());
-            ps.setInt(10, dl.getNbrAffichage_Deal());
-            ps.setInt(11, dl.getIdVendeur_Deal());
-            ps.setInt(12, dl.getIdDeal_Deal());
-            ps.executeUpdate();
+            ps.setString(1, deal.getTitreDeal_Deal());
+            ps.setString(2, deal.getDescDeal_Deal());
+            ps.setDouble(3, deal.getPrixDeal_Deal());
+            ps.setInt(4, deal.getNbrAchatActuelDeal_Deal());
+            ps.setInt(5, deal.getNbrAchatValidation());
+            ps.setString(6, deal.getEtatDeal_Deal());
+            ps.setBoolean(7, deal.isStatutDeal());
+            ps.setDate(8, (Date) deal.getDateDebutDeal_Deal());
+            ps.setDate(9, (Date) deal.getDateFinDeal_Deal());
+            ps.setInt(10, deal.getNbrAffichage_Deal());
+            ps.setInt(11, deal.getIdVendeur_Deal());
+            ps.setInt(12, deal.getIdDeal_Deal());
+            a= ps.executeUpdate();
             System.out.println("Ajout effectuée avec succès");
         } catch (SQLException ex) {
             //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("erreur lors de l'insertion " + ex.getMessage());
         }
+        return a;
     }
    
     public List<Deal> displayDealByStatut (boolean statut){
@@ -173,4 +175,33 @@ public class DealDAO {
         return dealListe;
         
     }
+    
+    public int insertDealWithoutVendeur(Deal deal)
+    {
+         int a = 0;
+        String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage) values (?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
+            ps.setString(1, deal.getTitreDeal_Deal());
+            ps.setString(2, deal.getDescDeal_Deal());
+            ps.setDouble(3, deal.getPrixDeal_Deal());
+            ps.setInt(4, deal.getNbrAchatActuelDeal_Deal());
+            ps.setInt(5, deal.getNbrAchatValidation());
+            ps.setString(6, deal.getEtatDeal_Deal());
+            ps.setBoolean(7, deal.isStatutDeal());
+            ps.setDate(8, (Date) deal.getDateDebutDeal_Deal());
+            ps.setDate(9, (Date) deal.getDateFinDeal_Deal());
+            ps.setInt(10, deal.getNbrAffichage_Deal());
+            ps.setInt(11, deal.getIdVendeur_Deal());
+            ps.setInt(12, deal.getIdDeal_Deal());
+            a= ps.executeUpdate();
+            System.out.println("Ajout effectuée avec succès");
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors de l'insertion " + ex.getMessage());
+        }
+        return a;
+    }
+    
+    
 }

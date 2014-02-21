@@ -95,6 +95,20 @@ public class MessageDAO {
         }
         return MessageListe;
     }
+    
+    public int deleteMessage (int idMessage)
+    {
+         int a=0;
+      String sqlrequest = "DELETE FROM pi_dev.message WHERE idMessage=?;";
+        try {
+            PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+            ps.setInt(1, idMessage);
+           a = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
 
     public MessageDAO() {
     }

@@ -38,5 +38,19 @@ public class VendeurDAO {
         
         return a;
     }
+    
+    public int deleteVendeur(int idVendeur)
+    {
+         int a=0;
+      String sqlrequest = "DELETE FROM pi_dev.vendeur WHERE idVendeur=?;";
+        try {
+            PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+            ps.setInt(1, idVendeur);
+           a = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
 
 }
