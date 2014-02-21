@@ -177,6 +177,7 @@ public class DealDAO {
     }
     
     public int insertDealWithoutVendeur(Deal deal)
+            
     {
          int a = 0;
         String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage) values (?,?,?,?,?,?,?,?,?,?)";

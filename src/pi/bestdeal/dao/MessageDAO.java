@@ -22,7 +22,8 @@ import pi.bestdeal.utils.MySQLConnection;
  */
 public class MessageDAO {
 
-    public List<Message> displayAllMessages() {
+    public List<Message> displayAllMessages()
+    {
         List<Message> MessageListe = new ArrayList<Message>();
         String sqlrequest = "SELECT * FROM pi_dev.message";
         Statement statement;
@@ -46,7 +47,8 @@ public class MessageDAO {
         return MessageListe;
     }
 
-    public List<Message> displayMessagesByClient(int idClient) {
+    public List<Message> displayMessagesByClient(int idClient)
+    {
         List<Message> MessageListe = new ArrayList<Message>();
         String sqlrequest = "SELECT * FROM pi_dev.message where idClient=?";
 
@@ -71,7 +73,8 @@ public class MessageDAO {
         return MessageListe;
     }
     
-    public List<Message> displayMessagesByStatut(boolean statutLivraison) {
+    public List<Message> displayMessagesByStatut(boolean statutLivraison)
+    {
         List<Message> MessageListe = new ArrayList<Message>();
         String sqlrequest = "SELECT * FROM pi_dev.message where statutLivraison=?";
 
@@ -110,7 +113,8 @@ public class MessageDAO {
         return a;
     }
 
-    public MessageDAO() {
+    public MessageDAO()
+    {
     }
 
     
