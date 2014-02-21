@@ -118,7 +118,7 @@ public class Authentification extends javax.swing.JFrame {
         String log = login.getText(); 
         String mo = mot.getText(); 
         AdministrateurDAO add = new AdministrateurDAO(); 
-        add.verfication(log, mo);
+        add.verification(log, mo);
         
 
     }//GEN-LAST:event_connecterActionPerformed
