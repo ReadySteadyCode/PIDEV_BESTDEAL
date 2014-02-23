@@ -19,13 +19,19 @@ import pi.bestdeal.utils.MySQLConnection;
 
 /**
  *
- * @author Internet
+ * @author Ready_Steady_Code
  */
 public class DealDAO {
 
+    /**
+     *
+     * @param deal:Deal permet d'effectuer une modification sur les paramètres
+     * d'un deal.
+     * @return int : 0 si un prblème survient, 1 si la modification s'effectue.
+     */
     public int updateStock(Deal deal) {
         String requete = "update deal set titreDeal=?, descDeal=?, prixDeal=?, nbrachatactuel=?, nbrAchatValidation=?,etatDeal=?, StatutDeal=?, dateDebut=?, dateFin=?, nbrAffichage=?, idVendeur=? where idDeal=?";
-        int a=0;
+        int a = 0;
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
             ps.setString(1, deal.getTitreDeal_Deal());
@@ -50,6 +56,11 @@ public class DealDAO {
 
     }
 
+    /**
+     * Afficher une liste compléte des deals
+     *
+     * @return List<Deal>
+     */
     public List<Deal> displayDeal() {
         List<Deal> dealListe = new ArrayList<Deal>();
         String sqlrequest = "SELECT * FROM pi_dev.deal";
@@ -82,9 +93,13 @@ public class DealDAO {
         return dealListe;
 
     }
-    
-    public int insertDeal(Deal deal)
-    {
+
+    /**
+     *
+     * @param deal
+     * @return int =0 si un problème arrive, 1 si l'opération est effectuée
+     */
+    public int insertDeal(Deal deal) {
         int a = 0;
         String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage, idVendeur) values (?,?,?,?,?,?,?,?,?,?,?)";
         try {
@@ -101,7 +116,7 @@ public class DealDAO {
             ps.setInt(10, deal.getNbrAffichage_Deal());
             ps.setInt(11, deal.getIdVendeur_Deal());
             ps.setInt(12, deal.getIdDeal_Deal());
-            a= ps.executeUpdate();
+            a = ps.executeUpdate();
             System.out.println("Ajout effectuée avec succès");
         } catch (SQLException ex) {
             //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,16 +124,21 @@ public class DealDAO {
         }
         return a;
     }
-   
-    public List<Deal> displayDealByStatut (boolean statut)
-    {
-    
-    List<Deal> dealListe = new ArrayList<Deal>();
-        String sqlrequest = "SELECT * FROM pi_dev.deal where StatutDeal="+statut;
-        Statement statement;
+
+    /**
+     *
+     * @param statut : boolean qui indique si un deal est validé ou pas
+     * @return List<Deal>
+     */
+    public List<Deal> displayDealByStatut(boolean statut) {
+
+        List<Deal> dealListe = new ArrayList<Deal>();
+        String sqlrequest = "SELECT * FROM pi_dev.deal where StatutDeal=?";
+        PreparedStatement ps;
         try {
-            statement = MySQLConnection.getInstance().createStatement();
-            ResultSet resultat = statement.executeQuery(sqlrequest);
+            ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+            ps.setBoolean(1, statut);
+            ResultSet resultat = ps.executeQuery(sqlrequest);
             while (resultat.next()) {
                 Deal deal = new Deal();
                 deal.setIdDeal_Deal(resultat.getInt("idDeal"));
@@ -142,12 +162,17 @@ public class DealDAO {
             Logger.getLogger(DealDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dealListe;
-}
-    
-    public List<Deal> displayDealByEtat (String etat)
-    {
-        
-    List<Deal> dealListe = new ArrayList<Deal>();
+    }
+
+    /**
+     * selection de deals par etat actuel
+     *
+     * @param etat : en cours , deal passé, deal à venir
+     * @return List<Deal>
+     */
+    public List<Deal> displayDealByEtat(String etat) {
+
+        List<Deal> dealListe = new ArrayList<Deal>();
         String sqlrequest = "SELECT * FROM pi_dev.deal where etatDeal=?";
         PreparedStatement ps;
         try {
@@ -177,12 +202,17 @@ public class DealDAO {
             Logger.getLogger(DealDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dealListe;
-        
+
     }
-    
-    public int insertDealWithoutVendeur(Deal deal)
-    {
-         int a = 0;
+
+    /**
+     * utilisé pour ajouter un deal au vendeur par défaut (id = 0)
+     *
+     * @param deal de type Deal
+     * @return int=0 si il y a un problème, 1 si l'ajout est correct
+     */
+    public int insertDealWithoutVendeur(Deal deal) {
+        int a = 0;
         String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage) values (?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
@@ -198,7 +228,7 @@ public class DealDAO {
             ps.setInt(10, deal.getNbrAffichage_Deal());
             ps.setInt(11, deal.getIdVendeur_Deal());
             ps.setInt(12, deal.getIdDeal_Deal());
-            a= ps.executeUpdate();
+            a = ps.executeUpdate();
             System.out.println("Ajout effectuée avec succès");
         } catch (SQLException ex) {
             //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -206,6 +236,5 @@ public class DealDAO {
         }
         return a;
     }
-    
-    
+
 }

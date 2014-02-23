@@ -24,6 +24,11 @@ public class Deal {
     private int nbrAffichage_Deal;
     private int idVendeur_Deal;
 
+    @Override
+    public String toString() {
+        return "Deal{" + "idDeal_Deal=" + idDeal_Deal + ", titreDeal_Deal=" + titreDeal_Deal + ", descDeal_Deal=" + descDeal_Deal + ", prixDeal_Deal=" + prixDeal_Deal + ", nbrAchatActuel_Deal=" + nbrAchatActuel_Deal + ", nbrAchatValidation_Deal=" + nbrAchatValidation_Deal + ", etatDeal_Deal=" + etatDeal_Deal + ", statutDeal_Deal=" + statutDeal_Deal + ", dateDebutDeal_Deal=" + dateDebutDeal_Deal + ", dateFinDeal_Deal=" + dateFinDeal_Deal + ", nbrAffichage_Deal=" + nbrAffichage_Deal + ", idVendeur_Deal=" + idVendeur_Deal + '}';
+    }
+
     public Deal() {
     }
 
