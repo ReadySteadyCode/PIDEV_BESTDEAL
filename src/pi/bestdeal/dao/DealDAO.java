@@ -83,7 +83,8 @@ public class DealDAO {
 
     }
     
-    public int insertDeal(Deal deal) {
+    public int insertDeal(Deal deal)
+    {
         int a = 0;
         String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage, idVendeur) values (?,?,?,?,?,?,?,?,?,?,?)";
         try {
@@ -109,7 +110,8 @@ public class DealDAO {
         return a;
     }
    
-    public List<Deal> displayDealByStatut (boolean statut){
+    public List<Deal> displayDealByStatut (boolean statut)
+    {
     
     List<Deal> dealListe = new ArrayList<Deal>();
         String sqlrequest = "SELECT * FROM pi_dev.deal where StatutDeal="+statut;
@@ -142,14 +144,16 @@ public class DealDAO {
         return dealListe;
 }
     
-    public List<Deal> displayDealByEtat (String etat){
+    public List<Deal> displayDealByEtat (String etat)
+    {
         
     List<Deal> dealListe = new ArrayList<Deal>();
-        String sqlrequest = "SELECT * FROM pi_dev.deal where etatDeal="+etat;
-        Statement statement;
+        String sqlrequest = "SELECT * FROM pi_dev.deal where etatDeal=?";
+        PreparedStatement ps;
         try {
-            statement = MySQLConnection.getInstance().createStatement();
-            ResultSet resultat = statement.executeQuery(sqlrequest);
+            ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+            ps.setString(1, etat);
+            ResultSet resultat = ps.executeQuery(sqlrequest);
             while (resultat.next()) {
                 Deal deal = new Deal();
                 deal.setIdDeal_Deal(resultat.getInt("idDeal"));
@@ -177,7 +181,6 @@ public class DealDAO {
     }
     
     public int insertDealWithoutVendeur(Deal deal)
-            
     {
          int a = 0;
         String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage) values (?,?,?,?,?,?,?,?,?,?)";
