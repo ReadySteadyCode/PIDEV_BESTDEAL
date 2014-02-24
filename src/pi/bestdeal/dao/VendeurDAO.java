@@ -20,6 +20,12 @@ public class VendeurDAO {
 
     public VendeurDAO() {
     }
+    
+    /**
+     * 
+     * @param vendeur
+     * @return int 0: un problème survient, 1: ajout avec succès
+     */
 
     public int addVendeur(Vendeur vendeur) {
         int a=0;
@@ -39,6 +45,11 @@ public class VendeurDAO {
         return a;
     }
     
+    /**
+     * 
+     @param idVendeur
+     * @return int 0: un problème survient, 1: ajout avec succès
+     */
     public int deleteVendeur(int idVendeur)
     {
          int a=0;

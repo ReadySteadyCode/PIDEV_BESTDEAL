@@ -68,6 +68,7 @@ public class Ajouter_Deal extends javax.swing.JInternalFrame {
 
         txtA_desc.setColumns(20);
         txtA_desc.setRows(5);
+        txtA_desc.setToolTipText("");
         jScrollPane1.setViewportView(txtA_desc);
 
         jLb_DateD.setText("Date Début");
