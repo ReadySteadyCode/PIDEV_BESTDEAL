@@ -62,4 +62,7 @@ public class RapportDAO {
         return a;
     }
 
+    public RapportDAO() {
+    }
+
 }
