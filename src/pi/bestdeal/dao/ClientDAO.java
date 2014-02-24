@@ -68,6 +68,7 @@ public class ClientDAO
                 client.setNom(resultat.getString("nom"));
                 client.setPrenom(resultat.getString("prenom"));
                 client.setTelephone(resultat.getString("Telephone"));
+                client.setSexe(resultat.getBoolean("sexe"));
                 clientListe.add(client);
                
             }
