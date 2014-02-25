@@ -86,6 +86,10 @@ public class Modifier_Deal extends javax.swing.JInternalFrame {
 
         jLb_Prix.setText("Prix");
 
+        jDateChooser1.setDateFormatString("yyyy MMM d  ");
+
+        jDateChooser2.setDateFormatString("yyyy MMM d  ");
+
         txt_nbpers.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_nbpersKeyTyped(evt);
@@ -138,15 +142,14 @@ public class Modifier_Deal extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txt_Prix)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txt_nb_max_pers)
-                        .addComponent(txt_nb_min_pers)
-                        .addComponent(txt_nbpers)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txt_pres, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txt_Nom_Deal, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(txt_nb_max_pers)
+                    .addComponent(txt_nb_min_pers)
+                    .addComponent(txt_nbpers)
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txt_pres, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txt_Nom_Deal, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(74, 74, 74))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -198,7 +201,7 @@ public class Modifier_Deal extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBt_Annuler)
                     .addComponent(jBt_Enregistrer))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
