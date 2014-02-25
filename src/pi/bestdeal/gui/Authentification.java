@@ -120,6 +120,7 @@ public class Authentification extends javax.swing.JFrame {
         AdministrateurDAO add = new AdministrateurDAO(); 
         add.verification(log, mo);
         
+        
 
     }//GEN-LAST:event_connecterActionPerformed
 
