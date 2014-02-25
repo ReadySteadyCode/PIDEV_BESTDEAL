@@ -19,9 +19,10 @@ import pi.bestdeal.utils.MySQLConnection;
  */
 public class AdministrateurDAO {
     
-    public void  verification(String login, String password){
+    public int  verification(String login, String password){
     Administrateur adm = new Administrateur();
      String requete = "select login from administrateur  where  login=? and password=?";
+     int a=0;
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
             ps.setString(1, login);
@@ -35,15 +36,16 @@ public class AdministrateurDAO {
                i++;
             }
             if(i==0)
-                JOptionPane.showMessageDialog(null, "verifier login et mot de passe", "Message", JOptionPane.ERROR_MESSAGE);
+               a=0;
             else 
-                JOptionPane.showMessageDialog(null, "ok c'est ", "Message", JOptionPane.ERROR_MESSAGE);
+                a=1;
              
         } catch (SQLException ex) {
            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("erreur lors de la verfication "+ex.getMessage());
             
         }
+        return a;
     }
 
     public AdministrateurDAO() {
