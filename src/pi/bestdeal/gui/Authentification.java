@@ -117,8 +117,13 @@ public class Authentification extends javax.swing.JFrame {
     private void connecterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connecterActionPerformed
         String log = login.getText(); 
         String mo = mot.getText(); 
-        AdministrateurDAO add = new AdministrateurDAO(); 
-        add.verification(log, mo);
+        AdministrateurDAO admin = new AdministrateurDAO();
+        InterfaceTravail inter = new InterfaceTravail();
+        int a = admin.verification(log, mo);
+        if (a==1)
+            inter.setVisible(true);
+        else
+            JOptionPane.showMessageDialog(null, "Veuillez Verifier", "Connexion Impossible", JOptionPane.ERROR_MESSAGE);
         
 
     }//GEN-LAST:event_connecterActionPerformed
