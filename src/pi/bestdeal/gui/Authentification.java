@@ -129,10 +129,10 @@ public class Authentification extends javax.swing.JFrame {
         AdministrateurDAO admin = new AdministrateurDAO();
         InterfaceTravail inter = new InterfaceTravail();
         int a = admin.verification(log, mo);
-        if (a==1){
-            //JOptionPane.showConfirmDialog(null, JOptionPane.OK_OPTION);
+        if (a==1)
+            
             inter.setVisible(true);
-        }else
+        else
             JOptionPane.showMessageDialog(null, "Veuillez Verifier", "Connexion Impossible", JOptionPane.ERROR_MESSAGE);
         
         
