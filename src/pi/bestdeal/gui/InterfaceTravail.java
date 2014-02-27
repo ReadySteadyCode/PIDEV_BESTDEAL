@@ -4,8 +4,10 @@
  */
 package pi.bestdeal.gui;
 
-import pi.bestdeal.dao.DealDAO;
-import pi.bestdeal.entities.Deal;
+import javax.swing.JOptionPane;
+import pi.bestdeal.utils.Mail;
+
+
 
 /**
  *
@@ -35,7 +37,7 @@ public class InterfaceTravail extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         panel1 = new java.awt.Panel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        Table_deal = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -46,6 +48,20 @@ public class InterfaceTravail extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         panel3 = new java.awt.Panel();
         jPanel2 = new javax.swing.JPanel();
+        jPanel3_Contacts = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLab_From = new javax.swing.JLabel();
+        jLab_To = new javax.swing.JLabel();
+        jLab_CC = new javax.swing.JLabel();
+        jLab_Content = new javax.swing.JLabel();
+        txt_From = new javax.swing.JTextField();
+        txt_To = new javax.swing.JTextField();
+        txt_CC = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txA_Content = new javax.swing.JTextArea();
+        btn_Envoyer = new javax.swing.JButton();
+        jLab_Subject = new javax.swing.JLabel();
+        txt_subject = new javax.swing.JTextField();
 
         jMenu1.setText("jMenu1");
 
@@ -53,34 +69,18 @@ public class InterfaceTravail extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Table_deal.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Id delal", "Titre ", "descprition"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Float.class, java.lang.String.class, java.lang.Float.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane4.setViewportView(Table_deal);
+        jScrollPane4.setViewportView(jTable1);
 
         jButton2.setText("Supprimer");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jButton3.setText("Modifier");
 
         jButton4.setText("Ajouter");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Afficher");
 
@@ -93,17 +93,18 @@ public class InterfaceTravail extends javax.swing.JFrame {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel1Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(106, 106, 106)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(198, Short.MAX_VALUE))
+                    .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panel1Layout.createSequentialGroup()
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(139, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,7 +119,7 @@ public class InterfaceTravail extends javax.swing.JFrame {
                     .addComponent(jButton3)
                     .addComponent(jButton1)
                     .addComponent(jButton4))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Gérer les Deals           ", panel1);
@@ -133,15 +134,7 @@ public class InterfaceTravail extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                true, true, false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(jTable2);
 
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
@@ -151,14 +144,14 @@ public class InterfaceTravail extends javax.swing.JFrame {
             .addGroup(panel2Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Gérer les Cliens", panel2);
@@ -167,11 +160,11 @@ public class InterfaceTravail extends javax.swing.JFrame {
         panel3.setLayout(panel3Layout);
         panel3Layout.setHorizontalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 694, Short.MAX_VALUE)
+            .addGap(0, 610, Short.MAX_VALUE)
         );
         panel3Layout.setVerticalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 359, Short.MAX_VALUE)
+            .addGap(0, 463, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Générer des Statistiques", panel3);
@@ -180,26 +173,127 @@ public class InterfaceTravail extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 694, Short.MAX_VALUE)
+            .addGap(0, 610, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 359, Short.MAX_VALUE)
+            .addGap(0, 463, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Générer Les Rapports", jPanel2);
+
+        jLabel1.setFont(new java.awt.Font("Snap ITC", 3, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel1.setText("Envoyer un e-mail");
+
+        jLab_From.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLab_From.setText("From");
+
+        jLab_To.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLab_To.setText("To");
+
+        jLab_CC.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLab_CC.setText("CC");
+
+        jLab_Content.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLab_Content.setText("Content");
+
+        txt_From.setEditable(false);
+        txt_From.setText("best.deal.3a19@gmail.com");
+        txt_From.setEnabled(false);
+        txt_From.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_FromActionPerformed(evt);
+            }
+        });
+
+        txA_Content.setColumns(20);
+        txA_Content.setRows(5);
+        jScrollPane2.setViewportView(txA_Content);
+
+        btn_Envoyer.setFont(new java.awt.Font("Plantagenet Cherokee", 1, 14)); // NOI18N
+        btn_Envoyer.setText("Envoyer");
+        btn_Envoyer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EnvoyerActionPerformed(evt);
+            }
+        });
+
+        jLab_Subject.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLab_Subject.setText("Subject");
+
+        javax.swing.GroupLayout jPanel3_ContactsLayout = new javax.swing.GroupLayout(jPanel3_Contacts);
+        jPanel3_Contacts.setLayout(jPanel3_ContactsLayout);
+        jPanel3_ContactsLayout.setHorizontalGroup(
+            jPanel3_ContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3_ContactsLayout.createSequentialGroup()
+                .addGroup(jPanel3_ContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3_ContactsLayout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addGroup(jPanel3_ContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLab_To)
+                            .addComponent(jLab_CC)
+                            .addComponent(jLab_From)
+                            .addComponent(jLab_Content)
+                            .addComponent(jLab_Subject))
+                        .addGap(142, 142, 142)
+                        .addGroup(jPanel3_ContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_CC)
+                            .addComponent(txt_To)
+                            .addComponent(txt_From)
+                            .addComponent(jScrollPane2)
+                            .addComponent(txt_subject)))
+                    .addGroup(jPanel3_ContactsLayout.createSequentialGroup()
+                        .addGap(216, 216, 216)
+                        .addComponent(btn_Envoyer))
+                    .addGroup(jPanel3_ContactsLayout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(138, Short.MAX_VALUE))
+        );
+        jPanel3_ContactsLayout.setVerticalGroup(
+            jPanel3_ContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3_ContactsLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel3_ContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLab_From)
+                    .addComponent(txt_From, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3_ContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLab_To)
+                    .addComponent(txt_To, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3_ContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLab_CC)
+                    .addComponent(txt_CC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3_ContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLab_Subject)
+                    .addComponent(txt_subject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel3_ContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLab_Content)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(btn_Envoyer)
+                .addGap(35, 35, 35))
+        );
+
+        jTabbedPane1.addTab("Contacts", jPanel3_Contacts);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 699, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 84, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jTabbedPane1)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -214,15 +308,34 @@ public class InterfaceTravail extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 153, Short.MAX_VALUE))
+                .addGap(0, 49, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       
+                
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btn_EnvoyerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EnvoyerActionPerformed
+        
+        String to = txt_To.getText().trim();
+        String cc= txt_CC.getText().trim();
+        String subject = txt_subject.getText().trim();
+        String content = txA_Content.getText().trim();
+       
+        
+        Mail.sendEmail(to,cc, subject, content);
+        
+    }//GEN-LAST:event_btn_EnvoyerActionPerformed
+
+    private void txt_FromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_FromActionPerformed
+
+        
+
+    }//GEN-LAST:event_txt_FromActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,22 +372,36 @@ public class InterfaceTravail extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable Table_deal;
+    private javax.swing.JButton btn_Envoyer;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLab_CC;
+    private javax.swing.JLabel jLab_Content;
+    private javax.swing.JLabel jLab_From;
+    private javax.swing.JLabel jLab_Subject;
+    private javax.swing.JLabel jLab_To;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3_Contacts;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private java.awt.Panel panel1;
     private java.awt.Panel panel2;
     private java.awt.Panel panel3;
+    private javax.swing.JTextArea txA_Content;
+    private javax.swing.JTextField txt_CC;
+    private javax.swing.JTextField txt_From;
+    private javax.swing.JTextField txt_To;
+    private javax.swing.JTextField txt_subject;
     // End of variables declaration//GEN-END:variables
 }
