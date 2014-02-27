@@ -24,8 +24,15 @@ import pi.bestdeal.utils.MySQLConnection;
 public class ClientDAO
 {
 
-    public ClientDAO() {
+   private static ClientDAO clientdao;
+    private ClientDAO() {
     }
+
+    public static ClientDAO getInstance() {
+        if (clientdao == null) {
+            clientdao = new ClientDAO();
+        }
+        return clientdao;}
      
     /**
      * permet de supprimer un client à travers son ID

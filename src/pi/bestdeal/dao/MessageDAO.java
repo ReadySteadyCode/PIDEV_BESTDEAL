@@ -21,6 +21,16 @@ import pi.bestdeal.utils.MySQLConnection;
  * @author Internet
  */
 public class MessageDAO {
+     private static MessageDAO messagedao;
+    private MessageDAO() {
+    }
+
+    public static MessageDAO getInstance() {
+        if (messagedao == null) {
+            messagedao = new MessageDAO();
+        }
+        return messagedao;
+    }
 
     public List<Message> displayAllMessages()
     {
@@ -113,9 +123,7 @@ public class MessageDAO {
         return a;
     }
 
-    public MessageDAO()
-    {
-    }
+    
 
     
 }

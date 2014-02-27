@@ -21,9 +21,16 @@ import pi.bestdeal.utils.MySQLConnection;
  */
 public class VendeurDAO {
 
-    public VendeurDAO() {
+     private static VendeurDAO vendeurdao;
+    private VendeurDAO() {
     }
-    
+
+    public static VendeurDAO getInstance() {
+        if (vendeurdao == null) {
+            vendeurdao = new VendeurDAO();
+        }
+        return vendeurdao;
+    }
     /**
      * 
      * @param vendeur

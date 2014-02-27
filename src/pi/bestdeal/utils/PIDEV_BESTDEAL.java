@@ -23,7 +23,7 @@ public class PIDEV_BESTDEAL {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        ClientDAO client = new ClientDAO();
+       /* ClientDAO client = new ClientDAO();
         //Deal dd = new Deal("hello", "world", 5, 12, "happy", true, Date.valueOf("2014/01/02 00:00:00"), 120, 0);
         DealDAO deal = new DealDAO();
        //deal.insertDeal(dd);
@@ -34,7 +34,7 @@ public class PIDEV_BESTDEAL {
         for(Client a:client.displayClient())
         {
             System.out.println(a.toString());
-        }
+        }*/
         
     }
     

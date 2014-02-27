@@ -22,6 +22,18 @@ import pi.bestdeal.utils.MySQLConnection;
  * @author Ready_Steady_Code
  */
 public class DealDAO {
+    
+    
+    private static DealDAO dealdao;
+    private DealDAO() {
+    }
+
+    public static DealDAO getInstance() {
+        if (dealdao == null) {
+            dealdao = new DealDAO();
+        }
+        return dealdao;
+    }
 
     /**
      *
