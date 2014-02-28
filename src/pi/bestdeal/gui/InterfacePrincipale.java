@@ -260,7 +260,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         Modifier_Ajouter modaj = new Modifier_Ajouter();
         
        //if(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0)==null){
-            JOptionPane.showMessageDialog(null, modaj.jList1.getSelectedValue().toString());
+          
        // }else{
         
         Deal abc = new Deal();
