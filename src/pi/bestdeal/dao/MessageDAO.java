@@ -122,6 +122,23 @@ public class MessageDAO {
         }
         return a;
     }
+    
+    public List<Message> displayMessageWithSenderMail()
+    {
+        List<Message> msglist = new ArrayList<>();
+        String sqlrequest="SELECT client.nom,client.prenom,client.email, message.contenu FROM pi_dev.client,pi_dev.message;";
+         try {
+             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+             ResultSet resultat = ps.executeQuery();
+             while (resultat.next()){
+                 //createmailingclass
+                 
+             }
+         } catch (SQLException ex) {
+             Logger.getLogger(MessageDAO.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         return msglist;
+    }
 
     
 

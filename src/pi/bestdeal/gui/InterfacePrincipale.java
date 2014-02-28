@@ -16,7 +16,7 @@ import pi.bestdeal.dao.DealDAO;
 import pi.bestdeal.dao.VendeurDAO;
 import pi.bestdeal.entities.Deal;
 import pi.bestdeal.entities.Vendeur;
-import pi.bestdeal.utils.TableModelClient;
+import models.DealTableModel;
 
 /**
  *
@@ -26,7 +26,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
     DealDAO list = DealDAO.getInstance();
     List<Deal> deals = list.displayDeal();
-    TableModel tableModel = new TableModelClient(deals);
+    TableModel tableModel = new DealTableModel(deals);
     
 
     /**

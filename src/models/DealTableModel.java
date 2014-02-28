@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pi.bestdeal.utils;
+package models;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -13,7 +13,7 @@ import pi.bestdeal.entities.Deal;
  *
  * @author Internet
  */
-public class TableModelClient extends AbstractTableModel {
+public class DealTableModel extends AbstractTableModel {
 
     private List<Deal> deals;
 
@@ -24,7 +24,7 @@ public class TableModelClient extends AbstractTableModel {
     
     
 
-    public TableModelClient(List<Deal> deals) {
+    public DealTableModel(List<Deal> deals) {
         this.deals = deals;
     }
   
