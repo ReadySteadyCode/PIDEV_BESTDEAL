@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pi.bestdeal.entities.ClientMail;
 import pi.bestdeal.entities.Message;
 import pi.bestdeal.utils.MySQLConnection;
 
@@ -123,15 +124,20 @@ public class MessageDAO {
         return a;
     }
     
-    public List<Message> displayMessageWithSenderMail()
+    public List<ClientMail> displayMessageWithSenderMail()
     {
-        List<Message> msglist = new ArrayList<>();
+        List<ClientMail> msglist = new ArrayList<>();
         String sqlrequest="SELECT client.nom,client.prenom,client.email, message.contenu FROM pi_dev.client,pi_dev.message;";
          try {
              PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
              ResultSet resultat = ps.executeQuery();
+             
              while (resultat.next()){
-                 //createmailingclass
+                 ClientMail clientmail = new ClientMail();
+                 clientmail.setNom(resultat.getString("nom"));
+                 clientmail.setPrenom(resultat.getString("prenom"));
+                 clientmail.setEmail(resultat.getString("email"));
+                 clientmail.setContenu(resultat.getString("contenu"));
                  
              }
          } catch (SQLException ex) {

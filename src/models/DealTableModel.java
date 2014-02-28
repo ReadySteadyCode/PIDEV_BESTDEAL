@@ -17,13 +17,7 @@ public class DealTableModel extends AbstractTableModel {
 
     private List<Deal> deals;
 
-    @Override
-    public void fireTableDataChanged() {
-        getValueAt(0, 0);
-    }
     
-    
-
     public DealTableModel(List<Deal> deals) {
         this.deals = deals;
     }
