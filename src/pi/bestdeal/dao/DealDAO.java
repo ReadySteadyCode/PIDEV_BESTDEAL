@@ -248,5 +248,51 @@ public class DealDAO {
         }
         return a;
     }
+    
+     public int deleteDeal (int idDeal)
+    {
+        int a=0;
+      String sqlrequest = "DELETE FROM pi_dev.deal WHERE idDeal=?;";
+        try {
+            PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+            ps.setInt(1, idDeal);
+           a = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
+public List<Deal> displayDealById(int idDeal){
+        List<Deal> dealListe = new ArrayList<Deal>();
+        String sqlrequest = "SELECT * FROM pi_dev.deal where idDeal=?;";
+        try {
+         PreparedStatement ps  = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+            ps.setInt(1, idDeal);
+            ResultSet resultat = ps.executeQuery();
+            while (resultat.next()) {
+                Deal deal = new Deal();
+                deal.setIdDeal_Deal(resultat.getInt("idDeal"));
+                deal.setTitreDeal_Deal(resultat.getString("titreDeal"));
+                deal.setDescDeal_Deal(resultat.getString("descDeal"));
+                deal.setPrixDeal_Deal(resultat.getDouble("prixDeal"));
+                deal.setNbrAchatActuelDeal_Deal(resultat.getInt("nbrachatactuel"));
+                deal.setNbrAchatValidation(resultat.getInt("nbrAchatValidation"));
+                deal.setEtatDeal_Deal(resultat.getString("etatDeal"));
+                deal.setStatutDeal_Deal(resultat.getBoolean("StatutDeal"));
+                deal.setDateDebutDeal_Deal(resultat.getDate("dateDebut"));
+                deal.setDateFinDeal_Deal(resultat.getDate("dateFin"));
+                deal.setNbrAffichage_Deal(resultat.getInt("nbrAffichage"));
+                deal.setIdVendeur_Deal(resultat.getInt("idVendeur"));
 
+                dealListe.add(deal);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DealDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dealListe;
+
+    }
+   
 }

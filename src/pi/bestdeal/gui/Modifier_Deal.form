@@ -116,7 +116,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLb_Nom_Deal">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nom Deal"/>
+        <Property name="text" type="java.lang.String" value="Titre"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLb_Pres">

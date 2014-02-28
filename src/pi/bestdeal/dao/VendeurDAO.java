@@ -105,26 +105,37 @@ public class VendeurDAO {
      */
     public List<Vendeur> displayVendeur ()
     {
-        List<Vendeur> listevendeur = new ArrayList<>();
-        String sqlrequest ="SELECT * FROM pi_dev.vendeur;";
+        List<Vendeur> vendeurListe = new ArrayList<Vendeur>();
+        String sqlrequest = "SELECT idVendeur,nomCommercial FROM pi_dev.vendeur;";
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
-            ResultSet resualt = ps.executeQuery();
-            while(resualt.next())
-            {
+            ResultSet resultat = ps.executeQuery();
             Vendeur vendeur = new Vendeur();
-            vendeur.setIdVendeur(resualt.getInt("idVendeur"));
-            vendeur.setAddresse(resualt.getString("addresse"));
-            vendeur.setDescription(resualt.getString("description"));
-            vendeur.setNomCommercial(resualt.getString("nomCommercial"));
-            vendeur.setNote(resualt.getInt("note"));
-           vendeur.setTypeBien(resualt.getString("typeBien"));
-           listevendeur.add(vendeur);
+            while(resultat.next()){
+            vendeur.setIdVendeur(resultat.getInt("idVendeur"));
+            vendeur.setNomCommercial(resultat.getString("nomCommercial"));
+            vendeurListe.add(vendeur);
             }
         } catch (SQLException ex) {
             Logger.getLogger(VendeurDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return listevendeur;
+        return vendeurListe;
+    }
+    public List<Vendeur> displayvendeurByNom(String nomCommercial){
+        List<Vendeur> vendeurListe = new ArrayList<Vendeur>();
+        String sqlrequest = "SELECT idVendeur FROM pi_dev.vendeur;";
+        try {
+            PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+            ResultSet resultat = ps.executeQuery();
+            Vendeur vendeur = new Vendeur();
+            while(resultat.next()){
+            vendeur.setIdVendeur(resultat.getInt("idVendeur"));
+            vendeurListe.add(vendeur);
+             }
+        } catch (SQLException ex) {
+            Logger.getLogger(VendeurDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vendeurListe;
     }
 
 }

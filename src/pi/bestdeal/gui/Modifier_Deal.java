@@ -52,7 +52,7 @@ public class Modifier_Deal extends javax.swing.JInternalFrame {
         jBt_Annuler = new javax.swing.JButton();
         jBt_Enregistrer = new javax.swing.JButton();
 
-        jLb_Nom_Deal.setText("Nom Deal");
+        jLb_Nom_Deal.setText("Titre");
 
         jLb_Pres.setText("Préstataire");
 

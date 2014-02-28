@@ -127,7 +127,7 @@ public class Authentification extends javax.swing.JFrame {
         String log = login.getText(); 
         String mo = mot.getText(); 
         AdministrateurDAO admin = new AdministrateurDAO();
-        InterfaceTravail inter = new InterfaceTravail();
+        InterfacePrincipale inter = new InterfacePrincipale();
         int a = admin.verification(log, mo);
         if (a==1)
             
