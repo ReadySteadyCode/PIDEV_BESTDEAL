@@ -73,7 +73,7 @@ public class DealDAO {
      *
      * @return List<Deal>
      */
-    public List<Deal> displayDeal() {
+   public List<Deal> displayDeal() {
         List<Deal> dealListe = new ArrayList<Deal>();
         String sqlrequest = "SELECT * FROM pi_dev.deal";
         Statement statement;
@@ -85,15 +85,15 @@ public class DealDAO {
                 deal.setIdDeal_Deal(resultat.getInt("idDeal"));
                 deal.setTitreDeal_Deal(resultat.getString("titreDeal"));
                 deal.setDescDeal_Deal(resultat.getString("descDeal"));
-                //deal.setPrixDeal_Deal(resultat.getDouble("prixDeal"));
-               // deal.setNbrAchatActuelDeal_Deal(resultat.getInt("nbrachatactuel"));
-               // deal.setNbrAchatValidation(resultat.getInt("nbrAchatValidation"));
-                //deal.setEtatDeal_Deal(resultat.getString("etatDeal"));
-               // deal.setStatutDeal_Deal(resultat.getBoolean("StatutDeal"));
-                //deal.setDateDebutDeal_Deal(resultat.getDate("dateDebut"));
-                //deal.setDateFinDeal_Deal(resultat.getDate("dateFin"));
-               // deal.setNbrAffichage_Deal(resultat.getInt("nbrAffichage"));
-                //deal.setIdVendeur_Deal(resultat.getInt("idVendeur"));
+                deal.setPrixDeal_Deal(resultat.getDouble("prixDeal"));
+                deal.setNbrAchatActuelDeal_Deal(resultat.getInt("nbrachatactuel"));
+                deal.setNbrAchatValidation(resultat.getInt("nbrAchatValidation"));
+                deal.setEtatDeal_Deal(resultat.getString("etatDeal"));
+                deal.setStatutDeal_Deal(resultat.getBoolean("StatutDeal"));
+                deal.setDateDebutDeal_Deal(resultat.getDate("dateDebut"));
+                deal.setDateFinDeal_Deal(resultat.getDate("dateFin"));
+                deal.setNbrAffichage_Deal(resultat.getInt("nbrAffichage"));
+                deal.setIdVendeur_Deal(resultat.getInt("idVendeur"));
 
                 dealListe.add(deal);
 
