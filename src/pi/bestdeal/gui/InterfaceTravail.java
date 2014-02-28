@@ -19,6 +19,7 @@ public class InterfaceTravail extends javax.swing.JFrame {
      * Creates new form UI_supprimer_deal
      */
     public InterfaceTravail() {
+        this.setTitle("BEST DEAL");
         initComponents();
     }
 
