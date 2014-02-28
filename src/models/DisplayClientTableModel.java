@@ -8,52 +8,49 @@ package models;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import pi.bestdeal.entities.Client;
-import pi.bestdeal.entities.ClientMail;
-import pi.bestdeal.entities.Deal;
 
 /**
  *
  * @author Internet
  */
-public class ClientTableModel extends AbstractTableModel{
-    private List<ClientMail> clients;
+public class DisplayClientTableModel extends AbstractTableModel {
+    private List<Client> clients;
 
-    public ClientTableModel(List<ClientMail> clients) {
+    public DisplayClientTableModel(List<Client> clients) {
         this.clients = clients;
     }
 
+
     @Override
     public int getRowCount() {
-       return clients.size();
+      return clients.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 4;
+      return 4;
     }
 
     @Override
     public String getColumnName(int column) {
         switch (column) {
-            case 0:return "Nom";
-            case 1:return "Prénom";
-            case 2:return "E-Mail";
-            case 3:return "Contenu";
-                default:return "Error";
+            case 0:return "ID";
+            case 1:return "Nom";
+            case 2:return "Prénom";
+            case 3:return "E-mail";
+                default:return "Autres";
         }
     }
-    
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        ClientMail mail = clients.get(rowIndex);
+        Client client = clients.get(rowIndex);
         switch (columnIndex){
-            case 0:return mail.getNom();
-            case 1:return mail.getPrenom();
-            case 2:return mail.getEmail();
-            case 3:return mail.getContenu();
+            case 0:return client.getIdClient();
+            case 1:return client.getNom();
+            case 2:return client.getPrenom();
+            case 3:return client.getEmail();
             default:return 0;
         }
     }

@@ -18,8 +18,11 @@ import pi.bestdeal.dao.VendeurDAO;
 import pi.bestdeal.entities.Deal;
 import pi.bestdeal.entities.Vendeur;
 import models.DealTableModel;
+import models.DisplayClientTableModel;
 import models.Mail;
+import pi.bestdeal.dao.ClientDAO;
 import pi.bestdeal.dao.MessageDAO;
+import pi.bestdeal.entities.Client;
 import pi.bestdeal.entities.ClientMail;
 
 /**
@@ -34,6 +37,10 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     MessageDAO listmessage = MessageDAO.getInstance();
     List<ClientMail> clientmail = listmessage.displayMessageWithSenderMail();
     TableModel mailmodel = new ClientTableModel(clientmail);
+    ClientDAO clinetdao = ClientDAO.getInstance();
+    List<Client> clients = clinetdao.displayClient();
+    TableModel clientmodel = new DisplayClientTableModel(clients);
+    
     
     
 
@@ -68,6 +75,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -176,15 +186,28 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Gestion des Deals", Client_Panel);
 
+        jTable2.setModel(clientmodel);
+        jScrollPane3.setViewportView(jTable2);
+
+        jButton3.setText("Supprimer");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 489, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 383, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3))
         );
 
         jTabbedPane1.addTab("Gestion des Clients", jPanel2);
@@ -197,7 +220,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 383, Short.MAX_VALUE)
+            .addGap(0, 427, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Générer les Rapports", jPanel3);
@@ -232,7 +255,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -453,15 +476,18 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     public javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTableMessage;
     // End of variables declaration//GEN-END:variables
 
