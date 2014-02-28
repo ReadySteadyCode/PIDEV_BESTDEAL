@@ -127,7 +127,7 @@ public class DealDAO {
             ps.setDate(9, (Date) deal.getDateFinDeal_Deal());
             ps.setInt(10, deal.getNbrAffichage_Deal());
             ps.setInt(11, deal.getIdVendeur_Deal());
-            ps.setInt(12, deal.getIdDeal_Deal());
+           // ps.setInt(12, deal.getIdDeal_Deal());
             a = ps.executeUpdate();
             System.out.println("Ajout effectuée avec succès");
         } catch (SQLException ex) {
