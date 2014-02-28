@@ -12,11 +12,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import models.ClientTableModel;
 import pi.bestdeal.dao.DealDAO;
 import pi.bestdeal.dao.VendeurDAO;
 import pi.bestdeal.entities.Deal;
 import pi.bestdeal.entities.Vendeur;
 import models.DealTableModel;
+import models.Mail;
+import pi.bestdeal.dao.MessageDAO;
+import pi.bestdeal.entities.ClientMail;
 
 /**
  *
@@ -27,6 +31,10 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     DealDAO list = DealDAO.getInstance();
     List<Deal> deals = list.displayDeal();
     TableModel tableModel = new DealTableModel(deals);
+    MessageDAO listmessage = MessageDAO.getInstance();
+    List<ClientMail> clientmail = listmessage.displayMessageWithSenderMail();
+    TableModel mailmodel = new ClientTableModel(clientmail);
+    
     
 
     /**
@@ -62,6 +70,10 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTableMessage = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BesDeal");
@@ -113,7 +125,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -168,11 +180,11 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addGap(0, 489, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
+            .addGap(0, 383, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Gestion des Clients", jPanel2);
@@ -181,24 +193,51 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addGap(0, 489, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
+            .addGap(0, 383, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Générer les Rapports", jPanel3);
+
+        jTableMessage.setModel(mailmodel);
+        jScrollPane4.setViewportView(jTableMessage);
+
+        jButton1.setText("Répondre");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Supprimer");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(292, 292, 292)
+                        .addComponent(jButton2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(8, 8, 8))
         );
 
         jTabbedPane1.addTab("Consulter les Messages", jPanel4);
@@ -337,9 +376,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1FocusGained
 
     private void Delete_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Delete_ButtonActionPerformed
-      if(jTable1.getValueAt(jTable1.getSelectedRow(), 0)==null){
-            JOptionPane.showMessageDialog(null, "Veuillez sélectionné une entrée");
-        }else{
+      
         int result = JOptionPane.showConfirmDialog(null, "Voulez Vous Supprimer", null, JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
         int idd = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
@@ -349,8 +386,23 @@ public class InterfacePrincipale extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(null, "Deal Supprimé");
       }
         }
-      }  
+        
     }//GEN-LAST:event_Delete_ButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       Interface_Mail intmail = new Interface_Mail();
+       intmail.txt_to.setText(jTableMessage.getModel().getValueAt(jTableMessage.getSelectedRow(), 2).toString());
+       int result = JOptionPane.showConfirmDialog(null, intmail, "Test",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            Mail monmail = new Mail();
+            if(intmail.txt_cc.getText()!=null)
+            monmail.sendEmail(intmail.txt_to.getText(), intmail.txt_cc.getText(), intmail.jTextField4.getText(), intmail.txa_content.getText());
+            else
+                monmail.sendEmail(intmail.txt_to.getText(),intmail.txt_to.getText() , intmail.jTextField4.getText(), intmail.txa_content.getText());
+        }
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -399,14 +451,18 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private javax.swing.JTextPane Search_TextField;
     private javax.swing.JButton Update_Button;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     public javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableMessage;
     // End of variables declaration//GEN-END:variables
 
 }

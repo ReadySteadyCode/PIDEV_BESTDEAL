@@ -20,7 +20,7 @@ import javax.mail.internet.MimeBodyPart;
  */
 public class Mail {
     
-    public static void sendEmail(String mailTo,String mailCC,String subject, String content)
+    public void sendEmail(String mailTo,String mailCC,String subject, String content)
     {
         Properties props= System.getProperties();
         props.setProperty("mail.transport.protocol", "smtp");

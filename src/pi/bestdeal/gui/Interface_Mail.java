@@ -41,7 +41,7 @@ public class Interface_Mail extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         txa_content = new javax.swing.JTextArea();
 
-        jLabel1.setFont(new java.awt.Font("Snap ITC", 3, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
         jLabel1.setText("Envoyer un e-mail");
 
@@ -117,7 +117,7 @@ public class Interface_Mail extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -131,9 +131,9 @@ public class Interface_Mail extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextArea txa_content;
-    private javax.swing.JTextField txt_cc;
-    private javax.swing.JTextField txt_to;
+    public javax.swing.JTextField jTextField4;
+    public javax.swing.JTextArea txa_content;
+    public javax.swing.JTextField txt_cc;
+    public javax.swing.JTextField txt_to;
     // End of variables declaration//GEN-END:variables
 }

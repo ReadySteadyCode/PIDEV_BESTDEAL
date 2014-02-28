@@ -53,7 +53,7 @@ public class ClientTableModel extends AbstractTableModel{
             case 1:return mail.getPrenom();
             case 2:return mail.getEmail();
             case 3:return mail.getContenu();
-            default:return "error";
+            default:return 0;
         }
     }
     

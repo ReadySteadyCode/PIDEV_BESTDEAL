@@ -16,6 +16,11 @@ public class ClientMail {
     private String email;
     private String contenu;
 
+    @Override
+    public String toString() {
+        return "ClientMail{" + "nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", contenu=" + contenu + '}';
+    }
+
     public String getNom() {
         return nom;
     }

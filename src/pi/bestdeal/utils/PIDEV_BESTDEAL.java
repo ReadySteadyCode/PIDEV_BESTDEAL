@@ -9,7 +9,9 @@ package pi.bestdeal.utils;
 import java.sql.Date;
 import pi.bestdeal.dao.ClientDAO;
 import pi.bestdeal.dao.DealDAO;
+import pi.bestdeal.dao.MessageDAO;
 import pi.bestdeal.entities.Client;
+import pi.bestdeal.entities.ClientMail;
 import pi.bestdeal.entities.Deal;
 
 /**
@@ -35,6 +37,10 @@ public class PIDEV_BESTDEAL {
         {
             System.out.println(a.toString());
         }*/
+        MessageDAO daom= MessageDAO.getInstance();
+        for(ClientMail a:daom.displayMessageWithSenderMail()){
+            System.out.println(a.toString());
+        }
         
     }
     

@@ -138,7 +138,7 @@ public class MessageDAO {
                  clientmail.setPrenom(resultat.getString("prenom"));
                  clientmail.setEmail(resultat.getString("email"));
                  clientmail.setContenu(resultat.getString("contenu"));
-                 
+                 msglist.add(clientmail);
              }
          } catch (SQLException ex) {
              Logger.getLogger(MessageDAO.class.getName()).log(Level.SEVERE, null, ex);
