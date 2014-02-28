@@ -110,8 +110,9 @@ public class VendeurDAO {
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
             ResultSet resultat = ps.executeQuery();
-            Vendeur vendeur = new Vendeur();
+            
             while(resultat.next()){
+            Vendeur vendeur = new Vendeur();
             vendeur.setIdVendeur(resultat.getInt("idVendeur"));
             vendeur.setNomCommercial(resultat.getString("nomCommercial"));
             vendeurListe.add(vendeur);
@@ -123,9 +124,10 @@ public class VendeurDAO {
     }
     public List<Vendeur> displayvendeurByNom(String nomCommercial){
         List<Vendeur> vendeurListe = new ArrayList<Vendeur>();
-        String sqlrequest = "SELECT idVendeur FROM pi_dev.vendeur;";
+        String sqlrequest = "SELECT * FROM pi_dev.vendeur where nomCommercial=?";
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+            ps.setString(1, nomCommercial);
             ResultSet resultat = ps.executeQuery();
             Vendeur vendeur = new Vendeur();
             while(resultat.next()){

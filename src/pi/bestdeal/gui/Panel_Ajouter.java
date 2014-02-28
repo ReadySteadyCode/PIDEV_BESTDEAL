@@ -5,7 +5,9 @@
  */
 package pi.bestdeal.gui;
 
+import java.awt.event.KeyEvent;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import pi.bestdeal.dao.VendeurDAO;
 import pi.bestdeal.entities.Vendeur;
 
@@ -76,6 +78,18 @@ public class Panel_Ajouter extends javax.swing.JPanel {
         txtDesc.setColumns(20);
         txtDesc.setRows(5);
         jScrollPane1.setViewportView(txtDesc);
+
+        txtPrix.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrixKeyTyped(evt);
+            }
+        });
+
+        txtValidation.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtValidationKeyTyped(evt);
+            }
+        });
 
         jdateFin.setDateFormatString("yyyy-MM-dd");
 
@@ -153,6 +167,32 @@ public class Panel_Ajouter extends javax.swing.JPanel {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtPrixKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrixKeyTyped
+         if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar()!='.')
+        {
+            getToolkit().beep();
+          JOptionPane.showMessageDialog(null, "Le prix est un chiifre pas caractére");
+
+            evt.consume();
+        }
+        if (evt.getKeyChar()=='.' && txtPrix.getText().contains("."))
+        {
+            getToolkit().beep();
+            
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrixKeyTyped
+
+    private void txtValidationKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValidationKeyTyped
+        char c =evt.getKeyChar();
+        if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE)|| c== KeyEvent.VK_DELETE) )
+        {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtValidationKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

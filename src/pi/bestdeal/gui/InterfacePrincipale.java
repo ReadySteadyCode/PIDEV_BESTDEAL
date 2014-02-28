@@ -256,10 +256,16 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     }//GEN-LAST:event_Add_ButtonActionPerformed
 
     private void Update_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Update_ButtonActionPerformed
-        DealDAO dealdao = DealDAO.getInstance();
+       DealDAO dealdao = DealDAO.getInstance();
         Modifier_Ajouter modaj = new Modifier_Ajouter();
+        
+       //if(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0)==null){
+            JOptionPane.showMessageDialog(null, modaj.jList1.getSelectedValue().toString());
+       // }else{
+        
         Deal abc = new Deal();
         Deal deal = new Deal();
+       
 
         int idd = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
         List<Deal> listdeal = dealdao.displayDealById((int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0));
@@ -285,7 +291,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             deal.setTitreDeal_Deal(modaj.txtTitre.getText());
             Vendeur vendeur = new Vendeur();
             VendeurDAO daov = VendeurDAO.getInstance();
-            for (Vendeur a : daov.displayvendeurByNom(String.valueOf(modaj.jList1.getSelectedValue()))) {
+            for (Vendeur a : daov.displayvendeurByNom(modaj.jList1.getSelectedValue().toString())) {
                 vendeur = a;
             }
             deal.setIdDeal_Deal(idd);
@@ -301,6 +307,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
             deal.setDateDebutDeal_Deal(sqlDate);
             deal.setDateFinDeal_Deal(sqlDate2);
+            
             deal.setIdVendeur_Deal(vendeur.getIdVendeur());
             if (modaj.jCheckBox1.isSelected()) {
                 deal.setStatutDeal_Deal(true);
@@ -319,8 +326,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             }
         } else {
             System.out.println("Cancelled");
+            
         }
-
+        
  
     }//GEN-LAST:event_Update_ButtonActionPerformed
 
@@ -329,7 +337,10 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1FocusGained
 
     private void Delete_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Delete_ButtonActionPerformed
-      int result = JOptionPane.showConfirmDialog(null, "Voulez Vous Supprimer", null, JOptionPane.OK_CANCEL_OPTION);
+      if(jTable1.getValueAt(jTable1.getSelectedRow(), 0)==null){
+            JOptionPane.showMessageDialog(null, "Veuillez sélectionné une entrée");
+        }else{
+        int result = JOptionPane.showConfirmDialog(null, "Voulez Vous Supprimer", null, JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
         int idd = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
        DealDAO dealdao = DealDAO.getInstance();
@@ -338,9 +349,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(null, "Deal Supprimé");
       }
         }
-       
+      }  
     }//GEN-LAST:event_Delete_ButtonActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
