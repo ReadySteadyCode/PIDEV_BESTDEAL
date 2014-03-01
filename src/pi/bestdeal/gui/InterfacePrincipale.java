@@ -49,8 +49,12 @@ public class InterfacePrincipale extends javax.swing.JFrame {
      */
     public InterfacePrincipale() {
         initComponents();
+        jTable1.removeColumn(jTable1.getColumn("ID"));
+        jTable1.repaint();
+        
 
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,6 +131,11 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         Display_Button.setToolTipText("Afficher le Deal");
 
         jTable1.setModel(tableModel);
+        jTable1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTable1PropertyChange(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -200,7 +209,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +225,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 489, Short.MAX_VALUE)
+            .addGap(0, 539, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +253,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(292, 292, 292)
@@ -269,7 +278,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,8 +318,14 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             deal.setDateFinDeal_Deal(sqlDate2);
             deal.setIdVendeur_Deal(vendeur.getIdVendeur());
             DealDAO dealdao = DealDAO.getInstance();
-            /*dealdao.insertDeal(deal, 5);*/
+            
             dealdao.insertDeal(deal);
+            
+           // ((DealTableModel)tableModel).add(deal);
+            JOptionPane.showMessageDialog(null, "Ajout terminé");
+            DealTableModel mymodel = new DealTableModel(deals);
+            jTable1.setModel(mymodel);
+            
         } else {
             System.out.println("Cancelled");
         }
@@ -377,21 +392,16 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 deal.setStatutDeal_Deal(false);
             }
             int f = dealdao.updateStock(deal);
-            
-             
-        jPanel1.repaint();
-        
-            
             if (f == 1) {
                 JOptionPane.showMessageDialog(null, "Deal modifié");
-
+                
+                 DealTableModel mymodel = new DealTableModel(list.displayDeal());
+            jTable1.setModel(mymodel);
             }
         } else {
             System.out.println("Cancelled");
-            
         }
         
- 
     }//GEN-LAST:event_Update_ButtonActionPerformed
 
     private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
@@ -407,7 +417,11 @@ public class InterfacePrincipale extends javax.swing.JFrame {
       int a= dealdao.deleteDeal(idd);
       if(a==1){
           JOptionPane.showMessageDialog(null, "Deal Supprimé");
-      }
+            DealTableModel mymodel = new DealTableModel(list.displayDeal());
+            jTable1.setModel(mymodel);
+            
+            
+     }
         }
         
     }//GEN-LAST:event_Delete_ButtonActionPerformed
@@ -426,6 +440,10 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         }
        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable1PropertyChange
+       
+    }//GEN-LAST:event_jTable1PropertyChange
     
     /**
      * @param args the command line arguments

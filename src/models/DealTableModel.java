@@ -7,6 +7,7 @@ package models;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import pi.bestdeal.entities.ClientMail;
 import pi.bestdeal.entities.Deal;
 
 /**
@@ -17,11 +18,10 @@ public class DealTableModel extends AbstractTableModel {
 
     private List<Deal> deals;
 
-    
     public DealTableModel(List<Deal> deals) {
         this.deals = deals;
     }
-  
+
     @Override
     public String getColumnName(int column) {
         switch (column) {
@@ -67,7 +67,7 @@ public class DealTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Deal deal = deals.get(rowIndex);
-        switch (columnIndex){
+        switch (columnIndex) {
             case 0:
                 return deal.getIdDeal_Deal();
             case 1:
@@ -96,6 +96,28 @@ public class DealTableModel extends AbstractTableModel {
                 return 0;
         }
     }
-    
+
+    public void add(Deal deal) {
+        int size = this.getRowCount();
+        deals.add(deal);
+        fireTableRowsInserted(size, size);
+        
+    }
+    public void update(Deal deal){
+        if(deals.contains(deal)){
+            int index = deals.indexOf(deal);
+            deals.remove(index);
+            deals.add(index,deal);
+        }
+        fireTableStructureChanged();
+    }
+
+    public void remove(Deal deal) {
+        int size = this.getRowCount();
+            int index = deals.indexOf(deal);
+            deals.remove(index-1);
+            fireTableRowsDeleted(index, index);
+        }
 
 }
+
