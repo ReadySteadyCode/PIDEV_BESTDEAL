@@ -71,7 +71,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
         jTable1.removeColumn(jTable1.getColumn("Vendeur"));
         jTable1.getColumnModel().setColumnMargin(20);
-        jTable1.setRowSelectionInterval(0, 0);
+        if(jTable1.getModel().getRowCount()!=0){
+        jTable1.setRowSelectionInterval(0, 0);}
 
     }
 
@@ -333,7 +334,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             deal.setNbrAchatValidation(Integer.valueOf(panajout.txtValidation.getText()));
             deal.setNbrAchatActuelDeal_Deal(0);
             deal.setNbrAffichage_Deal(0);
-            deal.setEtatDeal_Deal("comming");
+            deal.setEtatDeal_Deal("Comming");
+            deal.setCategorie_Deal(panajout.ComboCategorie.getSelectedItem().toString());
             deal.setStatutDeal_Deal(false);
             java.util.Date d1 = panajout.jdateDebut.getCalendar().getTime();
             java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
@@ -348,17 +350,18 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
             // ((DealTableModel)tableModel).add(deal);
             JOptionPane.showMessageDialog(null, "Ajout terminé");
-            DealTableModel mymodel = new DealTableModel(deals);
+            DealTableModel mymodel = new DealTableModel(list.displayDeal());
             jTable1.setModel(mymodel);
             jTable1.removeColumn(jTable1.getColumn("ID"));
-        jTable1.removeColumn(jTable1.getColumn("Description"));
-        jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
-        jTable1.removeColumn(jTable1.getColumn("Etat"));
-        jTable1.removeColumn(jTable1.getColumn("Statut"));
-        jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
-        jTable1.removeColumn(jTable1.getColumn("Vendeur"));
-        jTable1.getColumnModel().setColumnMargin(20);
-        jTable1.setRowSelectionInterval(0, 0);
+            jTable1.removeColumn(jTable1.getColumn("Description"));
+            jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+            jTable1.removeColumn(jTable1.getColumn("Etat"));
+            jTable1.removeColumn(jTable1.getColumn("Statut"));
+            jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+            jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+
+            jTable1.getColumnModel().setColumnMargin(20);
+            jTable1.setRowSelectionInterval(0, 0);
 
         } else {
             System.out.println("Cancelled");
@@ -387,14 +390,39 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         } else {
             modaj.jCheckBox1.setSelected(false);
         }
-        if(abc.getEtatDeal_Deal().toString().equals("Passé"))
+        if (abc.getEtatDeal_Deal().toString().equals("Passé")) {
             modaj.jComboBox1.setSelectedIndex(0);
-        if(abc.getEtatDeal_Deal().toString().equals("Courant"))
+        }
+        if (abc.getEtatDeal_Deal().toString().equals("Courant")) {
             modaj.jComboBox1.setSelectedIndex(1);
-         if(abc.getEtatDeal_Deal().toString().equals("Comming"))
+        }
+        if (abc.getEtatDeal_Deal().toString().equals("Comming")) {
             modaj.jComboBox1.setSelectedIndex(2);
-       // "High-Tech", "Bricolage", "Bijouterie", "Vacances&Sorties", "Beauté", "Accessoires&Vétements", "Divers"
+        }
+        // "High-Tech", "Bricolage", "Bijouterie", "Vacances&Sorties", "Beauté", "Accessoires&Vétements", "Divers"
         //
+        if (abc.getCategorie_Deal().toString().equalsIgnoreCase("High-Tech")) {
+            modaj.ComboCategorie.setSelectedIndex(0);
+        }
+        if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Bricolage")) {
+            modaj.ComboCategorie.setSelectedIndex(1);
+        }
+        if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Bijouterie")) {
+            modaj.ComboCategorie.setSelectedIndex(2);
+        }
+        if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Vacances&Sorties")) {
+            modaj.ComboCategorie.setSelectedIndex(3);
+        }
+
+        if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Beauté")) {
+            modaj.ComboCategorie.setSelectedIndex(4);
+        }
+        if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Accessoires&Vétements")) {
+            modaj.ComboCategorie.setSelectedIndex(5);
+        }
+         if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Divers")) {
+            modaj.ComboCategorie.setSelectedIndex(6);
+        }
         abc.setEtatDeal_Deal(modaj.jComboBox1.getSelectedItem().toString());
         int result = JOptionPane.showConfirmDialog(null, modaj, "Test",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -419,6 +447,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
             deal.setDateDebutDeal_Deal(sqlDate);
             deal.setDateFinDeal_Deal(sqlDate2);
+            deal.setCategorie_Deal(modaj.ComboCategorie.getSelectedItem().toString());
 
             deal.setIdVendeur_Deal(vendeur.getIdVendeur());
             if (modaj.jCheckBox1.isSelected()) {
@@ -433,14 +462,14 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 DealTableModel mymodel = new DealTableModel(list.displayDeal());
                 jTable1.setModel(mymodel);
                 jTable1.removeColumn(jTable1.getColumn("ID"));
-        jTable1.removeColumn(jTable1.getColumn("Description"));
-        jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
-        jTable1.removeColumn(jTable1.getColumn("Etat"));
-        jTable1.removeColumn(jTable1.getColumn("Statut"));
-        jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
-        jTable1.removeColumn(jTable1.getColumn("Vendeur"));
-        jTable1.getColumnModel().setColumnMargin(20);
-        jTable1.setRowSelectionInterval(0, 0);
+                jTable1.removeColumn(jTable1.getColumn("Description"));
+                jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+                jTable1.removeColumn(jTable1.getColumn("Etat"));
+                jTable1.removeColumn(jTable1.getColumn("Statut"));
+                jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+                jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+                jTable1.getColumnModel().setColumnMargin(20);
+                jTable1.setRowSelectionInterval(0, 0);
             }
         } else {
             System.out.println("Cancelled");
@@ -463,16 +492,16 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Deal Supprimé");
                 DealTableModel mymodel = new DealTableModel(list.displayDeal());
                 jTable1.setModel(mymodel);
+
                 jTable1.removeColumn(jTable1.getColumn("ID"));
-                jTable1.removeColumn(jTable1.getColumn("ID"));
-        jTable1.removeColumn(jTable1.getColumn("Description"));
-        jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
-        jTable1.removeColumn(jTable1.getColumn("Etat"));
-        jTable1.removeColumn(jTable1.getColumn("Statut"));
-        jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
-        jTable1.removeColumn(jTable1.getColumn("Vendeur"));
-        jTable1.getColumnModel().setColumnMargin(20);
-        jTable1.setRowSelectionInterval(0, 0);
+                jTable1.removeColumn(jTable1.getColumn("Description"));
+                jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+                jTable1.removeColumn(jTable1.getColumn("Etat"));
+                jTable1.removeColumn(jTable1.getColumn("Statut"));
+                jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+                jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+                jTable1.getColumnModel().setColumnMargin(20);
+                jTable1.setRowSelectionInterval(0, 0);
 
             }
         }
@@ -510,6 +539,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         DealTableModel mymodel = new DealTableModel(recherche);
         jTable1.setModel(mymodel);
         jTable1.removeColumn(jTable1.getColumn("ID"));
+            jTable1.removeColumn(jTable1.getColumn("Description"));
+            jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+            jTable1.removeColumn(jTable1.getColumn("Etat"));
+            jTable1.removeColumn(jTable1.getColumn("Statut"));
+            jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+            jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+
+            jTable1.getColumnModel().setColumnMargin(20);
+            jTable1.setRowSelectionInterval(0, 0);
     }//GEN-LAST:event_Search_TextFieldKeyReleased
 
     private void Display_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Display_ButtonActionPerformed
@@ -518,7 +556,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         Deal abc = new Deal();
         Deal deal = new Deal();
         int idd = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
-         List<Deal> listdeal = dealdao.displayDealById(idd);
+        List<Deal> listdeal = dealdao.displayDealById(idd);
         for (Deal a : listdeal) {
             abc = a;
         }
@@ -535,16 +573,16 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             panneauAffichage.txtStatutAffichage.setText("Deal non Confirmé");
         }
         Vendeur vendeur = new Vendeur();
-            VendeurDAO daov = VendeurDAO.getInstance();
-            int idv = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
-            panneauAffichage.txtVendeurAffichage.setText(daov.displayvendeurByID(idv).getNomCommercial());
-            panneauAffichage.txtEtat.setText(abc.getEtatDeal_Deal());
-            panneauAffichage.txtCategorie.setText(abc.getCategorie_Deal());
-            panneauAffichage.txtAffichage.setText(String.valueOf(abc.getNbrAffichage_Deal()));
-            panneauAffichage.txtAchatActuel.setText(String.valueOf(abc.getNbrAchatActuelDeal_Deal()));
-            JOptionPane.showMessageDialog(null, panneauAffichage, "Affichage",
+        VendeurDAO daov = VendeurDAO.getInstance();
+        int idv = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
+        panneauAffichage.txtVendeurAffichage.setText(daov.displayvendeurByID(idv).getNomCommercial());
+        panneauAffichage.txtEtat.setText(abc.getEtatDeal_Deal());
+        panneauAffichage.txtCategorie.setText(abc.getCategorie_Deal());
+        panneauAffichage.txtAffichage.setText(String.valueOf(abc.getNbrAffichage_Deal()));
+        panneauAffichage.txtAchatActuel.setText(String.valueOf(abc.getNbrAchatActuelDeal_Deal()));
+        JOptionPane.showMessageDialog(null, panneauAffichage, "Affichage",
                 JOptionPane.YES_OPTION);
-            
+
     }//GEN-LAST:event_Display_ButtonActionPerformed
 
     /**
