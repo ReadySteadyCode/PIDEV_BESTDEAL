@@ -1,5 +1,5 @@
 
-package models;
+package pi.bestdeal.models;
 
 import java.util.Date;
 import java.util.Properties;

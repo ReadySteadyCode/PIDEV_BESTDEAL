@@ -23,6 +23,11 @@ public class Deal {
     private Date dateFinDeal_Deal;
     private int nbrAffichage_Deal;
     private int idVendeur_Deal;
+    private String categorie_Deal;
+
+    public String getCategorie_Deal() {
+        return categorie_Deal;
+    }
 
     @Override
     public String toString() {
@@ -32,17 +37,23 @@ public class Deal {
     public Deal() {
     }
 
-    public Deal(String titreDeal, String descDeal, int nbrachatactuel, int nbrAchatValidation, String etatDeal, Boolean StatutDeal, Date dateFin, int nbrAffichage, int idVendeur) {
-        this.titreDeal_Deal = titreDeal;
-        this.descDeal_Deal = descDeal;
-        this.nbrAchatActuel_Deal = nbrachatactuel;
-        this.nbrAchatValidation_Deal = nbrAchatValidation;
-        this.etatDeal_Deal = etatDeal;
-        this.statutDeal_Deal = StatutDeal;
-        this.dateFinDeal_Deal = dateFin;
-        this.nbrAffichage_Deal = nbrAffichage;
-        this.idVendeur_Deal = idVendeur;
+    public Deal(int idDeal_Deal, String titreDeal_Deal, String descDeal_Deal, Double prixDeal_Deal, int nbrAchatActuel_Deal, int nbrAchatValidation_Deal, String etatDeal_Deal, Boolean statutDeal_Deal, Date dateDebutDeal_Deal, Date dateFinDeal_Deal, int nbrAffichage_Deal, int idVendeur_Deal, String categorie_Deal) {
+        this.idDeal_Deal = idDeal_Deal;
+        this.titreDeal_Deal = titreDeal_Deal;
+        this.descDeal_Deal = descDeal_Deal;
+        this.prixDeal_Deal = prixDeal_Deal;
+        this.nbrAchatActuel_Deal = nbrAchatActuel_Deal;
+        this.nbrAchatValidation_Deal = nbrAchatValidation_Deal;
+        this.etatDeal_Deal = etatDeal_Deal;
+        this.statutDeal_Deal = statutDeal_Deal;
+        this.dateDebutDeal_Deal = dateDebutDeal_Deal;
+        this.dateFinDeal_Deal = dateFinDeal_Deal;
+        this.nbrAffichage_Deal = nbrAffichage_Deal;
+        this.idVendeur_Deal = idVendeur_Deal;
+        this.categorie_Deal = categorie_Deal;
     }
+
+   
     
     
     
@@ -141,5 +152,9 @@ public class Deal {
 
     public void setIdDeal_Deal(int idDeal_Deal) {
         this.idDeal_Deal = idDeal_Deal;
+    }
+
+    public void setCategorie_Deal(String categorie_Deal) {
+        this.categorie_Deal = categorie_Deal;
     }
 }

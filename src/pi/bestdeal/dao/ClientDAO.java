@@ -60,7 +60,7 @@ public class ClientDAO
    public List<Client> displayClient ()
    {
        List<Client> clientListe = new ArrayList<Client>();
-       String sqlrequest = "SELECT idCLient,nom,prenom,email FROM pi_dev.client;";
+       String sqlrequest = "SELECT idCLient,nom,prenom,email,nbrSignalisation FROM pi_dev.client;";
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
             ResultSet resultat = ps.executeQuery(sqlrequest);
@@ -72,6 +72,7 @@ public class ClientDAO
                 client.setIdClient(resultat.getInt("idClient"));
                 client.setNom(resultat.getString("nom"));
                 client.setPrenom(resultat.getString("prenom"));
+                client.setNbrSignalisation(resultat.getInt("nbrSignalisation"));
                
                 clientListe.add(client);
                

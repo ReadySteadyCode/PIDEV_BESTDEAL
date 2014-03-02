@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package models;
+package pi.bestdeal.models;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
