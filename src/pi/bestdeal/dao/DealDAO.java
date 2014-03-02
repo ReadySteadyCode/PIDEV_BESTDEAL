@@ -41,8 +41,8 @@ public class DealDAO {
      * d'un deal.
      * @return int : 0 si un prblème survient, 1 si la modification s'effectue.
      */
-    public int updateStock(Deal deal) {
-        String requete = "update deal set titreDeal=?, descDeal=?, prixDeal=?, nbrachatactuel=?, nbrAchatValidation=?,etatDeal=?, StatutDeal=?, dateDebut=?, dateFin=?, nbrAffichage=?, idVendeur=? where idDeal=?";
+    public int updateDeal(Deal deal) {
+        String requete = "update deal set titreDeal=?, descDeal=?, prixDeal=?, nbrachatactuel=?, nbrAchatValidation=?,etatDeal=?, StatutDeal=?, dateDebut=?, dateFin=?, nbrAffichage=?, idVendeur=?, categorie=? where idDeal=?";
         int a = 0;
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
@@ -58,6 +58,7 @@ public class DealDAO {
             ps.setInt(10, deal.getNbrAffichage_Deal());
             ps.setInt(11, deal.getIdVendeur_Deal());
             ps.setInt(12, deal.getIdDeal_Deal());
+            ps.setString(13, deal.getCategorie_Deal());
             a = ps.executeUpdate();
             System.out.println("Mise à jour effectuée avec succès");
         } catch (SQLException ex) {
@@ -94,6 +95,7 @@ public class DealDAO {
                 deal.setDateFinDeal_Deal(resultat.getDate("dateFin"));
                 deal.setNbrAffichage_Deal(resultat.getInt("nbrAffichage"));
                 deal.setIdVendeur_Deal(resultat.getInt("idVendeur"));
+                deal.setCategorie_Deal(resultat.getString("categorie"));
 
                 dealListe.add(deal);
 
@@ -113,7 +115,7 @@ public class DealDAO {
      */
     public int insertDeal(Deal deal) {
         int a = 0;
-        String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage, idVendeur) values (?,?,?,?,?,?,?,?,?,?,?)";
+        String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage, idVendeur,categorie) values (?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
             ps.setString(1, deal.getTitreDeal_Deal());
@@ -127,7 +129,7 @@ public class DealDAO {
             ps.setDate(9, (Date) deal.getDateFinDeal_Deal());
             ps.setInt(10, deal.getNbrAffichage_Deal());
             ps.setInt(11, deal.getIdVendeur_Deal());
-           // ps.setInt(12, deal.getIdDeal_Deal());
+           ps.setString(12, deal.getCategorie_Deal());
             a = ps.executeUpdate();
             System.out.println("Ajout effectuée avec succès");
         } catch (SQLException ex) {
@@ -205,9 +207,8 @@ public class DealDAO {
                 deal.setDateFinDeal_Deal(resultat.getDate("dateFin"));
                 deal.setNbrAffichage_Deal(resultat.getInt("nbrAffichage"));
                 deal.setIdVendeur_Deal(resultat.getInt("idVendeur"));
-
+                deal.setCategorie_Deal(resultat.getString("categorie"));
                 dealListe.add(deal);
-
             }
 
         } catch (SQLException ex) {
@@ -225,7 +226,7 @@ public class DealDAO {
      */
     public int insertDealWithoutVendeur(Deal deal) {
         int a = 0;
-        String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage) values (?,?,?,?,?,?,?,?,?,?)";
+        String requete = "insert into deal (titreDeal, descDeal, prixDeal, nbrachatactuel, nbrAchatValidation,etatDeal, StatutDeal, dateDebut, dateFin, nbrAffichage,categorie) values (?,?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
             ps.setString(1, deal.getTitreDeal_Deal());
@@ -240,6 +241,7 @@ public class DealDAO {
             ps.setInt(10, deal.getNbrAffichage_Deal());
             ps.setInt(11, deal.getIdVendeur_Deal());
             ps.setInt(12, deal.getIdDeal_Deal());
+            ps.setString(13,deal.getCategorie_Deal());
             a = ps.executeUpdate();
             System.out.println("Ajout effectuée avec succès");
         } catch (SQLException ex) {
@@ -283,9 +285,8 @@ public List<Deal> displayDealById(int idDeal){
                 deal.setDateFinDeal_Deal(resultat.getDate("dateFin"));
                 deal.setNbrAffichage_Deal(resultat.getInt("nbrAffichage"));
                 deal.setIdVendeur_Deal(resultat.getInt("idVendeur"));
-
+                deal.setCategorie_Deal(resultat.getString("categorie"));
                 dealListe.add(deal);
-
             }
 
         } catch (SQLException ex) {

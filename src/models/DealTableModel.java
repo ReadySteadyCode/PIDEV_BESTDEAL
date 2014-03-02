@@ -49,6 +49,8 @@ public class DealTableModel extends AbstractTableModel {
                 return "Nombre d'Affichage";
             case 11:
                 return "Vendeur";
+            case 12:
+                return "Catégorie";
             default:
                 return "problème d'affichage";
         }
@@ -61,7 +63,7 @@ public class DealTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 11;
+        return 12;
     }
 
     @Override
@@ -92,6 +94,8 @@ public class DealTableModel extends AbstractTableModel {
                 return deal.getNbrAffichage_Deal();
             case 11:
                 return deal.getIdVendeur_Deal();
+            case 12:
+                return deal.getCategorie_Deal();
             default:
                 return 0;
         }

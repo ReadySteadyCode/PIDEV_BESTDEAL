@@ -18,6 +18,7 @@ public class Client {
     
   
    private int idClient; 
+   private int nbrSignalisation;
 
     public Client() {
     }
@@ -115,7 +116,7 @@ public class Client {
         this.sexe = sexe;
     }
 
-    public Client(int idClient, String nom, String prenom, String password, String Telephone, String email, String listedechoix, int CIN, Date datenaissance, Boolean sexe) {
+    public Client(int idClient, String nom, String prenom, String password, String Telephone, String email, String listedechoix, int CIN, Date datenaissance, Boolean sexe,int nbrSignalisation) {
         this.idClient = idClient;
         this.nom = nom;
         this.prenom = prenom;
@@ -126,6 +127,7 @@ public class Client {
         this.CIN = CIN;
         this.datenaissance = datenaissance;
         this.sexe = sexe;
+        this.nbrSignalisation = nbrSignalisation;
     }
 
     @Override
@@ -161,6 +163,18 @@ public class Client {
             return false;
         }
         return true;
+    }
+
+    public int getNbrSignalisation() {
+        return nbrSignalisation;
+    }
+
+    public Boolean isSexe() {
+        return sexe;
+    }
+
+    public void setNbrSignalisation(int nbrSignalisation) {
+        this.nbrSignalisation = nbrSignalisation;
     }
   
  

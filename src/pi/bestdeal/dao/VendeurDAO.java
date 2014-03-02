@@ -139,5 +139,23 @@ public class VendeurDAO {
         }
         return vendeurListe;
     }
+    public Vendeur displayvendeurByID(int idVendeur){
+       Vendeur dealer = new Vendeur();
+        String sqlrequest = "select pi_dev.vendeur.nomCommercial from pi_dev.deal,pi_dev.vendeur where pi_dev.deal.idDeal=? and pi_dev.deal.idVendeur=pi_dev.vendeur.idVendeur";
+        try {
+            PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+            ps.setInt(1,idVendeur);
+            ResultSet resultat = ps.executeQuery();
+           
+            while(resultat.next()){
+            dealer.setNomCommercial(resultat.getString("nomCommercial"));
+            
+             }
+        } catch (SQLException ex) {
+            Logger.getLogger(VendeurDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dealer;
+    }
+    
 
 }
