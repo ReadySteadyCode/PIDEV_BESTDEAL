@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package models;
 
 import java.util.List;
@@ -17,7 +16,8 @@ import pi.bestdeal.entities.Deal;
  *
  * @author Internet
  */
-public class ClientTableModel extends AbstractTableModel{
+public class ClientTableModel extends AbstractTableModel {
+
     private List<ClientMail> clients;
 
     public ClientTableModel(List<ClientMail> clients) {
@@ -26,7 +26,7 @@ public class ClientTableModel extends AbstractTableModel{
 
     @Override
     public int getRowCount() {
-       return clients.size();
+        return clients.size();
     }
 
     @Override
@@ -37,25 +37,34 @@ public class ClientTableModel extends AbstractTableModel{
     @Override
     public String getColumnName(int column) {
         switch (column) {
-            case 0:return "Nom";
-            case 1:return "Prénom";
-            case 2:return "E-Mail";
-            case 3:return "Contenu";
-                default:return "Error";
+            case 0:
+                return "Nom";
+            case 1:
+                return "Prénom";
+            case 2:
+                return "E-Mail";
+            case 3:
+                return "Contenu";
+            default:
+                return "Error";
         }
     }
-    
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         ClientMail mail = clients.get(rowIndex);
-        switch (columnIndex){
-            case 0:return mail.getNom();
-            case 1:return mail.getPrenom();
-            case 2:return mail.getEmail();
-            case 3:return mail.getContenu();
-            default:return 0;
+        switch (columnIndex) {
+            case 0:
+                return mail.getNom();
+            case 1:
+                return mail.getPrenom();
+            case 2:
+                return mail.getEmail();
+            case 3:
+                return mail.getContenu();
+            default:
+                return 0;
         }
     }
-    
+
 }

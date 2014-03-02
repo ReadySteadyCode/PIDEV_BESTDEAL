@@ -6,7 +6,8 @@
 
 package pi.bestdeal.utils;
 
-import java.sql.Date;
+import java.util.Calendar;
+import java.util.Date;
 import pi.bestdeal.dao.ClientDAO;
 import pi.bestdeal.dao.DealDAO;
 import pi.bestdeal.dao.MessageDAO;
@@ -40,6 +41,10 @@ public class PIDEV_BESTDEAL {
         MessageDAO daom= MessageDAO.getInstance();
         for(ClientMail a:daom.displayMessageWithSenderMail()){
             System.out.println(a.toString());
+           Date date = new Date();
+           Calendar calendar = Calendar.getInstance();
+            System.out.println(date);
+           // System.out.println(calendar.);
         }
         
     }
