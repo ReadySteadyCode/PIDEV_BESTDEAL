@@ -52,7 +52,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     public InterfacePrincipale() {
 
         try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
