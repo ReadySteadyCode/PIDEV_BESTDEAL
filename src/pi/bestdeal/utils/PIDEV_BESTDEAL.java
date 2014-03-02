@@ -44,7 +44,7 @@ public class PIDEV_BESTDEAL {
            Date date = new Date();
            Calendar calendar = Calendar.getInstance();
             System.out.println(date);
-            System.out.println(calendar.);
+           // System.out.println(calendar.);
         }
         
     }
