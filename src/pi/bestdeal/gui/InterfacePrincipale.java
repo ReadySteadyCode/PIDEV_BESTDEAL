@@ -17,14 +17,14 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import models.ClientTableModel;
+import pi.bestdeal.models.ClientTableModel;
 import pi.bestdeal.dao.DealDAO;
 import pi.bestdeal.dao.VendeurDAO;
 import pi.bestdeal.entities.Deal;
 import pi.bestdeal.entities.Vendeur;
-import models.DealTableModel;
-import models.DisplayClientTableModel;
-import models.Mail;
+import pi.bestdeal.models.DealTableModel;
+import pi.bestdeal.models.DisplayClientTableModel;
+import pi.bestdeal.models.Mail;
 import pi.bestdeal.dao.ClientDAO;
 import pi.bestdeal.dao.MessageDAO;
 import pi.bestdeal.entities.Client;
@@ -64,6 +64,13 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         }
         initComponents();
         jTable1.removeColumn(jTable1.getColumn("ID"));
+        jTable1.removeColumn(jTable1.getColumn("Description"));
+        jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+        jTable1.removeColumn(jTable1.getColumn("Etat"));
+        jTable1.removeColumn(jTable1.getColumn("Statut"));
+        jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+        jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+        jTable1.getColumnModel().setColumnMargin(20);
         jTable1.setRowSelectionInterval(0, 0);
 
     }
@@ -343,7 +350,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ajout terminé");
             DealTableModel mymodel = new DealTableModel(deals);
             jTable1.setModel(mymodel);
-            jTable1.setRowSelectionInterval(0, 0);
+            jTable1.removeColumn(jTable1.getColumn("ID"));
+        jTable1.removeColumn(jTable1.getColumn("Description"));
+        jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+        jTable1.removeColumn(jTable1.getColumn("Etat"));
+        jTable1.removeColumn(jTable1.getColumn("Statut"));
+        jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+        jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+        jTable1.getColumnModel().setColumnMargin(20);
+        jTable1.setRowSelectionInterval(0, 0);
 
         } else {
             System.out.println("Cancelled");
@@ -372,6 +387,14 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         } else {
             modaj.jCheckBox1.setSelected(false);
         }
+        if(abc.getEtatDeal_Deal().toString().equals("Passé"))
+            modaj.jComboBox1.setSelectedIndex(0);
+        if(abc.getEtatDeal_Deal().toString().equals("Courant"))
+            modaj.jComboBox1.setSelectedIndex(1);
+         if(abc.getEtatDeal_Deal().toString().equals("Comming"))
+            modaj.jComboBox1.setSelectedIndex(2);
+       // "High-Tech", "Bricolage", "Bijouterie", "Vacances&Sorties", "Beauté", "Accessoires&Vétements", "Divers"
+        //
         abc.setEtatDeal_Deal(modaj.jComboBox1.getSelectedItem().toString());
         int result = JOptionPane.showConfirmDialog(null, modaj, "Test",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -409,7 +432,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
                 DealTableModel mymodel = new DealTableModel(list.displayDeal());
                 jTable1.setModel(mymodel);
-                jTable1.setRowSelectionInterval(0, 0);
+                jTable1.removeColumn(jTable1.getColumn("ID"));
+        jTable1.removeColumn(jTable1.getColumn("Description"));
+        jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+        jTable1.removeColumn(jTable1.getColumn("Etat"));
+        jTable1.removeColumn(jTable1.getColumn("Statut"));
+        jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+        jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+        jTable1.getColumnModel().setColumnMargin(20);
+        jTable1.setRowSelectionInterval(0, 0);
             }
         } else {
             System.out.println("Cancelled");
@@ -433,7 +464,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 DealTableModel mymodel = new DealTableModel(list.displayDeal());
                 jTable1.setModel(mymodel);
                 jTable1.removeColumn(jTable1.getColumn("ID"));
-                jTable1.setRowSelectionInterval(0, 0);
+                jTable1.removeColumn(jTable1.getColumn("ID"));
+        jTable1.removeColumn(jTable1.getColumn("Description"));
+        jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+        jTable1.removeColumn(jTable1.getColumn("Etat"));
+        jTable1.removeColumn(jTable1.getColumn("Statut"));
+        jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+        jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+        jTable1.getColumnModel().setColumnMargin(20);
+        jTable1.setRowSelectionInterval(0, 0);
 
             }
         }
