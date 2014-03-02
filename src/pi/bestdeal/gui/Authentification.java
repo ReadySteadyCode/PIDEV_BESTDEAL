@@ -76,7 +76,7 @@ public class Authentification extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("BEST DEAL");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bestdeal.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Dell\\Desktop\\bestdeal.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
