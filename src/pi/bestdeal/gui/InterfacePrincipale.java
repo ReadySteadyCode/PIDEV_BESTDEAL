@@ -11,12 +11,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.OptionPaneUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.xy.XYSeriesCollection;
 import pi.bestdeal.models.ClientTableModel;
 import pi.bestdeal.dao.DealDAO;
 import pi.bestdeal.dao.VendeurDAO;
@@ -26,9 +36,11 @@ import pi.bestdeal.models.DealTableModel;
 import pi.bestdeal.models.DisplayClientTableModel;
 import pi.bestdeal.models.Mail;
 import pi.bestdeal.dao.ClientDAO;
+import pi.bestdeal.dao.ConsultationDAO;
 import pi.bestdeal.dao.MessageDAO;
 import pi.bestdeal.entities.Client;
 import pi.bestdeal.entities.ClientMail;
+import pi.bestdeal.models.Charts;
 
 /**
  *
@@ -71,8 +83,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
         jTable1.removeColumn(jTable1.getColumn("Vendeur"));
         jTable1.getColumnModel().setColumnMargin(20);
-        if(jTable1.getModel().getRowCount()!=0){
-        jTable1.setRowSelectionInterval(0, 0);}
+        if (jTable1.getModel().getRowCount() != 0) {
+            jTable1.setRowSelectionInterval(0, 0);
+        }
 
     }
 
@@ -281,6 +294,11 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jScrollPane5.setViewportView(jTable3);
 
         jButton4.setText("Statistique");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Rapport");
 
@@ -296,19 +314,20 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addGap(98, 98, 98)
-                .addComponent(jButton4)
-                .addGap(138, 138, 138))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,11 +336,11 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addGap(50, 50, 50))
+                    .addComponent(jButton5)
+                    .addComponent(jButton4))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Générer les Rapports", jPanel3);
@@ -486,7 +505,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Accessoires&Vétements")) {
             modaj.ComboCategorie.setSelectedIndex(5);
         }
-         if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Divers")) {
+        if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Divers")) {
             modaj.ComboCategorie.setSelectedIndex(6);
         }
         abc.setEtatDeal_Deal(modaj.jComboBox1.getSelectedItem().toString());
@@ -605,15 +624,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         DealTableModel mymodel = new DealTableModel(recherche);
         jTable1.setModel(mymodel);
         jTable1.removeColumn(jTable1.getColumn("ID"));
-            jTable1.removeColumn(jTable1.getColumn("Description"));
-            jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
-            jTable1.removeColumn(jTable1.getColumn("Etat"));
-            jTable1.removeColumn(jTable1.getColumn("Statut"));
-            jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
-            jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+        jTable1.removeColumn(jTable1.getColumn("Description"));
+        jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+        jTable1.removeColumn(jTable1.getColumn("Etat"));
+        jTable1.removeColumn(jTable1.getColumn("Statut"));
+        jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+        jTable1.removeColumn(jTable1.getColumn("Vendeur"));
 
-            jTable1.getColumnModel().setColumnMargin(20);
-            jTable1.setRowSelectionInterval(0, 0);
+        jTable1.getColumnModel().setColumnMargin(20);
+        jTable1.setRowSelectionInterval(0, 0);
     }//GEN-LAST:event_Search_TextFieldKeyReleased
 
     private void Display_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Display_ButtonActionPerformed
@@ -660,8 +679,99 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     }//GEN-LAST:event_Search_TextField1KeyReleased
 
     private void Search_TextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Search_TextField2KeyReleased
-        // TODO add your handling code here:
+        List<Deal> recherche = new ArrayList<>();
+        for (Deal a : list.displayDeal()) {
+            if (a.getTitreDeal_Deal().toLowerCase().contains(this.Search_TextField2.getText().toLowerCase())) {
+                recherche.add(a);
+            }
+
+        }
+        DealTableModel mymodel = new DealTableModel(recherche);
+        jTable3.setModel(mymodel);
+        jTable3.removeColumn(jTable3.getColumn("ID"));
+        jTable3.removeColumn(jTable3.getColumn("Description"));
+        jTable3.removeColumn(jTable3.getColumn("Achat Actuel"));
+        jTable3.removeColumn(jTable3.getColumn("Etat"));
+        jTable3.removeColumn(jTable3.getColumn("Statut"));
+        jTable3.removeColumn(jTable3.getColumn("Nombre d'Affichage"));
+        jTable3.removeColumn(jTable3.getColumn("Vendeur"));
+
+        jTable3.getColumnModel().setColumnMargin(20);
+        jTable3.setRowSelectionInterval(0, 0);
     }//GEN-LAST:event_Search_TextField2KeyReleased
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int idd = (int) jTable3.getModel().getValueAt(jTable3.getSelectedRow(), 0);
+        ChoixStat1 chStat = new ChoixStat1();
+        ChoixStat2 chStat2 = new ChoixStat2();
+        /* JOptionPane.showMessageDialog(null, chStat, "Choisir",
+         JOptionPane.OK_CANCEL_OPTION);*/
+        Object[] options = {"BACK", "NEXT"};
+     int a=  JOptionPane.showOptionDialog(null, chStat, "",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[0]);
+     int b =0;
+     if(chStat.jRadiosexe.isSelected()&&chStat.jRadioconsult.isSelected())
+         b=0;
+     if(chStat.jRadiosexe.isSelected()&&chStat.jRadiores.isSelected())
+         b=1;
+     if(chStat.jRadiooperation.isSelected()&&chStat.jRadioconsult.isSelected())
+         b=2;
+     if(chStat.jRadiooperation.isSelected()&&chStat.jRadiores.isSelected())
+         b=3;
+     if(a==1&&(b==2||b==3)){
+         chStat.setVisible(false);
+           Object[] options2 = {"Annuler", "Afficher la Statistique"};
+     int c=  JOptionPane.showOptionDialog(null, chStat2, "",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options2, options[0]);
+     if(c==1){
+         java.util.Date d1 = chStat2.jDateDebut.getCalendar().getTime();
+            java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
+            java.util.Date d2 = chStat2.jDatefin.getCalendar().getTime();
+            java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
+           Charts charts = new Charts();
+          XYSeriesCollection dataxy =  charts.createDataset(sqlDate.toString(), sqlDate2.toString(), idd);
+           JFreeChart chart = ChartFactory.createXYLineChart(
+                "Evolution des Consultation par rapport au temps", // Title
+                "Jours", // x-axis Label
+                "Nombre des Consultations", // y-axis Label
+                dataxy, // Dataset
+                PlotOrientation.VERTICAL, // Plot Orientation
+                
+                true, // Show Legend
+                true, // Use tooltips
+                false // Configure chart to generate URLs?
+        );
+           XYItemRenderer rend = chart.getXYPlot().getRenderer();
+       
+        ChartPanel crepart = new ChartPanel(chart);
+        Plot plot = chart.getPlot();
+        
+         JPanel jpan = new JPanel();
+         jpan.add(crepart);
+           JOptionPane.showConfirmDialog(null, jpan, "Test",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+     }
+     }
+     else{
+          ConsultationDAO cdao=ConsultationDAO.getInstance();
+        DefaultPieDataset union = new DefaultPieDataset();
+          union.setValue("Homme", cdao.consultationCounterByGender(false,idd));
+          union.setValue("Femme", cdao.consultationCounterByGender(true,idd));
+        
+        JFreeChart repart = 
+            ChartFactory.createPieChart3D("Répartition par personne",
+            union,true, true, false);
+        ChartPanel crepart = new ChartPanel(repart);
+        Plot plot = repart.getPlot();
+        JPanel jpan = new JPanel();
+        jpan.add(crepart);
+       JOptionPane.showConfirmDialog(null, jpan, "Test",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+     }
+     
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -11,6 +11,13 @@ package pi.bestdeal.dao;
  * @author Internet
  */
 public class ReservationDAO {
-    String a;
+  private static ReservationDAO reservationDAO;
+
+    public static ReservationDAO getInstance() {
+        if (reservationDAO == null) {
+            reservationDAO = new ReservationDAO();
+        }
+        return reservationDAO;
+    }
     
 }
