@@ -5,20 +5,17 @@
  */
 package pi.bestdeal.gui;
 
+import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
+import com.jtattoo.plaf.texture.TextureLookAndFeel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.OptionPaneUI;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -63,17 +60,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
      */
     public InterfacePrincipale() {
 
-        try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
         initComponents();
         jTable1.removeColumn(jTable1.getColumn("ID"));
         jTable1.removeColumn(jTable1.getColumn("Description"));
@@ -192,7 +179,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -269,7 +256,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -317,7 +304,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -364,7 +351,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(292, 292, 292)
@@ -719,7 +706,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
          b=2;
      if(chStat.jRadiooperation.isSelected()&&chStat.jRadiores.isSelected())
          b=3;
-     if(a==1&&(b==2||b==3)){
+     if(a==1&&(b==2)){
          chStat.setVisible(false);
            Object[] options2 = {"Annuler", "Afficher la Statistique"};
      int c=  JOptionPane.showOptionDialog(null, chStat2, "",
@@ -731,8 +718,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             java.util.Date d2 = chStat2.jDatefin.getCalendar().getTime();
             java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
            Charts charts = new Charts();
+      //     JFreeChart chrt = ChartFactory.createXYStepAreaChart(null, null, null, null, PlotOrientation.HORIZONTAL, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled)
           XYSeriesCollection dataxy =  charts.createDataset(sqlDate.toString(), sqlDate2.toString(), idd);
-           JFreeChart chart = ChartFactory.createXYLineChart(
+           JFreeChart chart = ChartFactory.createXYStepAreaChart(
                 "Evolution des Consultation par rapport au temps", // Title
                 "Jours", // x-axis Label
                 "Nombre des Consultations", // y-axis Label
@@ -749,12 +737,52 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         Plot plot = chart.getPlot();
         
          JPanel jpan = new JPanel();
+         JButton button = new JButton("Imprimer");
+        
          jpan.add(crepart);
            JOptionPane.showConfirmDialog(null, jpan, "Test",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
      }
      }
-     else{
+     if(a==1&&(b==3))
+     {
+           Object[] options2 = {"Annuler", "Afficher la Statistique"};
+     int c=  JOptionPane.showOptionDialog(null, chStat2, "",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options2, options[0]);
+     if(c==1){
+         java.util.Date d1 = chStat2.jDateDebut.getCalendar().getTime();
+            java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
+            java.util.Date d2 = chStat2.jDatefin.getCalendar().getTime();
+            java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
+           Charts charts = new Charts();
+      //     JFreeChart chrt = ChartFactory.createXYStepAreaChart(null, null, null, null, PlotOrientation.HORIZONTAL, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled)
+          XYSeriesCollection dataxy =  charts.createDataset(sqlDate.toString(), sqlDate2.toString(), idd);
+           JFreeChart chart = ChartFactory.createXYStepAreaChart(
+                "Evolution des Consultation par rapport au temps", // Title
+                "Jours", // x-axis Label
+                "Nombre des Consultations", // y-axis Label
+                dataxy, // Dataset
+                PlotOrientation.VERTICAL, // Plot Orientation
+                
+                true, // Show Legend
+                true, // Use tooltips
+                false // Configure chart to generate URLs?
+        );
+           XYItemRenderer rend = chart.getXYPlot().getRenderer();
+       
+        ChartPanel crepart = new ChartPanel(chart);
+        Plot plot = chart.getPlot();
+        
+         JPanel jpan = new JPanel();
+         JButton button = new JButton("Imprimer");
+        
+         jpan.add(crepart);
+           JOptionPane.showConfirmDialog(null, jpan, "Test",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+     }
+         
+         
           ConsultationDAO cdao=ConsultationDAO.getInstance();
         DefaultPieDataset union = new DefaultPieDataset();
           union.setValue("Homme", cdao.consultationCounterByGender(false,idd));
@@ -769,8 +797,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jpan.add(crepart);
        JOptionPane.showConfirmDialog(null, jpan, "Test",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-     }
      
+     }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -797,6 +825,12 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(InterfacePrincipale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InterfacePrincipale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+         try {
+            UIManager.setLookAndFeel(new AluminiumLookAndFeel());
+      
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

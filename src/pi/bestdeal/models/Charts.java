@@ -53,15 +53,28 @@ public class Charts extends JPanel
     public XYSeriesCollection createDataset(String DateDebut,String DateFin,int idDeal) {
         XYSeries series = new XYSeries("évolution des consultations");
         ChartDAO aO = ChartDAO.getInstance();
-        for (int a : aO.daysvalues(DateDebut, DateFin, idDeal)) {
+        for (int a : aO.daysvaluesConsultation(DateDebut, DateFin, idDeal)) {
 
-            series.add(aO.daysvalues(DateDebut, DateFin, idDeal).indexOf(a), a);
+            series.add(aO.daysvaluesConsultation(DateDebut, DateFin, idDeal).indexOf(a), a);
         }
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
         return dataset;
 
     }
+    public XYSeriesCollection createDatasetRes(String DateDebut,String DateFin,int idDeal) {
+        XYSeries series = new XYSeries("évolution des consultations");
+        ChartDAO aO = ChartDAO.getInstance();
+        for (int a : aO.daysvaluesConsultation(DateDebut, DateFin, idDeal)) {
+
+            series.add(aO.daysvaluesConsultation(DateDebut, DateFin, idDeal).indexOf(a), a);
+        }
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series);
+        return dataset;
+
+    }
+   
     public void XYChart (XYSeriesCollection mydataset)
     {
          JFreeChart chart = ChartFactory.createXYLineChart(
