@@ -6,6 +6,7 @@
 
 package pi.bestdeal.dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -83,4 +84,31 @@ public class ClientDAO
         }
         return clientListe;
    }
+   public int insertClient(Client client) {
+        int a = 0;
+        String date="";
+        String requete = "insert into client (nom, prenom, password, Telephone, email,listedechoix, CIN, datenaissance, sexe, nbrSignalisation) values (?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
+            ps.setString(1, client.getNom());
+            ps.setString(2, client.getPrenom());
+            ps.setString(3, client.getPassword());
+            ps.setString(4, client.getTelephone());
+            ps.setString(5, client.getEmail());
+            ps.setString(6, client.getListedechoix());
+            ps.setInt(7, client.getCIN());
+            date=client.getDatenaissance().toString();
+            ps.setDate(8, (Date) client.getDatenaissance());
+            ps.setBoolean(9, client.getSexe());
+            ps.setInt(10, client.getNbrSignalisation());
+          
+            a = ps.executeUpdate();
+            System.out.println("Ajout effectuée avec succès");
+        } catch (SQLException ex) {
+            //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("erreur lors de l'insertion " + ex.getMessage());
+        }
+        return a;
+    }
+
 }
