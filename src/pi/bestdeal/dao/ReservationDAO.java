@@ -28,7 +28,7 @@ public class ReservationDAO {
     }
     public int reservationCounterByGender (Boolean gender,int idDeal){
         int rs=0;
-    String sqlrequest="SELECT count(pi_dev.reservation.idReservation) as compteur FROM pi_dev.reservation,pi_dev.Deal where pi_dev.reservation.IdDeal=pi_dev.Deal.idDeal and pi_dev.Deal.idDeal=? and pi_dev.reservation.dateRerservation between ? and ?;";
+    String sqlrequest="SELECT count( reservation.idClient) as reservation FROM pi_dev.reservation,pi_dev.client where client.idClient=reservation.idClient and client.sexe=? and idDeal=?";
  try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
             ps.setBoolean(1, gender);
@@ -37,7 +37,7 @@ public class ReservationDAO {
            
             while (result.next())
             {
-                rs=result.getInt("compteur");
+                rs=result.getInt("reservation");
             }
             
         } catch (SQLException ex) {

@@ -6,7 +6,11 @@
 package pi.bestdeal.gui;
 
 import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
-import com.jtattoo.plaf.texture.TextureLookAndFeel;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +22,7 @@ import javax.swing.table.TableModel;
 import javax.swing.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -35,6 +40,7 @@ import pi.bestdeal.models.Mail;
 import pi.bestdeal.dao.ClientDAO;
 import pi.bestdeal.dao.ConsultationDAO;
 import pi.bestdeal.dao.MessageDAO;
+import pi.bestdeal.dao.ReservationDAO;
 import pi.bestdeal.entities.Client;
 import pi.bestdeal.entities.ClientMail;
 import pi.bestdeal.models.Charts;
@@ -60,7 +66,6 @@ public class InterfacePrincipale extends javax.swing.JFrame {
      */
     public InterfacePrincipale() {
 
-       
         initComponents();
         jTable1.removeColumn(jTable1.getColumn("ID"));
         jTable1.removeColumn(jTable1.getColumn("Description"));
@@ -392,7 +397,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
         Deal deal = new Deal();
 
-        int result = JOptionPane.showConfirmDialog(null, panajout, "Test",
+        int result = JOptionPane.showConfirmDialog(null, panajout, "Ajout d'un Nouveau Deal",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             deal.setTitreDeal_Deal(panajout.txtTitre.getText());
@@ -413,6 +418,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
             java.util.Date d2 = panajout.jdateFin.getCalendar().getTime();
             java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
+            if(d1.after(d2))
+                JOptionPane.showMessageDialog(null, "La date de Début ne peut pas étre après la date de Fin");
+            else{
             deal.setDateDebutDeal_Deal(sqlDate);
             deal.setDateFinDeal_Deal(sqlDate2);
             deal.setIdVendeur_Deal(vendeur.getIdVendeur());
@@ -420,8 +428,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
             dealdao.insertDeal(deal);
 
-            // ((DealTableModel)tableModel).add(deal);
-            JOptionPane.showMessageDialog(null, "Ajout terminé");
+            JOptionPane.showMessageDialog(null, "Ajout terminé");}
             DealTableModel mymodel = new DealTableModel(list.displayDeal());
             jTable1.setModel(mymodel);
             jTable1.removeColumn(jTable1.getColumn("ID"));
@@ -431,9 +438,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             jTable1.removeColumn(jTable1.getColumn("Statut"));
             jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
             jTable1.removeColumn(jTable1.getColumn("Vendeur"));
-
-            jTable1.getColumnModel().setColumnMargin(20);
-            jTable1.setRowSelectionInterval(0, 0);
+            if(!list.displayDeal().isEmpty()){
+            jTable1.setRowSelectionInterval(0, 0);}
 
         } else {
             System.out.println("Cancelled");
@@ -471,8 +477,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         if (abc.getEtatDeal_Deal().toString().equals("Comming")) {
             modaj.jComboBox1.setSelectedIndex(2);
         }
-        // "High-Tech", "Bricolage", "Bijouterie", "Vacances&Sorties", "Beauté", "Accessoires&Vétements", "Divers"
-        //
+       
         if (abc.getCategorie_Deal().toString().equalsIgnoreCase("High-Tech")) {
             modaj.ComboCategorie.setSelectedIndex(0);
         }
@@ -541,7 +546,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
                 jTable1.removeColumn(jTable1.getColumn("Vendeur"));
                 jTable1.getColumnModel().setColumnMargin(20);
+                if(!list.displayDeal().isEmpty()){
                 jTable1.setRowSelectionInterval(0, 0);
+                }
             }
         } else {
             System.out.println("Cancelled");
@@ -694,111 +701,200 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         /* JOptionPane.showMessageDialog(null, chStat, "Choisir",
          JOptionPane.OK_CANCEL_OPTION);*/
         Object[] options = {"BACK", "NEXT"};
-     int a=  JOptionPane.showOptionDialog(null, chStat, "",
+        int a = JOptionPane.showOptionDialog(null, chStat, "",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
                 null, options, options[0]);
-     int b =0;
-     if(chStat.jRadiosexe.isSelected()&&chStat.jRadioconsult.isSelected())
-         b=0;
-     if(chStat.jRadiosexe.isSelected()&&chStat.jRadiores.isSelected())
-         b=1;
-     if(chStat.jRadiooperation.isSelected()&&chStat.jRadioconsult.isSelected())
-         b=2;
-     if(chStat.jRadiooperation.isSelected()&&chStat.jRadiores.isSelected())
-         b=3;
-     if(a==1&&(b==2)){
-         chStat.setVisible(false);
-           Object[] options2 = {"Annuler", "Afficher la Statistique"};
-     int c=  JOptionPane.showOptionDialog(null, chStat2, "",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
-                null, options2, options[0]);
-     if(c==1){
-         java.util.Date d1 = chStat2.jDateDebut.getCalendar().getTime();
-            java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
-            java.util.Date d2 = chStat2.jDatefin.getCalendar().getTime();
-            java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
-           Charts charts = new Charts();
-      //     JFreeChart chrt = ChartFactory.createXYStepAreaChart(null, null, null, null, PlotOrientation.HORIZONTAL, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled)
-          XYSeriesCollection dataxy =  charts.createDataset(sqlDate.toString(), sqlDate2.toString(), idd);
-           JFreeChart chart = ChartFactory.createXYStepAreaChart(
-                "Evolution des Consultation par rapport au temps", // Title
-                "Jours", // x-axis Label
-                "Nombre des Consultations", // y-axis Label
-                dataxy, // Dataset
-                PlotOrientation.VERTICAL, // Plot Orientation
-                
-                true, // Show Legend
-                true, // Use tooltips
-                false // Configure chart to generate URLs?
-        );
-           XYItemRenderer rend = chart.getXYPlot().getRenderer();
-       
-        ChartPanel crepart = new ChartPanel(chart);
-        Plot plot = chart.getPlot();
-        
-         JPanel jpan = new JPanel();
-         JButton button = new JButton("Imprimer");
-        
-         jpan.add(crepart);
-           JOptionPane.showConfirmDialog(null, jpan, "Test",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-     }
-     }
-     if(a==1&&(b==3))
-     {
-           Object[] options2 = {"Annuler", "Afficher la Statistique"};
-     int c=  JOptionPane.showOptionDialog(null, chStat2, "",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
-                null, options2, options[0]);
-     if(c==1){
-         java.util.Date d1 = chStat2.jDateDebut.getCalendar().getTime();
-            java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
-            java.util.Date d2 = chStat2.jDatefin.getCalendar().getTime();
-            java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
-           Charts charts = new Charts();
-      //     JFreeChart chrt = ChartFactory.createXYStepAreaChart(null, null, null, null, PlotOrientation.HORIZONTAL, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled)
-          XYSeriesCollection dataxy =  charts.createDataset(sqlDate.toString(), sqlDate2.toString(), idd);
-           JFreeChart chart = ChartFactory.createXYStepAreaChart(
-                "Evolution des Consultation par rapport au temps", // Title
-                "Jours", // x-axis Label
-                "Nombre des Consultations", // y-axis Label
-                dataxy, // Dataset
-                PlotOrientation.VERTICAL, // Plot Orientation
-                
-                true, // Show Legend
-                true, // Use tooltips
-                false // Configure chart to generate URLs?
-        );
-           XYItemRenderer rend = chart.getXYPlot().getRenderer();
-       
-        ChartPanel crepart = new ChartPanel(chart);
-        Plot plot = chart.getPlot();
-        
-         JPanel jpan = new JPanel();
-         JButton button = new JButton("Imprimer");
-        
-         jpan.add(crepart);
-           JOptionPane.showConfirmDialog(null, jpan, "Test",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-     }
-         
-         
-          ConsultationDAO cdao=ConsultationDAO.getInstance();
-        DefaultPieDataset union = new DefaultPieDataset();
-          union.setValue("Homme", cdao.consultationCounterByGender(false,idd));
-          union.setValue("Femme", cdao.consultationCounterByGender(true,idd));
-        
-        JFreeChart repart = 
-            ChartFactory.createPieChart3D("Répartition par personne",
-            union,true, true, false);
-        ChartPanel crepart = new ChartPanel(repart);
-        Plot plot = repart.getPlot();
-        JPanel jpan = new JPanel();
-        jpan.add(crepart);
-       JOptionPane.showConfirmDialog(null, jpan, "Test",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-     
-     }
+        int b = 0;
+        if (chStat.jRadiosexe.isSelected() && chStat.jRadioconsult.isSelected()) {
+            b = 0;
+        }
+        if (chStat.jRadiosexe.isSelected() && chStat.jRadiores.isSelected()) {
+            b = 1;
+        }
+        if (chStat.jRadiooperation.isSelected() && chStat.jRadioconsult.isSelected()) {
+            b = 2;
+        }
+        if (chStat.jRadiooperation.isSelected() && chStat.jRadiores.isSelected()) {
+            b = 3;
+        }
+        if (a == 1 && b == 2) {
+            chStat.setVisible(false);
+            Object[] options2 = {"Annuler", "Afficher la Statistique"};
+            int c = JOptionPane.showOptionDialog(null, chStat2, "",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options2, options[0]);
+            if (c == 1) {
+                java.util.Date d1 = chStat2.jDateDebut.getCalendar().getTime();
+                java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
+                java.util.Date d2 = chStat2.jDatefin.getCalendar().getTime();
+                java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
+                Charts charts = new Charts();
+                //     JFreeChart chrt = ChartFactory.createXYStepAreaChart(null, null, null, null, PlotOrientation.HORIZONTAL, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled)
+                XYSeriesCollection dataxy = charts.createDataset(sqlDate.toString(), sqlDate2.toString(), idd);
+                final JFreeChart chart = ChartFactory.createXYLineChart(
+                        "Evolution des Consultation par rapport au temps", // Title
+                        "Jours", // x-axis Label
+                        "Nombre des Consultations", // y-axis Label
+                        dataxy, // Dataset
+                        PlotOrientation.VERTICAL, // Plot Orientation
+
+                        true, // Show Legend
+                        true, // Use tooltips
+                        false // Configure chart to generate URLs?
+                );
+                XYItemRenderer rend = chart.getXYPlot().getRenderer();
+
+                ChartPanel crepart = new ChartPanel(chart);
+                Plot plot = chart.getPlot();
+
+                JPanel jpan = new JPanel();
+                JButton button = new JButton("Sauvgarder");
+                button.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            ChartUtilities.saveChartAsPNG(new File("C:\\Games\\LinesConsultation.png"), chart, 800, 600);
+                            File f = new File("C:\\Games\\LinesConsultation.png");
+                            if (f.exists() && !f.isDirectory()) {
+                                JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+
+                jpan.add(crepart);
+                jpan.add(button);
+                JOptionPane.showConfirmDialog(null, jpan, "Test",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            }
+        }
+        if (a == 1 && (b == 3)) {
+            Object[] options2 = {"Annuler", "Afficher la Statistique"};
+            int c = JOptionPane.showOptionDialog(null, chStat2, "",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options2, options[0]);
+            if (c == 1) {
+                java.util.Date d1 = chStat2.jDateDebut.getCalendar().getTime();
+                java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
+                java.util.Date d2 = chStat2.jDatefin.getCalendar().getTime();
+                java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
+                Charts charts = new Charts();
+                //     JFreeChart chrt = ChartFactory.createXYStepAreaChart(null, null, null, null, PlotOrientation.HORIZONTAL, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled)
+                XYSeriesCollection dataxy = charts.createDatasetRes(sqlDate.toString(), sqlDate2.toString(), idd);
+                final JFreeChart chart = ChartFactory.createXYLineChart("Evolution des Consultation par rapport au temps",
+                        "Jours",
+                        "Nombre des Reservations",
+                        dataxy,
+                        PlotOrientation.VERTICAL,
+                        true,
+                        true,
+                        false);
+                XYItemRenderer rend = chart.getXYPlot().getRenderer();
+
+                ChartPanel crepart = new ChartPanel(chart);
+                Plot plot = chart.getPlot();
+
+                JPanel jpan = new JPanel();
+                jpan.setLayout(new FlowLayout(FlowLayout.LEADING));
+                JButton button = new JButton();
+
+                button.setText("Sauvgarder");
+                button.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            ChartUtilities.saveChartAsPNG(new File("C:\\Games\\LinesReservation.png"), chart, 800, 600);
+                            File f = new File("C:\\Games\\LinesReservation.png");
+                            if (f.exists() && !f.isDirectory()) {
+                                JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+
+                jpan.add(crepart);
+                jpan.add(button);
+                JOptionPane.showConfirmDialog(null, jpan, "Test",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            }
+
+        }
+        if (a == 1 && b == 0) {
+            ConsultationDAO cdao = ConsultationDAO.getInstance();
+            DefaultPieDataset union = new DefaultPieDataset();
+            union.setValue("Homme", cdao.consultationCounterByGender(false, idd));
+            union.setValue("Femme", cdao.consultationCounterByGender(true, idd));
+
+            final JFreeChart repart
+                    = ChartFactory.createPieChart3D("Répartition par personne",
+                            union, true, true, false);
+            ChartPanel crepart = new ChartPanel(repart);
+            Plot plot = repart.getPlot();
+            JPanel jpan = new JPanel();
+            JButton button = new JButton("Sauvgarder");
+            button.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        ChartUtilities.saveChartAsPNG(new File("C:\\Games\\PieConsultation.png"), repart, 800, 600);
+                        File f = new File("C:\\Games\\PieConsultation.png");
+                        if (f.exists() && !f.isDirectory()) {
+                            JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+            jpan.add(crepart);
+            jpan.add(button);
+            JOptionPane.showConfirmDialog(null, jpan, "",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        }
+        if (a == 1 && b == 1) {
+            DefaultPieDataset union = new DefaultPieDataset();
+            ReservationDAO dAO = ReservationDAO.getInstance();
+            union.setValue("Homme", dAO.reservationCounterByGender(false, idd));
+            union.setValue("Femme", dAO.reservationCounterByGender(true, idd));
+
+            final JFreeChart repart
+                    = ChartFactory.createPieChart3D("Répartition par personne",
+                            union, true, true, false);
+            ChartPanel crepart = new ChartPanel(repart);
+            Plot plot = repart.getPlot();
+            JPanel jpan = new JPanel();
+            JButton button = new JButton("Sauvgarder");
+            button.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        ChartUtilities.saveChartAsPNG(new File("C:\\Games\\PieReservation.png"), repart, 800, 600);
+                        File f = new File("C:\\Games\\PieReservation.png");
+                        if (f.exists() && !f.isDirectory()) {
+                            JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+            jpan.add(crepart);
+            jpan.add(button);
+            JOptionPane.showConfirmDialog(null, jpan, "Test",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -826,9 +922,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InterfacePrincipale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-         try {
+        try {
             UIManager.setLookAndFeel(new AluminiumLookAndFeel());
-      
+
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
         }

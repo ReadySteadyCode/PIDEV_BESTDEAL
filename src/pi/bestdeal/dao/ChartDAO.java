@@ -85,7 +85,7 @@ public class ChartDAO {
            // DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
 
             
-            String sqlrequest = "SELECT count(pi_dev.Consultation.idConsultation) as compteur FROM pi_dev.consultation,pi_dev.Deal where pi_dev.Consultation.IdDeal=pi_dev.Deal.idDeal and pi_dev.Deal.idDeal=? and pi_dev.Consultation.dateCreation between ? and ?;";
+            String sqlrequest = "SELECT count(pi_dev.Reservation.idReservation) as compteur FROM pi_dev.reservation,pi_dev.Deal where pi_dev.reservation.IdDeal=pi_dev.Deal.idDeal and pi_dev.Deal.idDeal=? and pi_dev.reservation.dateRerservation between ? and ?;";
             /* DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
              DateTime dateTime = DateTime.parse(start, fmt);
              DateTime dateTime1 = DateTime.parse(end, fmt);*/

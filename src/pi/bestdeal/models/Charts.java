@@ -63,11 +63,11 @@ public class Charts extends JPanel
 
     }
     public XYSeriesCollection createDatasetRes(String DateDebut,String DateFin,int idDeal) {
-        XYSeries series = new XYSeries("évolution des consultations");
+        XYSeries series = new XYSeries("évolution des Reservations");
         ChartDAO aO = ChartDAO.getInstance();
-        for (int a : aO.daysvaluesConsultation(DateDebut, DateFin, idDeal)) {
+        for (int a : aO.daysvaluesReservation(DateDebut, DateFin, idDeal)) {
 
-            series.add(aO.daysvaluesConsultation(DateDebut, DateFin, idDeal).indexOf(a), a);
+            series.add(aO.daysvaluesReservation(DateDebut, DateFin, idDeal).indexOf(a), a);
         }
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
