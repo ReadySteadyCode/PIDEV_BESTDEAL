@@ -5,18 +5,7 @@
  */
 package pi.bestdeal.gui;
 
-import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
-import com.jtattoo.plaf.aero.AeroLookAndFeel;
-import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
-import com.jtattoo.plaf.bernstein.BernsteinLookAndFeel;
-import com.jtattoo.plaf.fast.FastLookAndFeel;
-import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
-import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
-import com.jtattoo.plaf.luna.LunaLookAndFeel;
-import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
-import com.jtattoo.plaf.mint.MintLookAndFeel;
 import com.jtattoo.plaf.noire.NoireLookAndFeel;
-import com.sun.java.swing.plaf.motif.MotifLookAndFeel;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,8 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.TableModel;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicLookAndFeel;
-import javax.swing.plaf.metal.MetalLookAndFeel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
@@ -89,8 +76,17 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jTable1.removeColumn(jTable1.getColumn("Statut"));
         jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
         jTable1.removeColumn(jTable1.getColumn("Vendeur"));
-        jTable1.getColumnModel().setColumnMargin(20);
-        if (jTable1.getModel().getRowCount() != 0) {
+        jTable3.removeColumn(jTable3.getColumn("ID"));
+        jTable3.removeColumn(jTable3.getColumn("Description"));
+        jTable3.removeColumn(jTable3.getColumn("Achat Actuel"));
+        jTable3.removeColumn(jTable3.getColumn("Etat"));
+        jTable3.removeColumn(jTable3.getColumn("Statut"));
+        jTable3.removeColumn(jTable3.getColumn("Nombre d'Affichage"));
+        jTable3.removeColumn(jTable3.getColumn("Vendeur"));
+        if (jTable3.getModel().getRowCount() != 0) {
+            jTable3.setRowSelectionInterval(0, 0);
+        }
+         if (jTable1.getModel().getRowCount() != 0) {
             jTable1.setRowSelectionInterval(0, 0);
         }
 
@@ -640,7 +636,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
         jTable1.removeColumn(jTable1.getColumn("Vendeur"));
 
-        jTable1.getColumnModel().setColumnMargin(20);
+       
         jTable1.setRowSelectionInterval(0, 0);
     }//GEN-LAST:event_Search_TextFieldKeyReleased
 

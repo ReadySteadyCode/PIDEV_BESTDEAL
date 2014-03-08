@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import pi.bestdeal.entities.ImageDeal;
 import pi.bestdeal.utils.MySQLConnection;
-import sun.security.jca.GetInstance;
+
 
 /**
  *
