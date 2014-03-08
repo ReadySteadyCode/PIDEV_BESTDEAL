@@ -10,11 +10,13 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -707,6 +709,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 //        }
 //      
        // add.image.setIcon(null);
+     
         
        }else{ System.out.println("aucune image trouvée");
        affichage.jLabel8.setText("aucune image trouvée");
