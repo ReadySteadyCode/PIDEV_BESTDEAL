@@ -52,10 +52,12 @@ import pi.bestdeal.models.DisplayClientTableModel;
 import pi.bestdeal.models.Mail;
 import pi.bestdeal.dao.ClientDAO;
 import pi.bestdeal.dao.ConsultationDAO;
+import pi.bestdeal.dao.ImageDAO;
 import pi.bestdeal.dao.MessageDAO;
 import pi.bestdeal.dao.ReservationDAO;
 import pi.bestdeal.entities.Client;
 import pi.bestdeal.entities.ClientMail;
+import pi.bestdeal.entities.ImageDeal;
 import pi.bestdeal.models.Charts;
 
 /**
@@ -645,6 +647,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private void Display_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Display_ButtonActionPerformed
         DealDAO dealdao = DealDAO.getInstance();
         PanelAffichage panneauAffichage = new PanelAffichage();
+        Affichage affichage = new Affichage();                
         Deal abc = new Deal();
         Deal deal = new Deal();
         int idd = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
@@ -652,27 +655,68 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         for (Deal a : listdeal) {
             abc = a;
         }
-        panneauAffichage.txtTitre.setText(abc.getTitreDeal_Deal());
-        panneauAffichage.txtDesc.setText(abc.getDescDeal_Deal());
-        panneauAffichage.txtPrix.setText(abc.getPrixDeal_Deal().toString());
-        panneauAffichage.txtValidation.setText(String.valueOf(abc.getNbrAchatValidation()));
-        panneauAffichage.jdateDebut.setDate(abc.getDateDebutDeal_Deal());
-        panneauAffichage.jdateFin.setDate(abc.getDateFinDeal_Deal());
-        panneauAffichage.txtVendeurAffichage.setText(null);
+        
+        affichage.txtTitre.setText(abc.getTitreDeal_Deal());
+        affichage.txtDesc.setText(abc.getDescDeal_Deal());
+        affichage.txtPrix.setText(abc.getPrixDeal_Deal().toString());
+        affichage.txtValidation.setText(String.valueOf(abc.getNbrAchatValidation()));
+        affichage.jdateDebut.setDate(abc.getDateDebutDeal_Deal());
+        affichage.jdateFin.setDate(abc.getDateFinDeal_Deal());
+        affichage.txtVendeurAffichage.setText(null);
         if (abc.isStatutDeal() == true) {
-            panneauAffichage.txtStatutAffichage.setText("Deal Confirmé");
+            affichage.txtStatutAffichage.setText("Deal Confirmé");
         } else {
-            panneauAffichage.txtStatutAffichage.setText("Deal non Confirmé");
+            affichage.txtStatutAffichage.setText("Deal non Confirmé");
         }
         Vendeur vendeur = new Vendeur();
         VendeurDAO daov = VendeurDAO.getInstance();
         int idv = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
-        panneauAffichage.txtVendeurAffichage.setText(daov.displayvendeurByID(idv).getNomCommercial());
-        panneauAffichage.txtEtat.setText(abc.getEtatDeal_Deal());
-        panneauAffichage.txtCategorie.setText(abc.getCategorie_Deal());
-        panneauAffichage.txtAffichage.setText(String.valueOf(abc.getNbrAffichage_Deal()));
-        panneauAffichage.txtAchatActuel.setText(String.valueOf(abc.getNbrAchatActuelDeal_Deal()));
-        JOptionPane.showMessageDialog(null, panneauAffichage, "Affichage",
+        affichage.txtVendeurAffichage.setText(daov.displayvendeurByID(idv).getNomCommercial());
+        affichage.txtEtat.setText(abc.getEtatDeal_Deal());
+        affichage.txtCategorie.setText(abc.getCategorie_Deal());
+        affichage.txtAffichage.setText(String.valueOf(abc.getNbrAffichage_Deal()));
+        affichage.txtAchatActuel.setText(String.valueOf(abc.getNbrAchatActuelDeal_Deal()));
+         ImageDeal img=new  ImageDeal();
+       
+        
+        
+        ImageDAO im= new ImageDAO();
+        Deal dea=new Deal();
+        
+       int x=(int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
+       System.out.println(x);
+      System.out.println(jTable1.getSelectedRow());
+       affichage.a=x;
+      //  int id=jTable1.get
+            //
+       if(im.DisplayAllImage(x).size()>0)
+       {
+      img=im.DisplayAllImage(x).get(0);
+      ImageIcon icon=new ImageIcon(img.getImage());
+      
+      affichage.jLabel8.setIcon(icon);
+     // panneauAffichage.image.setIcon(icon);
+     // add.jButton3.setEnabled(false);
+  //    JOptionPane.showOptionDialog(null, affichage, "Images deal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null, null, null);
+//        try {
+//            FileOutputStream file=new FileOutputStream("C:\\Android\\oumayma.jpg");
+//            try {
+//                file.write(img.getImage());
+//                file.close();
+//            } catch (IOException ex) {
+//                Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//      
+       // add.image.setIcon(null);
+        
+       }else{ System.out.println("aucune image trouvée");
+       affichage.jLabel8.setText("aucune image trouvée");
+       }
+
+        JOptionPane.showMessageDialog(null, affichage, "Affichage",
                 JOptionPane.YES_OPTION);
 
     }//GEN-LAST:event_Display_ButtonActionPerformed
