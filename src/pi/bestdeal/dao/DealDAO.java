@@ -42,7 +42,7 @@ public class DealDAO {
      * @return int : 0 si un prblème survient, 1 si la modification s'effectue.
      */
     public int updateDeal(Deal deal) {
-        String requete = "update deal set titreDeal=?, descDeal=?, prixDeal=?, nbrachatactuel=?, nbrAchatValidation=?,etatDeal=?, StatutDeal=?, dateDebut=?, dateFin=?, nbrAffichage=?, idVendeur=?, categorie=? where idDeal=?";
+        String requete = "update deal set titreDeal=?, descDeal=?, prixDeal=?, nbrachatactuel=?, nbrAchatValidation=?,etatDeal=?, StatutDeal=?, dateDebut=?, dateFin=?, nbrAffichage=?, idVendeur=?, categorie=? where idDeal=?;";
         int a = 0;
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(requete);
@@ -57,8 +57,9 @@ public class DealDAO {
             ps.setDate(9, (Date) deal.getDateFinDeal_Deal());
             ps.setInt(10, deal.getNbrAffichage_Deal());
             ps.setInt(11, deal.getIdVendeur_Deal());
-            ps.setInt(12, deal.getIdDeal_Deal());
-            ps.setString(13, deal.getCategorie_Deal());
+            ps.setString(12, deal.getCategorie_Deal());
+            ps.setInt(13, deal.getIdDeal_Deal());
+            
             a = ps.executeUpdate();
             System.out.println("Mise à jour effectuée avec succès");
         } catch (SQLException ex) {
