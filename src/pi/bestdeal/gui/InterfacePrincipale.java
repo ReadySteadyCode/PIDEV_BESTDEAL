@@ -26,6 +26,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import pi.bestdeal.models.ClientTableModel;
 import pi.bestdeal.dao.DealDAO;
 import pi.bestdeal.dao.VendeurDAO;
@@ -113,20 +114,17 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        erreur = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         Search_TextField1 = new javax.swing.JTextPane();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         Search_TextField2 = new javax.swing.JTextPane();
         jPanel4 = new javax.swing.JPanel();
@@ -198,27 +196,13 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-
-        jButton4.setText("Ajouter image deal");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("Afficher images deal");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout Client_PanelLayout = new javax.swing.GroupLayout(Client_Panel);
         Client_Panel.setLayout(Client_PanelLayout);
@@ -240,13 +224,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                         .addComponent(Delete_Button)
                         .addGap(40, 40, 40)
                         .addComponent(Display_Button)
-                        .addGap(39, 39, 39))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Client_PanelLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)))
+                        .addGap(39, 39, 39)))
                 .addContainerGap())
         );
         Client_PanelLayout.setVerticalGroup(
@@ -256,11 +234,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addGroup(Client_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(Client_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Add_Button)
                     .addComponent(Update_Button)
@@ -273,8 +247,6 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
         jTable2.setModel(clientmodel);
         jScrollPane3.setViewportView(jTable2);
-
-        erreur.setForeground(new java.awt.Color(204, 0, 0));
 
         jButton3.setText("Supprimer");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +268,6 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -308,12 +279,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(169, 169, 169)
-                .addComponent(erreur, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,7 +288,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                 .addGap(210, 210, 210)
                 .addComponent(jButton3))
         );
@@ -336,9 +303,13 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable3);
 
-        jButton4.setText("Statistique");
+        jPanel3.add(jScrollPane5);
 
-        jButton5.setText("Rapport");
+        jButton6.setText("Statistique");
+        jPanel3.add(jButton6);
+
+        jButton7.setText("Rapport");
+        jPanel3.add(jButton7);
 
         Search_TextField2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -347,38 +318,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(Search_TextField2);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addGap(98, 98, 98)
-                .addComponent(jButton4)
-                .addGap(138, 138, 138))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addGap(50, 50, 50))
-        );
+        jPanel3.add(jScrollPane7);
 
         jTabbedPane1.addTab("Générer les Rapports", jPanel3);
 
@@ -401,7 +341,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(292, 292, 292)
@@ -444,6 +384,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
         int result = JOptionPane.showConfirmDialog(null, panajout, "Test",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        
         if (result == JOptionPane.OK_OPTION) {
             deal.setTitreDeal_Deal(panajout.txtTitre.getText());
             Vendeur vendeur = new Vendeur();
@@ -704,6 +645,48 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         panneauAffichage.txtAchatActuel.setText(String.valueOf(abc.getNbrAchatActuelDeal_Deal()));
         JOptionPane.showMessageDialog(null, panneauAffichage, "Affichage",
                 JOptionPane.YES_OPTION);
+        ImageDeal img=new  ImageDeal();
+       
+        
+        AddImage add=new AddImage();
+        ImageDAO im= new ImageDAO();
+        Deal dea=new Deal();
+        
+       x=(int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
+       System.out.println(x);
+      System.out.println(jTable1.getSelectedRow());
+       panneauAffichage.a=x;
+      
+       
+        
+            
+        
+                
+      //  int id=jTable1.get
+            //
+       if(im.DisplayAllImage(x).size()>0)
+       {
+      img=im.DisplayAllImage(x).get(0);
+      ImageIcon icon=new ImageIcon(img.getImage());
+      panneauAffichage.label123.setIcon(icon);
+     // panneauAffichage.image.setIcon(icon);
+      add.jButton3.setEnabled(false);
+      JOptionPane.showOptionDialog(null, add, "Images deal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null, null, null);
+//        try {
+//            FileOutputStream file=new FileOutputStream("C:\\Android\\oumayma.jpg");
+//            try {
+//                file.write(img.getImage());
+//                file.close();
+//            } catch (IOException ex) {
+//                Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//      
+       // add.image.setIcon(null);
+        
+       }else System.out.println("aucune image trouvée");
 
     }//GEN-LAST:event_Display_ButtonActionPerformed
 
@@ -723,7 +706,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         if (jTable2.getSelectedRow()==-1) {
-            erreur.setText("Veuillez choisir un client à supprimer");
+           // erreur.setText("Veuillez choisir un client à supprimer");
             
         }else  
         {int result = JOptionPane.showConfirmDialog(null, "Voulez Vous Supprimer", null, JOptionPane.OK_CANCEL_OPTION);
@@ -740,73 +723,6 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        AddImage img=new  AddImage();
-        final JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showOpenDialog(null);
-        String file=fc.getSelectedFile().toString();
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(file);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        ImageDeal imgdeal=new ImageDeal();
-        Path path=Paths.get(file);
-        try {
-            imgdeal.setImage(Files.readAllBytes(path));
-            System.out.println( imgdeal.getImage());
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        imgdeal.setIdDeal(1);
-        ImageDAO im= new ImageDAO();
-        im.InsertImage(imgdeal);
-        
-       
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        ImageDeal img=new  ImageDeal();
-       
-        
-        AddImage add=new AddImage();
-        ImageDAO im= new ImageDAO();
-        Deal deal=new Deal();
-       x=(int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
-       add.a=x;
-      
-       System.out.println(x);
-       
-                
-      //  int id=jTable1.get
-        //
-      img=im.DisplayAllImage(x).get(0);
-      ImageIcon icon=new ImageIcon(img.getImage());
-      add.image.setIcon(icon);
-      add.jButton3.setEnabled(false);
-      JOptionPane.showOptionDialog(null, add, "Images deal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null, null, null);
-//        try {
-//            FileOutputStream file=new FileOutputStream("C:\\Android\\oumayma.jpg");
-//            try {
-//                file.write(img.getImage());
-//                file.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//      
-       // add.image.setIcon(null);
-        
-        
-    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -855,12 +771,11 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private javax.swing.JTextPane Search_TextField2;
     private javax.swing.JButton Update_Button;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel erreur;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

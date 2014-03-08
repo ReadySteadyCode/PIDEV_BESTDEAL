@@ -6,9 +6,20 @@
 package pi.bestdeal.gui;
 
 import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import pi.bestdeal.dao.ImageDAO;
 import pi.bestdeal.dao.VendeurDAO;
+import pi.bestdeal.entities.ImageDeal;
 import pi.bestdeal.entities.Vendeur;
 
 /**
@@ -59,6 +70,8 @@ public class Panel_Ajouter extends javax.swing.JPanel {
         jList1 = new javax.swing.JList();
         jLabel8 = new javax.swing.JLabel();
         ComboCategorie = new javax.swing.JComboBox();
+        ajoutImage = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
@@ -112,10 +125,24 @@ public class Panel_Ajouter extends javax.swing.JPanel {
 
         ComboCategorie.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "High-Tech", "Bricolage", "Bijouterie", "Vacances&Sorties", "Beauté", "Accessoires&Vétements", "Divers" }));
 
+        ajoutImage.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        ajoutImage.setText("Images");
+
+        jButton1.setText("parcourir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(119, 119, 119))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,23 +153,26 @@ public class Panel_Ajouter extends javax.swing.JPanel {
                     .addComponent(jLabel6)
                     .addComponent(jLabel9)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(ajoutImage))
                 .addGap(133, 133, 133)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ComboCategorie, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jdateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jdateDebut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtTitre, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtPrix, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtValidation, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane2)))
-                .addContainerGap(29, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(119, 119, 119))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ComboCategorie, 0, 266, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jdateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jdateDebut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtTitre, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtPrix, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtValidation, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane2)))
+                        .addContainerGap(20, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +214,11 @@ public class Panel_Ajouter extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(ajoutImage))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -214,9 +248,39 @@ public class Panel_Ajouter extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtValidationKeyTyped
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+             AddImage img=new  AddImage();
+        final JFileChooser fc = new JFileChooser();
+        int returnVal = fc.showOpenDialog(null);
+        String file=fc.getSelectedFile().toString();
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ImageDeal imgdeal=new ImageDeal();
+        Path path=Paths.get(file);
+        try {
+            imgdeal.setImage(Files.readAllBytes(path));
+            System.out.println( imgdeal.getImage());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        imgdeal.setIdDeal(1);
+        ImageDAO im= new ImageDAO();
+        im.InsertImage(imgdeal);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox ComboCategorie;
+    private javax.swing.JLabel ajoutImage;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

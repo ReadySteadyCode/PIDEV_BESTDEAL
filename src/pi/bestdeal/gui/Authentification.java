@@ -144,8 +144,9 @@ public class Authentification extends javax.swing.JFrame {
         InterfacePrincipale inter = new InterfacePrincipale();
         int a = admin.verification(log, mo);
         if (a==1)
-            
+        {  
             inter.setVisible(true);
+        this.setVisible(false);}
         else
             JOptionPane.showMessageDialog(null, "Veuillez Verifier", "Connexion Impossible", JOptionPane.ERROR_MESSAGE);
         
