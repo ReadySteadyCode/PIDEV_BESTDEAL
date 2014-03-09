@@ -11,13 +11,11 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -821,10 +819,19 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         try {
-                            ChartUtilities.saveChartAsPNG(new File("C:\\Games\\LinesConsultation.png"), chart, 800, 600);
-                            File f = new File("C:\\Games\\LinesConsultation.png");
-                            if (f.exists() && !f.isDirectory()) {
-                                JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            JFileChooser chooser = new JFileChooser();
+                            chooser.showSaveDialog(jPanel3);
+                            String path = chooser.getSelectedFile().getPath();
+                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
+                                path=path+".png";
+                            }
+                            File f = new File(path);
+                            ChartUtilities.saveChartAsPNG(new File(path), chart, 800, 600);
+                            
+                            
+                        if (f.exists() && !f.isDirectory()) {
+                            JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            Desktop.getDesktop().open(f);
                             }
                         } catch (IOException ex) {
                             Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
@@ -874,10 +881,19 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         try {
-                            ChartUtilities.saveChartAsPNG(new File("C:\\Games\\LinesReservation.png"), chart, 800, 600);
-                            File f = new File("C:\\Games\\LinesReservation.png");
-                            if (f.exists() && !f.isDirectory()) {
-                                JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                         JFileChooser chooser = new JFileChooser();
+                            chooser.showSaveDialog(jPanel3);
+                            String path = chooser.getSelectedFile().getPath();
+                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
+                                path=path+".png";
+                            }
+                            File f = new File(path);
+                            ChartUtilities.saveChartAsPNG(new File(path), chart, 800, 600);
+                            
+                            
+                        if (f.exists() && !f.isDirectory()) {
+                            JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            Desktop.getDesktop().open(f);
                             }
                         } catch (IOException ex) {
                             Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
@@ -910,10 +926,19 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        ChartUtilities.saveChartAsPNG(new File("C:\\Games\\PieConsultation.png"), repart, 800, 600);
-                        File f = new File("C:\\Games\\PieConsultation.png");
+                    JFileChooser chooser = new JFileChooser();
+                            chooser.showSaveDialog(jPanel3);
+                            String path = chooser.getSelectedFile().getPath();
+                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
+                                path=path+".png";
+                            }
+                            File f = new File(path);
+                            ChartUtilities.saveChartAsPNG(new File(path), repart, 800, 600);
+                            
+                            
                         if (f.exists() && !f.isDirectory()) {
                             JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            Desktop.getDesktop().open(f);
                         }
                     } catch (IOException ex) {
                         Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
@@ -945,10 +970,19 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        ChartUtilities.saveChartAsPNG(new File("C:\\Games\\PieReservation.png"), repart, 800, 600);
-                        File f = new File("C:\\Games\\PieReservation.png");
+                       JFileChooser chooser = new JFileChooser();
+                            chooser.showSaveDialog(jPanel3);
+                            String path = chooser.getSelectedFile().getPath();
+                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
+                                path=path+".png";
+                            }
+                            File f = new File(path);
+                            ChartUtilities.saveChartAsPNG(new File(path), repart, 800, 600);
+                            
+                            
                         if (f.exists() && !f.isDirectory()) {
                             JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            Desktop.getDesktop().open(f);
                         }
                     } catch (IOException ex) {
                         Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
