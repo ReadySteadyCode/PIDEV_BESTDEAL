@@ -992,7 +992,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
          }
          pattern= pattern.replace("\\", "\\"+"\\");
          path=path.replace("\\", "\\"+"\\");
-          System.out.println(pattern+" "+path+" "+idd);
+         
          ReportCreator creator = new ReportCreator();
          int a = creator.CreateReportDeal(pattern, idd, path);
          if (a==1){
