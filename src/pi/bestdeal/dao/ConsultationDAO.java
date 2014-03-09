@@ -8,7 +8,6 @@ package pi.bestdeal.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pi.bestdeal.utils.MySQLConnection;
@@ -27,7 +26,10 @@ public class ConsultationDAO {
         }
         return consultationDAO;
     }
-    
+ /*   public int insertConsultation (int idDeal,int idClient)
+    {
+        
+    }*/
     public int consultationCounterByGender(Boolean gender,int idDeal)
     {
          int rs=0;

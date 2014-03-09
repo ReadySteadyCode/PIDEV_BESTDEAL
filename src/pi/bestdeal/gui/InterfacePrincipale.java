@@ -60,6 +60,7 @@ import pi.bestdeal.utils.ReportCreator;
  * @author Internet
  */
 public class InterfacePrincipale extends javax.swing.JFrame {
+
     public int x;
     public int y;
     DealDAO list = DealDAO.getInstance();
@@ -132,7 +133,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jButton6 = new javax.swing.JButton();
+        StatButton = new javax.swing.JButton();
         ButtonRapport = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         Search_TextField2 = new javax.swing.JTextPane();
@@ -324,8 +325,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable3);
 
-        jButton6.setText("Statistique");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        StatButton.setText("Statistique");
+        StatButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
@@ -362,7 +363,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(ButtonRapport)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6)))
+                        .addComponent(StatButton)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -375,7 +376,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonRapport)
-                    .addComponent(jButton6))
+                    .addComponent(StatButton))
                 .addContainerGap(115, Short.MAX_VALUE))
         );
 
@@ -437,15 +438,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
     private void Add_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_ButtonActionPerformed
 
-         Panel_Ajouter panajout = new Panel_Ajouter();
-       y=(int)jTable1.getModel().getValueAt(jTable1.getRowCount()-1 ,0);
-       panajout.w=y;
+        Panel_Ajouter panajout = new Panel_Ajouter();
+        y = (int) jTable1.getModel().getValueAt(jTable1.getRowCount() - 1, 0);
+        panajout.w = y;
 
         Deal deal = new Deal();
 
         int result = JOptionPane.showConfirmDialog(null, panajout, "Test",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        
+
         if (result == JOptionPane.OK_OPTION) {
             deal.setTitreDeal_Deal(panajout.txtTitre.getText());
             Vendeur vendeur = new Vendeur();
@@ -471,35 +472,33 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             DealDAO dealdao = DealDAO.getInstance();
 
             dealdao.insertDeal(deal);
-            
-            for (int i = 0; i <panajout.fc.getSelectedFiles().length ; i++) {
-                
-            
-           
-            System.out.println(panajout.file[i]);
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(panajout.file[i]);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        ImageDeal imgdeal=new ImageDeal();
-        Path path=Paths.get( panajout.file[i].getAbsolutePath());
-        try {
-            imgdeal.setImage(Files.readAllBytes(path));
-            System.out.println( imgdeal.getImage());
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println();
-        imgdeal.setIdDeal(y+1);
-       // imgdeal.setIdDealImage(1);
-        ImageDAO im= ImageDAO.getInstance();
-        im.InsertImage(imgdeal);
-        System.out.println(imgdeal.getIdDeal());}
+            if( panajout.fc.getSelectedFiles().length!=0){
+            for (int i = 0; i < panajout.fc.getSelectedFiles().length; i++) {
+                //  System.out.println(panajout.file[i]);
+                FileInputStream fis = null;
+                try {
+                    fis = new FileInputStream(panajout.file[i]);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
+                ImageDeal imgdeal = new ImageDeal();
+                Path path = Paths.get(panajout.file[i].getAbsolutePath());
+                try {
+                    imgdeal.setImage(Files.readAllBytes(path));
+            //System.out.println( imgdeal.getImage());
+
+                } catch (IOException ex) {
+                    Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                // System.out.println();
+                imgdeal.setIdDeal(y + 1);
+                // imgdeal.setIdDealImage(1);
+                ImageDAO im = ImageDAO.getInstance();
+                im.InsertImage(imgdeal);
+                System.out.println(imgdeal.getIdDeal());
+            }
+            }
             // ((DealTableModel)tableModel).add(deal);
             JOptionPane.showMessageDialog(null, "Ajout terminé");
             DealTableModel mymodel = new DealTableModel(list.displayDeal());
@@ -514,10 +513,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
             jTable1.getColumnModel().setColumnMargin(20);
             jTable1.setRowSelectionInterval(0, 0);
-             y=mymodel.getRowCount();
-             panajout.w=y;
-             System.out.println("la valeur de y est :"+y+"et "+ panajout.w);
-            
+            y = mymodel.getRowCount();
+            panajout.w = y;
+            System.out.println("la valeur de y est :" + y + "et " + panajout.w);
 
         } else {
             System.out.println("Cancelled");
@@ -747,14 +745,14 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         System.out.println(x);
         System.out.println(jTable1.getSelectedRow());
         affichage.a = x;
-      //  int id=jTable1.get
+        //  int id=jTable1.get
         //
         if (im.DisplayAllImage(x).size() > 0) {
             img = im.DisplayAllImage(x).get(0);
             ImageIcon icon = new ImageIcon(img.getImage());
 
             affichage.jLabel8.setIcon(icon);
-     // panneauAffichage.image.setIcon(icon);
+            // panneauAffichage.image.setIcon(icon);
             // add.jButton3.setEnabled(false);
             //    JOptionPane.showOptionDialog(null, affichage, "Images deal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null, null, null);
 //        try {
@@ -874,16 +872,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                             JFileChooser chooser = new JFileChooser();
                             chooser.showSaveDialog(jPanel3);
                             String path = chooser.getSelectedFile().getPath();
-                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
-                                path=path+".png";
+                            if ((!path.contains("jpg")) || (!path.contains("png")) || (!path.contains("jpeg"))) {
+                                path = path + ".png";
                             }
                             File f = new File(path);
                             ChartUtilities.saveChartAsPNG(new File(path), chart, 800, 600);
-                            
-                            
-                        if (f.exists() && !f.isDirectory()) {
-                            JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
-                            Desktop.getDesktop().open(f);
+
+                            if (f.exists() && !f.isDirectory()) {
+                                JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                                Desktop.getDesktop().open(f);
                             }
                         } catch (IOException ex) {
                             Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
@@ -933,19 +930,18 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         try {
-                         JFileChooser chooser = new JFileChooser();
+                            JFileChooser chooser = new JFileChooser();
                             chooser.showSaveDialog(jPanel3);
                             String path = chooser.getSelectedFile().getPath();
-                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
-                                path=path+".png";
+                            if ((!path.contains("jpg")) || (!path.contains("png")) || (!path.contains("jpeg"))) {
+                                path = path + ".png";
                             }
                             File f = new File(path);
                             ChartUtilities.saveChartAsPNG(new File(path), chart, 800, 600);
-                            
-                            
-                        if (f.exists() && !f.isDirectory()) {
-                            JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
-                            Desktop.getDesktop().open(f);
+
+                            if (f.exists() && !f.isDirectory()) {
+                                JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                                Desktop.getDesktop().open(f);
                             }
                         } catch (IOException ex) {
                             Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
@@ -978,16 +974,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                    JFileChooser chooser = new JFileChooser();
-                            chooser.showSaveDialog(jPanel3);
-                            String path = chooser.getSelectedFile().getPath();
-                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
-                                path=path+".png";
-                            }
-                            File f = new File(path);
-                            ChartUtilities.saveChartAsPNG(new File(path), repart, 800, 600);
-                            
-                            
+                        JFileChooser chooser = new JFileChooser();
+                        chooser.showSaveDialog(jPanel3);
+                        String path = chooser.getSelectedFile().getPath();
+                        if ((!path.contains("jpg")) || (!path.contains("png")) || (!path.contains("jpeg"))) {
+                            path = path + ".png";
+                        }
+                        File f = new File(path);
+                        ChartUtilities.saveChartAsPNG(new File(path), repart, 800, 600);
+
                         if (f.exists() && !f.isDirectory()) {
                             JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
                             Desktop.getDesktop().open(f);
@@ -1022,16 +1017,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                       JFileChooser chooser = new JFileChooser();
-                            chooser.showSaveDialog(jPanel3);
-                            String path = chooser.getSelectedFile().getPath();
-                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
-                                path=path+".png";
-                            }
-                            File f = new File(path);
-                            ChartUtilities.saveChartAsPNG(new File(path), repart, 800, 600);
-                            
-                            
+                        JFileChooser chooser = new JFileChooser();
+                        chooser.showSaveDialog(jPanel3);
+                        String path = chooser.getSelectedFile().getPath();
+                        if ((!path.contains("jpg")) || (!path.contains("png")) || (!path.contains("jpeg"))) {
+                            path = path + ".png";
+                        }
+                        File f = new File(path);
+                        ChartUtilities.saveChartAsPNG(new File(path), repart, 800, 600);
+
                         if (f.exists() && !f.isDirectory()) {
                             JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
                             Desktop.getDesktop().open(f);
@@ -1052,69 +1046,70 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-         // TODO add your handling code here:
-        
-        if (jTable2.getSelectedRow()==-1) {
+        // TODO add your handling code here:
+
+        if (jTable2.getSelectedRow() == -1) {
            // erreur.setText("Veuillez choisir un client à supprimer");
-            
-        }else  
-        {int result = JOptionPane.showConfirmDialog(null, "Voulez Vous Supprimer", null, JOptionPane.OK_CANCEL_OPTION);
-        if (result == JOptionPane.OK_OPTION) {
-        
-        int indice=(int)jTable2.getValueAt(jTable2.getSelectedRow(), jTable2.getSelectedColumn());
-       int a= clinetdao.deleteClient(indice);
-        if (a == 1) {
-                JOptionPane.showMessageDialog(null, "Client Supprimé");
-       
-        DisplayClientTableModel model2=new DisplayClientTableModel(clinetdao.displayClient());
-        jTable2.setModel(model2);
-        }       
-        }
+
+        } else {
+            int result = JOptionPane.showConfirmDialog(null, "Voulez Vous Supprimer", null, JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+
+                int indice = (int) jTable2.getValueAt(jTable2.getSelectedRow(), jTable2.getSelectedColumn());
+                int a = clinetdao.deleteClient(indice);
+                if (a == 1) {
+                    JOptionPane.showMessageDialog(null, "Client Supprimé");
+
+                    DisplayClientTableModel model2 = new DisplayClientTableModel(clinetdao.displayClient());
+                    jTable2.setModel(model2);
+                }
+            }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void ButtonRapportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRapportActionPerformed
-       int idd = (int) jTable3.getModel().getValueAt(jTable3.getSelectedRow(), 0);
+        int idd = (int) jTable3.getModel().getValueAt(jTable3.getSelectedRow(), 0);
         String pattern = null;
         String path;
-       FileNameExtensionFilter filter = new FileNameExtensionFilter( "JASPER Images", "jasper");
-     JFileChooser  chooser = new JFileChooser();
-     chooser.setFileFilter(filter);
-    int returnVal = chooser.showOpenDialog(this);
-    chooser.setMultiSelectionEnabled(false);
-    if(returnVal == JFileChooser.APPROVE_OPTION) {
-      pattern= chooser.getSelectedFile().getPath();
-       }
-    FileNameExtensionFilter filterpath = new FileNameExtensionFilter( "PDF files", "pdf");
-        JFileChooser  chooserpath = new JFileChooser();
-     chooserpath.setFileFilter(filterpath);
-     int returnSave = chooserpath.showSaveDialog(this);
-     if(returnSave == JFileChooser.APPROVE_OPTION) {
-     path= chooserpath.getSelectedFile().getPath();
-        
-         if(!path.contains("pdf")){
-             path = path+".pdf";
-         }
-         pattern= pattern.replace("\\", "\\"+"\\");
-         path=path.replace("\\", "\\"+"\\");
-         
-         ReportCreator creator = new ReportCreator();
-         int a = creator.CreateReportDeal(pattern, idd, path);
-         if (a==1){
-             File file = new File(path.toString());
-         try {
-             Desktop.getDesktop().open(file);
-         } catch (IOException ex) {
-             Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         }
-       }
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JASPER files", "jasper");
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        chooser.setMultiSelectionEnabled(false);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            pattern = chooser.getSelectedFile().getPath();
+        }
+        FileNameExtensionFilter filterpath = new FileNameExtensionFilter("PDF files", "pdf");
+        JFileChooser chooserpath = new JFileChooser();
+        chooserpath.setFileFilter(filterpath);
+        int returnSave = chooserpath.showSaveDialog(this);
+        if (returnSave == JFileChooser.APPROVE_OPTION) {
+            path = chooserpath.getSelectedFile().getPath();
+
+            if (!path.contains("pdf")) {
+                path = path + ".pdf";
+                String a = "\\";
+            }
+            pattern = pattern.replace("\\", "\\" + "\\");
+            path = path.replace("\\", "\\" + "\\");
+
+            ReportCreator creator = new ReportCreator();
+            int a = creator.CreateReportDeal(pattern, idd, path);
+            if (a == 1) {
+                File file = new File(path.toString());
+                try {
+                    Desktop.getDesktop().open(file);
+                } catch (IOException ex) {
+                    Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }//GEN-LAST:event_ButtonRapportActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         this.hide();
-        Espace_Client espace_client=new Espace_Client();
+        Espace_Client espace_client = new Espace_Client();
         espace_client.show();
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -1171,13 +1166,13 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private javax.swing.JTextPane Search_TextField;
     private javax.swing.JTextPane Search_TextField1;
     private javax.swing.JTextPane Search_TextField2;
+    private javax.swing.JButton StatButton;
     private javax.swing.JButton Update_Button;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
