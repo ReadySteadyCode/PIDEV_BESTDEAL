@@ -6,19 +6,23 @@
 package pi.bestdeal.gui;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import pi.bestdeal.dao.DealDAO;
 import pi.bestdeal.dao.ImageDAO;
 import pi.bestdeal.dao.VendeurDAO;
+import pi.bestdeal.entities.Deal;
 import pi.bestdeal.entities.ImageDeal;
 import pi.bestdeal.entities.Vendeur;
 
@@ -27,6 +31,10 @@ import pi.bestdeal.entities.Vendeur;
  * @author Internet
  */
 public class Panel_Ajouter extends javax.swing.JPanel {
+public int w;
+public File[] file=null;
+ public  JFileChooser fc;
+  
 
     /**
      * Creates new form Panel_Ajouter
@@ -35,6 +43,7 @@ public class Panel_Ajouter extends javax.swing.JPanel {
         initComponents();
       DefaultListModel listModel = new DefaultListModel();
         VendeurDAO vendeurdao = VendeurDAO.getInstance();
+       
         for (Vendeur a : vendeurdao.displayVendeur()) {
 
             listModel.addElement(a.getNomCommercial());
@@ -250,29 +259,14 @@ public class Panel_Ajouter extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-             AddImage img=new  AddImage();
-        final JFileChooser fc = new JFileChooser();
+        DealDAO deal=DealDAO.getInstance();
+        List<Deal> list=deal.displayDeal();
+            // AddImage img=new  AddImage();
+     fc = new JFileChooser();
+     fc.setMultiSelectionEnabled(true);
         int returnVal = fc.showOpenDialog(null);
-        String file=fc.getSelectedFile().toString();
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(file);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        file=fc.getSelectedFiles();
         
-        ImageDeal imgdeal=new ImageDeal();
-        Path path=Paths.get(file);
-        try {
-            imgdeal.setImage(Files.readAllBytes(path));
-            System.out.println( imgdeal.getImage());
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        imgdeal.setIdDeal(1);
-        ImageDAO im= new ImageDAO();
-        im.InsertImage(imgdeal);
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

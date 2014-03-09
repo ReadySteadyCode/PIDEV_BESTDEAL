@@ -49,6 +49,7 @@ import sun.misc.IOUtils;
  */
 public class InterfacePrincipale extends javax.swing.JFrame {
     public int x;
+    public int y;
 
     DealDAO list = DealDAO.getInstance();
     List<Deal> deals = list.displayDeal();
@@ -288,8 +289,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                .addGap(210, 210, 210)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jButton3))
         );
 
@@ -379,6 +380,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private void Add_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_ButtonActionPerformed
 
         Panel_Ajouter panajout = new Panel_Ajouter();
+       y=(int)jTable1.getModel().getValueAt(jTable1.getRowCount()-1 ,0);
+       panajout.w=y;
 
         Deal deal = new Deal();
 
@@ -410,6 +413,34 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             DealDAO dealdao = DealDAO.getInstance();
 
             dealdao.insertDeal(deal);
+            
+            for (int i = 0; i <panajout.fc.getSelectedFiles().length ; i++) {
+                
+            
+           
+            System.out.println(panajout.file[i]);
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(panajout.file[i]);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ImageDeal imgdeal=new ImageDeal();
+        Path path=Paths.get( panajout.file[i].getAbsolutePath());
+        try {
+            imgdeal.setImage(Files.readAllBytes(path));
+            System.out.println( imgdeal.getImage());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println();
+        imgdeal.setIdDeal(y+1);
+       // imgdeal.setIdDealImage(1);
+        ImageDAO im= new ImageDAO();
+        im.InsertImage(imgdeal);
+        System.out.println(imgdeal.getIdDeal());}
 
             // ((DealTableModel)tableModel).add(deal);
             JOptionPane.showMessageDialog(null, "Ajout terminé");
@@ -425,6 +456,10 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
             jTable1.getColumnModel().setColumnMargin(20);
             jTable1.setRowSelectionInterval(0, 0);
+             y=mymodel.getRowCount();
+             panajout.w=y;
+             System.out.println("la valeur de y est :"+y+"et "+ panajout.w);
+            
 
         } else {
             System.out.println("Cancelled");
