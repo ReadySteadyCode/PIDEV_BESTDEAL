@@ -1,26 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package pi.bestdeal.entities;
 
 /**
  *
- * @author user
+ * @author Internet
  */
 public class ImageDeal {
     private int idDealImage;
+
+    public ImageDeal() {
+    }
     private int idDeal;
     private byte [] Image;
-
-    public ImageDeal(int idDealImage, int idDeal, byte[] Image) {
-        this.idDealImage = idDealImage;
-        this.idDeal = idDeal;
-        this.Image = Image;
-    }
-  public ImageDeal ()
-  {
-  }
 
     public int getIdDealImage() {
         return idDealImage;
@@ -45,6 +41,4 @@ public class ImageDeal {
     public void setImage(byte[] Image) {
         this.Image = Image;
     }
-  
-    
 }

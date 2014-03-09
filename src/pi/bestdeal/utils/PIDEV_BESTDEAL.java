@@ -38,15 +38,17 @@ public class PIDEV_BESTDEAL {
         {
             System.out.println(a.toString());
         }*/
-        MessageDAO daom= MessageDAO.getInstance();
+    /*    MessageDAO daom= MessageDAO.getInstance();
         for(ClientMail a:daom.displayMessageWithSenderMail()){
             System.out.println(a.toString());
            Date date = new Date();
            Calendar calendar = Calendar.getInstance();
             System.out.println(date);
            // System.out.println(calendar.);
-        }
-        
+        }*/
+        ReportCreator creator = new ReportCreator();
+      //  creator.ss();
+       creator.CreateReportDeal("C:\\Users\\Internet\\Desktop\\rapport\\mondeal.jrxml", 15, "C:\\Users\\Internet\\Desktop\\rapport\\DealDetails.pdf");
     }
     
 }

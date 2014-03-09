@@ -5,28 +5,32 @@
  */
 package pi.bestdeal.gui;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import com.jtattoo.plaf.noire.NoireLookAndFeel;
+import java.awt.Desktop;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JPanel;
 import javax.swing.table.TableModel;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.xy.XYSeriesCollection;
 import pi.bestdeal.models.ClientTableModel;
 import pi.bestdeal.dao.DealDAO;
 import pi.bestdeal.dao.VendeurDAO;
@@ -36,20 +40,21 @@ import pi.bestdeal.models.DealTableModel;
 import pi.bestdeal.models.DisplayClientTableModel;
 import pi.bestdeal.models.Mail;
 import pi.bestdeal.dao.ClientDAO;
+import pi.bestdeal.dao.ConsultationDAO;
 import pi.bestdeal.dao.ImageDAO;
 import pi.bestdeal.dao.MessageDAO;
+import pi.bestdeal.dao.ReservationDAO;
 import pi.bestdeal.entities.Client;
 import pi.bestdeal.entities.ClientMail;
 import pi.bestdeal.entities.ImageDeal;
-import sun.misc.IOUtils;
+import pi.bestdeal.models.Charts;
+import pi.bestdeal.utils.ReportCreator;
 
 /**
  *
  * @author Internet
  */
 public class InterfacePrincipale extends javax.swing.JFrame {
-    public int x;
-    public int y;
 
     DealDAO list = DealDAO.getInstance();
     List<Deal> deals = list.displayDeal();
@@ -66,17 +71,6 @@ public class InterfacePrincipale extends javax.swing.JFrame {
      */
     public InterfacePrincipale() {
 
-        try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
         initComponents();
         jTable1.removeColumn(jTable1.getColumn("ID"));
         jTable1.removeColumn(jTable1.getColumn("Description"));
@@ -85,14 +79,21 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jTable1.removeColumn(jTable1.getColumn("Statut"));
         jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
         jTable1.removeColumn(jTable1.getColumn("Vendeur"));
-        jTable1.getColumnModel().setColumnMargin(20);
-        if(jTable1.getModel().getRowCount()!=0){
-        jTable1.setRowSelectionInterval(0, 0);}
+        jTable3.removeColumn(jTable3.getColumn("ID"));
+        jTable3.removeColumn(jTable3.getColumn("Description"));
+        jTable3.removeColumn(jTable3.getColumn("Achat Actuel"));
+        jTable3.removeColumn(jTable3.getColumn("Etat"));
+        jTable3.removeColumn(jTable3.getColumn("Statut"));
+        jTable3.removeColumn(jTable3.getColumn("Nombre d'Affichage"));
+        jTable3.removeColumn(jTable3.getColumn("Vendeur"));
+        if (jTable3.getModel().getRowCount() != 0) {
+            jTable3.setRowSelectionInterval(0, 0);
+        }
+        if (jTable1.getModel().getRowCount() != 0) {
+            jTable1.setRowSelectionInterval(0, 0);
+        }
 
     }
-    public int getID()
-    {
-    return this.x;}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -124,8 +125,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        ButtonRapport = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         Search_TextField2 = new javax.swing.JTextPane();
         jPanel4 = new javax.swing.JPanel();
@@ -197,7 +198,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -212,12 +213,10 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             .addGroup(Client_PanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Client_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(Client_PanelLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Client_PanelLayout.createSequentialGroup()
+                    .addGroup(Client_PanelLayout.createSequentialGroup()
                         .addComponent(Add_Button)
                         .addGap(47, 47, 47)
                         .addComponent(Update_Button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -225,17 +224,18 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                         .addComponent(Delete_Button)
                         .addGap(40, 40, 40)
                         .addComponent(Display_Button)
-                        .addGap(39, 39, 39)))
+                        .addGap(39, 39, 39))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         Client_PanelLayout.setVerticalGroup(
             Client_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Client_PanelLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(7, 7, 7)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(Client_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Add_Button)
                     .addComponent(Update_Button)
@@ -280,7 +280,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -289,8 +289,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addGap(210, 210, 210)
                 .addComponent(jButton3))
         );
 
@@ -304,13 +304,19 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable3);
 
-        jPanel3.add(jScrollPane5);
+        jButton4.setText("Statistique");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-        jButton6.setText("Statistique");
-        jPanel3.add(jButton6);
-
-        jButton7.setText("Rapport");
-        jPanel3.add(jButton7);
+        ButtonRapport.setText("Rapport");
+        ButtonRapport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRapportActionPerformed(evt);
+            }
+        });
 
         Search_TextField2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -319,7 +325,39 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(Search_TextField2);
 
-        jPanel3.add(jScrollPane7);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(ButtonRapport)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ButtonRapport)
+                    .addComponent(jButton4))
+                .addContainerGap(97, Short.MAX_VALUE))
+        );
 
         jTabbedPane1.addTab("Générer les Rapports", jPanel3);
 
@@ -342,7 +380,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(292, 292, 292)
@@ -353,7 +391,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -371,7 +409,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
@@ -380,14 +418,11 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private void Add_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_ButtonActionPerformed
 
         Panel_Ajouter panajout = new Panel_Ajouter();
-       y=(int)jTable1.getModel().getValueAt(jTable1.getRowCount()-1 ,0);
-       panajout.w=y;
 
         Deal deal = new Deal();
 
-        int result = JOptionPane.showConfirmDialog(null, panajout, "Test",
+        int result = JOptionPane.showConfirmDialog(null, panajout, "Ajout d'un Nouveau Deal",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        
         if (result == JOptionPane.OK_OPTION) {
             deal.setTitreDeal_Deal(panajout.txtTitre.getText());
             Vendeur vendeur = new Vendeur();
@@ -407,43 +442,18 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
             java.util.Date d2 = panajout.jdateFin.getCalendar().getTime();
             java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
-            deal.setDateDebutDeal_Deal(sqlDate);
-            deal.setDateFinDeal_Deal(sqlDate2);
-            deal.setIdVendeur_Deal(vendeur.getIdVendeur());
-            DealDAO dealdao = DealDAO.getInstance();
+            if (d1.after(d2)) {
+                JOptionPane.showMessageDialog(null, "La date de Début ne peut pas étre après la date de Fin");
+            } else {
+                deal.setDateDebutDeal_Deal(sqlDate);
+                deal.setDateFinDeal_Deal(sqlDate2);
+                deal.setIdVendeur_Deal(vendeur.getIdVendeur());
+                DealDAO dealdao = DealDAO.getInstance();
 
-            dealdao.insertDeal(deal);
-            
-            for (int i = 0; i <panajout.fc.getSelectedFiles().length ; i++) {
-                
-            
-           
-            System.out.println(panajout.file[i]);
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(panajout.file[i]);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        ImageDeal imgdeal=new ImageDeal();
-        Path path=Paths.get( panajout.file[i].getAbsolutePath());
-        try {
-            imgdeal.setImage(Files.readAllBytes(path));
-            System.out.println( imgdeal.getImage());
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println();
-        imgdeal.setIdDeal(y+1);
-       // imgdeal.setIdDealImage(1);
-        ImageDAO im= new ImageDAO();
-        im.InsertImage(imgdeal);
-        System.out.println(imgdeal.getIdDeal());}
+                dealdao.insertDeal(deal);
 
-            // ((DealTableModel)tableModel).add(deal);
-            JOptionPane.showMessageDialog(null, "Ajout terminé");
+                JOptionPane.showMessageDialog(null, "Ajout terminé");
+            }
             DealTableModel mymodel = new DealTableModel(list.displayDeal());
             jTable1.setModel(mymodel);
             jTable1.removeColumn(jTable1.getColumn("ID"));
@@ -453,13 +463,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             jTable1.removeColumn(jTable1.getColumn("Statut"));
             jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
             jTable1.removeColumn(jTable1.getColumn("Vendeur"));
-
-            jTable1.getColumnModel().setColumnMargin(20);
-            jTable1.setRowSelectionInterval(0, 0);
-             y=mymodel.getRowCount();
-             panajout.w=y;
-             System.out.println("la valeur de y est :"+y+"et "+ panajout.w);
-            
+            if (!list.displayDeal().isEmpty()) {
+                jTable1.setRowSelectionInterval(0, 0);
+            }
 
         } else {
             System.out.println("Cancelled");
@@ -497,8 +503,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         if (abc.getEtatDeal_Deal().toString().equals("Comming")) {
             modaj.jComboBox1.setSelectedIndex(2);
         }
-        // "High-Tech", "Bricolage", "Bijouterie", "Vacances&Sorties", "Beauté", "Accessoires&Vétements", "Divers"
-        //
+
         if (abc.getCategorie_Deal().toString().equalsIgnoreCase("High-Tech")) {
             modaj.ComboCategorie.setSelectedIndex(0);
         }
@@ -518,7 +523,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Accessoires&Vétements")) {
             modaj.ComboCategorie.setSelectedIndex(5);
         }
-         if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Divers")) {
+        if (abc.getCategorie_Deal().toString().equalsIgnoreCase("Divers")) {
             modaj.ComboCategorie.setSelectedIndex(6);
         }
         abc.setEtatDeal_Deal(modaj.jComboBox1.getSelectedItem().toString());
@@ -567,7 +572,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
                 jTable1.removeColumn(jTable1.getColumn("Vendeur"));
                 jTable1.getColumnModel().setColumnMargin(20);
-                jTable1.setRowSelectionInterval(0, 0);
+                if (!list.displayDeal().isEmpty()) {
+                    jTable1.setRowSelectionInterval(0, 0);
+                }
             }
         } else {
             System.out.println("Cancelled");
@@ -637,20 +644,20 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         DealTableModel mymodel = new DealTableModel(recherche);
         jTable1.setModel(mymodel);
         jTable1.removeColumn(jTable1.getColumn("ID"));
-            jTable1.removeColumn(jTable1.getColumn("Description"));
-            jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
-            jTable1.removeColumn(jTable1.getColumn("Etat"));
-            jTable1.removeColumn(jTable1.getColumn("Statut"));
-            jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
-            jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+        jTable1.removeColumn(jTable1.getColumn("Description"));
+        jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+        jTable1.removeColumn(jTable1.getColumn("Etat"));
+        jTable1.removeColumn(jTable1.getColumn("Statut"));
+        jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+        jTable1.removeColumn(jTable1.getColumn("Vendeur"));
 
-            jTable1.getColumnModel().setColumnMargin(20);
-            jTable1.setRowSelectionInterval(0, 0);
+        jTable1.setRowSelectionInterval(0, 0);
     }//GEN-LAST:event_Search_TextFieldKeyReleased
 
     private void Display_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Display_ButtonActionPerformed
         DealDAO dealdao = DealDAO.getInstance();
         PanelAffichage panneauAffichage = new PanelAffichage();
+        Affichage affichage = new Affichage();
         Deal abc = new Deal();
         Deal deal = new Deal();
         int idd = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
@@ -658,55 +665,46 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         for (Deal a : listdeal) {
             abc = a;
         }
-        panneauAffichage.txtTitre.setText(abc.getTitreDeal_Deal());
-        panneauAffichage.txtDesc.setText(abc.getDescDeal_Deal());
-        panneauAffichage.txtPrix.setText(abc.getPrixDeal_Deal().toString());
-        panneauAffichage.txtValidation.setText(String.valueOf(abc.getNbrAchatValidation()));
-        panneauAffichage.jdateDebut.setDate(abc.getDateDebutDeal_Deal());
-        panneauAffichage.jdateFin.setDate(abc.getDateFinDeal_Deal());
-        panneauAffichage.txtVendeurAffichage.setText(null);
+
+        affichage.txtTitre.setText(abc.getTitreDeal_Deal());
+        affichage.txtDesc.setText(abc.getDescDeal_Deal());
+        affichage.txtPrix.setText(abc.getPrixDeal_Deal().toString());
+        affichage.txtValidation.setText(String.valueOf(abc.getNbrAchatValidation()));
+        affichage.jdateDebut.setDate(abc.getDateDebutDeal_Deal());
+        affichage.jdateFin.setDate(abc.getDateFinDeal_Deal());
+        affichage.txtVendeurAffichage.setText(null);
         if (abc.isStatutDeal() == true) {
-            panneauAffichage.txtStatutAffichage.setText("Deal Confirmé");
+            affichage.txtStatutAffichage.setText("Deal Confirmé");
         } else {
-            panneauAffichage.txtStatutAffichage.setText("Deal non Confirmé");
+            affichage.txtStatutAffichage.setText("Deal non Confirmé");
         }
         Vendeur vendeur = new Vendeur();
         VendeurDAO daov = VendeurDAO.getInstance();
         int idv = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
-        panneauAffichage.txtVendeurAffichage.setText(daov.displayvendeurByID(idv).getNomCommercial());
-        panneauAffichage.txtEtat.setText(abc.getEtatDeal_Deal());
-        panneauAffichage.txtCategorie.setText(abc.getCategorie_Deal());
-        panneauAffichage.txtAffichage.setText(String.valueOf(abc.getNbrAffichage_Deal()));
-        panneauAffichage.txtAchatActuel.setText(String.valueOf(abc.getNbrAchatActuelDeal_Deal()));
-        JOptionPane.showMessageDialog(null, panneauAffichage, "Affichage",
-                JOptionPane.YES_OPTION);
-        ImageDeal img=new  ImageDeal();
-       
-        
-        AddImage add=new AddImage();
-        ImageDAO im= new ImageDAO();
-        Deal dea=new Deal();
-        
-       x=(int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
-       System.out.println(x);
-      System.out.println(jTable1.getSelectedRow());
-       panneauAffichage.a=x;
-      
-       
-        
-            
-        
-                
+        affichage.txtVendeurAffichage.setText(daov.displayvendeurByID(idv).getNomCommercial());
+        affichage.txtEtat.setText(abc.getEtatDeal_Deal());
+        affichage.txtCategorie.setText(abc.getCategorie_Deal());
+        affichage.txtAffichage.setText(String.valueOf(abc.getNbrAffichage_Deal()));
+        affichage.txtAchatActuel.setText(String.valueOf(abc.getNbrAchatActuelDeal_Deal()));
+        ImageDeal img = new ImageDeal();
+
+        ImageDAO im = new ImageDAO();
+        Deal dea = new Deal();
+
+        int x = (int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
+        System.out.println(x);
+        System.out.println(jTable1.getSelectedRow());
+        affichage.a = x;
       //  int id=jTable1.get
-            //
-       if(im.DisplayAllImage(x).size()>0)
-       {
-      img=im.DisplayAllImage(x).get(0);
-      ImageIcon icon=new ImageIcon(img.getImage());
-      panneauAffichage.label123.setIcon(icon);
+        //
+        if (im.DisplayAllImage(x).size() > 0) {
+            img = im.DisplayAllImage(x).get(0);
+            ImageIcon icon = new ImageIcon(img.getImage());
+
+            affichage.jLabel8.setIcon(icon);
      // panneauAffichage.image.setIcon(icon);
-      add.jButton3.setEnabled(false);
-      JOptionPane.showOptionDialog(null, add, "Images deal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null, null, null);
+            // add.jButton3.setEnabled(false);
+            //    JOptionPane.showOptionDialog(null, affichage, "Images deal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null, null, null);
 //        try {
 //            FileOutputStream file=new FileOutputStream("C:\\Android\\oumayma.jpg");
 //            try {
@@ -719,9 +717,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 //            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //      
-       // add.image.setIcon(null);
-        
-       }else System.out.println("aucune image trouvée");
+            // add.image.setIcon(null);
+
+        } else {
+            System.out.println("aucune image trouvée");
+            affichage.jLabel8.setText("aucune image trouvée");
+        }
+
+        JOptionPane.showMessageDialog(null, affichage, "Affichage",
+                JOptionPane.YES_OPTION);
 
     }//GEN-LAST:event_Display_ButtonActionPerformed
 
@@ -734,30 +738,307 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     }//GEN-LAST:event_Search_TextField1KeyReleased
 
     private void Search_TextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Search_TextField2KeyReleased
-        // TODO add your handling code here:
+        List<Deal> recherche = new ArrayList<>();
+        for (Deal a : list.displayDeal()) {
+            if (a.getTitreDeal_Deal().toLowerCase().contains(this.Search_TextField2.getText().toLowerCase())) {
+                recherche.add(a);
+            }
+
+        }
+        DealTableModel mymodel = new DealTableModel(recherche);
+        jTable3.setModel(mymodel);
+        jTable3.removeColumn(jTable3.getColumn("ID"));
+        jTable3.removeColumn(jTable3.getColumn("Description"));
+        jTable3.removeColumn(jTable3.getColumn("Achat Actuel"));
+        jTable3.removeColumn(jTable3.getColumn("Etat"));
+        jTable3.removeColumn(jTable3.getColumn("Statut"));
+        jTable3.removeColumn(jTable3.getColumn("Nombre d'Affichage"));
+        jTable3.removeColumn(jTable3.getColumn("Vendeur"));
+
+        jTable3.getColumnModel().setColumnMargin(20);
+        jTable3.setRowSelectionInterval(0, 0);
     }//GEN-LAST:event_Search_TextField2KeyReleased
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int idd = (int) jTable3.getModel().getValueAt(jTable3.getSelectedRow(), 0);
+        ChoixStat1 chStat = new ChoixStat1();
+        ChoixStat2 chStat2 = new ChoixStat2();
+        /* JOptionPane.showMessageDialog(null, chStat, "Choisir",
+         JOptionPane.OK_CANCEL_OPTION);*/
+        Object[] options = {"BACK", "NEXT"};
+        int a = JOptionPane.showOptionDialog(null, chStat, "",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[0]);
+        int b = 0;
+        if (chStat.jRadiosexe.isSelected() && chStat.jRadioconsult.isSelected()) {
+            b = 0;
+        }
+        if (chStat.jRadiosexe.isSelected() && chStat.jRadiores.isSelected()) {
+            b = 1;
+        }
+        if (chStat.jRadiooperation.isSelected() && chStat.jRadioconsult.isSelected()) {
+            b = 2;
+        }
+        if (chStat.jRadiooperation.isSelected() && chStat.jRadiores.isSelected()) {
+            b = 3;
+        }
+        if (a == 1 && b == 2) {
+            chStat.setVisible(false);
+            Object[] options2 = {"Annuler", "Afficher la Statistique"};
+            int c = JOptionPane.showOptionDialog(null, chStat2, "",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options2, options[0]);
+            if (c == 1) {
+                java.util.Date d1 = chStat2.jDateDebut.getCalendar().getTime();
+                java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
+                java.util.Date d2 = chStat2.jDatefin.getCalendar().getTime();
+                java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
+                Charts charts = new Charts();
+                //     JFreeChart chrt = ChartFactory.createXYStepAreaChart(null, null, null, null, PlotOrientation.HORIZONTAL, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled)
+                XYSeriesCollection dataxy = charts.createDataset(sqlDate.toString(), sqlDate2.toString(), idd);
+                final JFreeChart chart = ChartFactory.createXYLineChart(
+                        "Evolution des Consultation par rapport au temps", // Title
+                        "Jours", // x-axis Label
+                        "Nombre des Consultations", // y-axis Label
+                        dataxy, // Dataset
+                        PlotOrientation.VERTICAL, // Plot Orientation
+
+                        true, // Show Legend
+                        true, // Use tooltips
+                        false // Configure chart to generate URLs?
+                );
+                XYItemRenderer rend = chart.getXYPlot().getRenderer();
+
+                ChartPanel crepart = new ChartPanel(chart);
+                Plot plot = chart.getPlot();
+
+                JPanel jpan = new JPanel();
+                JButton button = new JButton("Sauvgarder");
+                button.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            JFileChooser chooser = new JFileChooser();
+                            chooser.showSaveDialog(jPanel3);
+                            String path = chooser.getSelectedFile().getPath();
+                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
+                                path=path+".png";
+                            }
+                            File f = new File(path);
+                            ChartUtilities.saveChartAsPNG(new File(path), chart, 800, 600);
+                            
+                            
+                        if (f.exists() && !f.isDirectory()) {
+                            JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            Desktop.getDesktop().open(f);
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+
+                jpan.add(crepart);
+                jpan.add(button);
+                JOptionPane.showConfirmDialog(null, jpan, "Test",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            }
+        }
+        if (a == 1 && (b == 3)) {
+            Object[] options2 = {"Annuler", "Afficher la Statistique"};
+            int c = JOptionPane.showOptionDialog(null, chStat2, "",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options2, options[0]);
+            if (c == 1) {
+                java.util.Date d1 = chStat2.jDateDebut.getCalendar().getTime();
+                java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
+                java.util.Date d2 = chStat2.jDatefin.getCalendar().getTime();
+                java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
+                Charts charts = new Charts();
+                //     JFreeChart chrt = ChartFactory.createXYStepAreaChart(null, null, null, null, PlotOrientation.HORIZONTAL, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled)
+                XYSeriesCollection dataxy = charts.createDatasetRes(sqlDate.toString(), sqlDate2.toString(), idd);
+                final JFreeChart chart = ChartFactory.createXYLineChart("Evolution des Consultation par rapport au temps",
+                        "Jours",
+                        "Nombre des Reservations",
+                        dataxy,
+                        PlotOrientation.VERTICAL,
+                        true,
+                        true,
+                        false);
+                XYItemRenderer rend = chart.getXYPlot().getRenderer();
+
+                ChartPanel crepart = new ChartPanel(chart);
+                Plot plot = chart.getPlot();
+
+                JPanel jpan = new JPanel();
+                jpan.setLayout(new FlowLayout(FlowLayout.LEADING));
+                JButton button = new JButton();
+
+                button.setText("Sauvgarder");
+                button.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                         JFileChooser chooser = new JFileChooser();
+                            chooser.showSaveDialog(jPanel3);
+                            String path = chooser.getSelectedFile().getPath();
+                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
+                                path=path+".png";
+                            }
+                            File f = new File(path);
+                            ChartUtilities.saveChartAsPNG(new File(path), chart, 800, 600);
+                            
+                            
+                        if (f.exists() && !f.isDirectory()) {
+                            JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            Desktop.getDesktop().open(f);
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+
+                jpan.add(crepart);
+                jpan.add(button);
+                JOptionPane.showConfirmDialog(null, jpan, "Test",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            }
+
+        }
+        if (a == 1 && b == 0) {
+            ConsultationDAO cdao = ConsultationDAO.getInstance();
+            DefaultPieDataset union = new DefaultPieDataset();
+            union.setValue("Homme", cdao.consultationCounterByGender(false, idd));
+            union.setValue("Femme", cdao.consultationCounterByGender(true, idd));
+
+            final JFreeChart repart
+                    = ChartFactory.createPieChart3D("Répartition par personne",
+                            union, true, true, false);
+            ChartPanel crepart = new ChartPanel(repart);
+            Plot plot = repart.getPlot();
+            JPanel jpan = new JPanel();
+            JButton button = new JButton("Sauvgarder");
+            button.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                    JFileChooser chooser = new JFileChooser();
+                            chooser.showSaveDialog(jPanel3);
+                            String path = chooser.getSelectedFile().getPath();
+                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
+                                path=path+".png";
+                            }
+                            File f = new File(path);
+                            ChartUtilities.saveChartAsPNG(new File(path), repart, 800, 600);
+                            
+                            
+                        if (f.exists() && !f.isDirectory()) {
+                            JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            Desktop.getDesktop().open(f);
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+            jpan.add(crepart);
+            jpan.add(button);
+            JOptionPane.showConfirmDialog(null, jpan, "",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        }
+        if (a == 1 && b == 1) {
+            DefaultPieDataset union = new DefaultPieDataset();
+            ReservationDAO dAO = ReservationDAO.getInstance();
+            union.setValue("Homme", dAO.reservationCounterByGender(false, idd));
+            union.setValue("Femme", dAO.reservationCounterByGender(true, idd));
+
+            final JFreeChart repart
+                    = ChartFactory.createPieChart3D("Répartition par personne",
+                            union, true, true, false);
+            ChartPanel crepart = new ChartPanel(repart);
+            Plot plot = repart.getPlot();
+            JPanel jpan = new JPanel();
+            JButton button = new JButton("Sauvgarder");
+            button.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                       JFileChooser chooser = new JFileChooser();
+                            chooser.showSaveDialog(jPanel3);
+                            String path = chooser.getSelectedFile().getPath();
+                            if((!path.contains("jpg"))||(!path.contains("png"))||(!path.contains("jpeg"))){
+                                path=path+".png";
+                            }
+                            File f = new File(path);
+                            ChartUtilities.saveChartAsPNG(new File(path), repart, 800, 600);
+                            
+                            
+                        if (f.exists() && !f.isDirectory()) {
+                            JOptionPane.showMessageDialog(null, "Sauvgarde Effectuée");
+                            Desktop.getDesktop().open(f);
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+            jpan.add(crepart);
+            jpan.add(button);
+            JOptionPane.showConfirmDialog(null, jpan, "Test",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
-        if (jTable2.getSelectedRow()==-1) {
-           // erreur.setText("Veuillez choisir un client à supprimer");
-            
-        }else  
-        {int result = JOptionPane.showConfirmDialog(null, "Voulez Vous Supprimer", null, JOptionPane.OK_CANCEL_OPTION);
-        if (result == JOptionPane.OK_OPTION) {
-        
-        int indice=(int)jTable2.getValueAt(jTable2.getSelectedRow(), jTable2.getSelectedColumn());
-       int a= clinetdao.deleteClient(indice);
-        if (a == 1) {
-                JOptionPane.showMessageDialog(null, "Client Supprimé");
-       
-        DisplayClientTableModel model2=new DisplayClientTableModel(clinetdao.displayClient());
-        jTable2.setModel(model2);
-        }       
-        }
-        }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void ButtonRapportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRapportActionPerformed
+       int idd = (int) jTable3.getModel().getValueAt(jTable3.getSelectedRow(), 0);
+        String pattern = null;
+        String path;
+       FileNameExtensionFilter filter = new FileNameExtensionFilter( "JASPER Images", "jasper");
+     JFileChooser  chooser = new JFileChooser();
+     chooser.setFileFilter(filter);
+    int returnVal = chooser.showOpenDialog(this);
+    chooser.setMultiSelectionEnabled(false);
+    if(returnVal == JFileChooser.APPROVE_OPTION) {
+      pattern= chooser.getSelectedFile().getPath();
+       }
+    FileNameExtensionFilter filterpath = new FileNameExtensionFilter( "PDF files", "pdf");
+        JFileChooser  chooserpath = new JFileChooser();
+     chooserpath.setFileFilter(filterpath);
+     int returnSave = chooserpath.showSaveDialog(this);
+     if(returnSave == JFileChooser.APPROVE_OPTION) {
+     path= chooserpath.getSelectedFile().getPath();
+        
+         if(!path.contains("pdf")){
+             path = path+".pdf";
+         }
+         pattern= pattern.replace("\\", "\\"+"\\");
+         path=path.replace("\\", "\\"+"\\");
+         
+         ReportCreator creator = new ReportCreator();
+         int a = creator.CreateReportDeal(pattern, idd, path);
+         if (a==1){
+             File file = new File(path.toString());
+         try {
+             Desktop.getDesktop().open(file);
+         } catch (IOException ex) {
+             Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         }
+       }
+    }//GEN-LAST:event_ButtonRapportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -784,10 +1065,17 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InterfacePrincipale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        try {
+            UIManager.setLookAndFeel(new NoireLookAndFeel());
+
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
 
                 new InterfacePrincipale().setVisible(true);
@@ -798,6 +1086,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Add_Button;
+    private javax.swing.JButton ButtonRapport;
     private javax.swing.JPanel Client_Panel;
     private javax.swing.JButton Delete_Button;
     private javax.swing.JButton Display_Button;
@@ -809,8 +1098,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

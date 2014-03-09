@@ -127,7 +127,7 @@ public class MessageDAO {
     public List<ClientMail> displayMessageWithSenderMail()
     {
         List<ClientMail> msglist = new ArrayList<>();
-        String sqlrequest="SELECT client.nom,client.prenom,client.email, message.contenu FROM pi_dev.client,pi_dev.message;";
+        String sqlrequest="SELECT client.nom,client.prenom,client.email, message.contenu FROM pi_dev.client,pi_dev.message where pi_dev.client.idClient=pi_dev.message.idClient;";
          try {
              PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
              ResultSet resultat = ps.executeQuery();

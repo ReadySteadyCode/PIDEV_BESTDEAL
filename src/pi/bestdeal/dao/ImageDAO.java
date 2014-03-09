@@ -16,13 +16,20 @@ import java.util.logging.Logger;
 import pi.bestdeal.entities.ImageDeal;
 import pi.bestdeal.utils.MySQLConnection;
 
+
 /**
  *
  * @author user
  */
 public class ImageDAO {
     
-    
+    private static ImageDAO imageDAO;
+    public static ImageDAO getInstance(){
+        if(imageDAO==null){
+            imageDAO = new ImageDAO();
+        }
+        return imageDAO;
+    }
     
     public List<ImageDeal> DisplayAllImage(int id) {
         String requete = "SELECT * FROM pi_dev.dealimage where idDeal=? ;";
