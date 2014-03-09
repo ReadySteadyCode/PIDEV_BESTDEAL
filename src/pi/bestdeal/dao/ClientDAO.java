@@ -84,6 +84,32 @@ public class ClientDAO
         }
         return clientListe;
    }
+   public List<Client> displayAllClient ()
+   {
+       List<Client> clientListe = new ArrayList<Client>();
+       String sqlrequest = "SELECT idCLient,nom,prenom,email,nbrSignalisation FROM pi_dev.client where nbrSignalisation<6 ;";
+        try {
+            PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
+            ResultSet resultat = ps.executeQuery(sqlrequest);
+            while (resultat.next()){
+                Client client = new Client();
+               
+               
+                client.setEmail(resultat.getString("email"));
+                client.setIdClient(resultat.getInt("idClient"));
+                client.setNom(resultat.getString("nom"));
+                client.setPrenom(resultat.getString("prenom"));
+                client.setNbrSignalisation(resultat.getInt("nbrSignalisation"));
+               
+                clientListe.add(client);
+               
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clientListe;
+   }
    public int insertClient(Client client) {
         int a = 0;
         String date="";

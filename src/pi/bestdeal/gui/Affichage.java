@@ -16,7 +16,11 @@ import pi.bestdeal.entities.ImageDeal;
  * @author Internet
  */
 public class Affichage extends javax.swing.JPanel {
-public int a;
+  public int a;
+public int i=0;
+
+ List<ImageDeal> liste;
+ ImageDAO im=new ImageDAO();
     /**
      * Creates new form Affichage
      */
@@ -148,7 +152,6 @@ public int a;
         txtCategorie.setEditable(false);
 
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Internet\\Documents\\Cours\\Pi_DEV\\icon\\1394313868_arrow-right_yellow.png")); // NOI18N
         jButton1.setText(" ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,7 +160,6 @@ public int a;
         });
 
         jButton2.setBackground(new java.awt.Color(0, 0, 0));
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Internet\\Documents\\Cours\\Pi_DEV\\icon\\1394313884_arrow-left_yellow.png")); // NOI18N
         jButton2.setText(" ");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +224,7 @@ public int a;
                                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
                                         .addComponent(jButton1)))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,16 +306,38 @@ public int a;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+         liste=im.DisplayAllImage(a);
+        ImageDeal img=new ImageDeal();
+        if((i>=1)&&(i<liste.size()))
+        {jButton1.setEnabled(true);
+            i--;
+            img=liste.get(i);
+            ImageIcon icon=new ImageIcon(img.getImage());
+            this.jLabel8.setIcon(icon);}
+        if(i==0)
+        {
+            jButton2.setEnabled(false);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        // TODO add your handling code here:
+           liste=im.DisplayAllImage(a);
+        ImageDeal img=new ImageDeal();
+        if (i<(liste.size())-1) {
+            i++;
+
+            img=liste.get(i);
+            ImageIcon icon=new ImageIcon(img.getImage());
+            this.jLabel8.setIcon(icon);
+            jButton2.setEnabled(true);}
+        if(i==(liste.size())-1) jButton1.setEnabled(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtValidationKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValidationKeyTyped

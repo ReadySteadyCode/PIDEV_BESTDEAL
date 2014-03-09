@@ -34,6 +34,7 @@ public class Panel_Ajouter extends javax.swing.JPanel {
 public int w;
 public File[] file=null;
  public  JFileChooser fc;
+ 
   
 
     /**
@@ -258,7 +259,8 @@ public File[] file=null;
     }//GEN-LAST:event_txtValidationKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+      
+     // TODO add your handling code here:
         DealDAO deal=DealDAO.getInstance();
         List<Deal> list=deal.displayDeal();
             // AddImage img=new  AddImage();
