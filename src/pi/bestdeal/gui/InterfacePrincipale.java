@@ -6,6 +6,7 @@
 package pi.bestdeal.gui;
 
 import com.jtattoo.plaf.noire.NoireLookAndFeel;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.TableModel;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
@@ -48,6 +50,7 @@ import pi.bestdeal.entities.Client;
 import pi.bestdeal.entities.ClientMail;
 import pi.bestdeal.entities.ImageDeal;
 import pi.bestdeal.models.Charts;
+import pi.bestdeal.utils.ReportCreator;
 
 /**
  *
@@ -88,7 +91,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         if (jTable3.getModel().getRowCount() != 0) {
             jTable3.setRowSelectionInterval(0, 0);
         }
-         if (jTable1.getModel().getRowCount() != 0) {
+        if (jTable1.getModel().getRowCount() != 0) {
             jTable1.setRowSelectionInterval(0, 0);
         }
 
@@ -125,7 +128,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        ButtonRapport = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         Search_TextField2 = new javax.swing.JTextPane();
         jPanel4 = new javax.swing.JPanel();
@@ -249,6 +252,11 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jTable2);
 
         jButton3.setText("Supprimer");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         Search_TextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -305,7 +313,12 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Rapport");
+        ButtonRapport.setText("Rapport");
+        ButtonRapport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRapportActionPerformed(evt);
+            }
+        });
 
         Search_TextField2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -329,7 +342,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton5)
+                        .addComponent(ButtonRapport)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4)))
                 .addContainerGap())
@@ -343,7 +356,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
+                    .addComponent(ButtonRapport)
                     .addComponent(jButton4))
                 .addContainerGap(97, Short.MAX_VALUE))
         );
@@ -431,17 +444,18 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
             java.util.Date d2 = panajout.jdateFin.getCalendar().getTime();
             java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
-            if(d1.after(d2))
+            if (d1.after(d2)) {
                 JOptionPane.showMessageDialog(null, "La date de Début ne peut pas étre après la date de Fin");
-            else{
-            deal.setDateDebutDeal_Deal(sqlDate);
-            deal.setDateFinDeal_Deal(sqlDate2);
-            deal.setIdVendeur_Deal(vendeur.getIdVendeur());
-            DealDAO dealdao = DealDAO.getInstance();
+            } else {
+                deal.setDateDebutDeal_Deal(sqlDate);
+                deal.setDateFinDeal_Deal(sqlDate2);
+                deal.setIdVendeur_Deal(vendeur.getIdVendeur());
+                DealDAO dealdao = DealDAO.getInstance();
 
-            dealdao.insertDeal(deal);
+                dealdao.insertDeal(deal);
 
-            JOptionPane.showMessageDialog(null, "Ajout terminé");}
+                JOptionPane.showMessageDialog(null, "Ajout terminé");
+            }
             DealTableModel mymodel = new DealTableModel(list.displayDeal());
             jTable1.setModel(mymodel);
             jTable1.removeColumn(jTable1.getColumn("ID"));
@@ -451,8 +465,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             jTable1.removeColumn(jTable1.getColumn("Statut"));
             jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
             jTable1.removeColumn(jTable1.getColumn("Vendeur"));
-            if(!list.displayDeal().isEmpty()){
-            jTable1.setRowSelectionInterval(0, 0);}
+            if (!list.displayDeal().isEmpty()) {
+                jTable1.setRowSelectionInterval(0, 0);
+            }
 
         } else {
             System.out.println("Cancelled");
@@ -490,7 +505,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         if (abc.getEtatDeal_Deal().toString().equals("Comming")) {
             modaj.jComboBox1.setSelectedIndex(2);
         }
-       
+
         if (abc.getCategorie_Deal().toString().equalsIgnoreCase("High-Tech")) {
             modaj.ComboCategorie.setSelectedIndex(0);
         }
@@ -559,8 +574,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
                 jTable1.removeColumn(jTable1.getColumn("Vendeur"));
                 jTable1.getColumnModel().setColumnMargin(20);
-                if(!list.displayDeal().isEmpty()){
-                jTable1.setRowSelectionInterval(0, 0);
+                if (!list.displayDeal().isEmpty()) {
+                    jTable1.setRowSelectionInterval(0, 0);
                 }
             }
         } else {
@@ -638,14 +653,13 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
         jTable1.removeColumn(jTable1.getColumn("Vendeur"));
 
-       
         jTable1.setRowSelectionInterval(0, 0);
     }//GEN-LAST:event_Search_TextFieldKeyReleased
 
     private void Display_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Display_ButtonActionPerformed
         DealDAO dealdao = DealDAO.getInstance();
         PanelAffichage panneauAffichage = new PanelAffichage();
-        Affichage affichage = new Affichage();                
+        Affichage affichage = new Affichage();
         Deal abc = new Deal();
         Deal deal = new Deal();
         int idd = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
@@ -653,7 +667,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         for (Deal a : listdeal) {
             abc = a;
         }
-        
+
         affichage.txtTitre.setText(abc.getTitreDeal_Deal());
         affichage.txtDesc.setText(abc.getDescDeal_Deal());
         affichage.txtPrix.setText(abc.getPrixDeal_Deal().toString());
@@ -674,28 +688,25 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         affichage.txtCategorie.setText(abc.getCategorie_Deal());
         affichage.txtAffichage.setText(String.valueOf(abc.getNbrAffichage_Deal()));
         affichage.txtAchatActuel.setText(String.valueOf(abc.getNbrAchatActuelDeal_Deal()));
-         ImageDeal img=new  ImageDeal();
-       
-        
-        
-        ImageDAO im= new ImageDAO();
-        Deal dea=new Deal();
-        
-       int x=(int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
-       System.out.println(x);
-      System.out.println(jTable1.getSelectedRow());
-       affichage.a=x;
+        ImageDeal img = new ImageDeal();
+
+        ImageDAO im = new ImageDAO();
+        Deal dea = new Deal();
+
+        int x = (int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
+        System.out.println(x);
+        System.out.println(jTable1.getSelectedRow());
+        affichage.a = x;
       //  int id=jTable1.get
-            //
-       if(im.DisplayAllImage(x).size()>0)
-       {
-      img=im.DisplayAllImage(x).get(0);
-      ImageIcon icon=new ImageIcon(img.getImage());
-      
-      affichage.jLabel8.setIcon(icon);
+        //
+        if (im.DisplayAllImage(x).size() > 0) {
+            img = im.DisplayAllImage(x).get(0);
+            ImageIcon icon = new ImageIcon(img.getImage());
+
+            affichage.jLabel8.setIcon(icon);
      // panneauAffichage.image.setIcon(icon);
-     // add.jButton3.setEnabled(false);
-  //    JOptionPane.showOptionDialog(null, affichage, "Images deal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null, null, null);
+            // add.jButton3.setEnabled(false);
+            //    JOptionPane.showOptionDialog(null, affichage, "Images deal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null, null, null);
 //        try {
 //            FileOutputStream file=new FileOutputStream("C:\\Android\\oumayma.jpg");
 //            try {
@@ -708,12 +719,12 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 //            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //      
-       // add.image.setIcon(null);
-     
-        
-       }else{ System.out.println("aucune image trouvée");
-       affichage.jLabel8.setText("aucune image trouvée");
-       }
+            // add.image.setIcon(null);
+
+        } else {
+            System.out.println("aucune image trouvée");
+            affichage.jLabel8.setText("aucune image trouvée");
+        }
 
         JOptionPane.showMessageDialog(null, affichage, "Affichage",
                 JOptionPane.YES_OPTION);
@@ -953,6 +964,48 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void ButtonRapportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRapportActionPerformed
+       int idd = (int) jTable3.getModel().getValueAt(jTable3.getSelectedRow(), 0);
+        String pattern = null;
+        String path;
+       FileNameExtensionFilter filter = new FileNameExtensionFilter( "JASPER Images", "jasper");
+     JFileChooser  chooser = new JFileChooser();
+     chooser.setFileFilter(filter);
+    int returnVal = chooser.showOpenDialog(this);
+    chooser.setMultiSelectionEnabled(false);
+    if(returnVal == JFileChooser.APPROVE_OPTION) {
+      pattern= chooser.getSelectedFile().getPath();
+       }
+    FileNameExtensionFilter filterpath = new FileNameExtensionFilter( "PDF files", "pdf");
+        JFileChooser  chooserpath = new JFileChooser();
+     chooserpath.setFileFilter(filterpath);
+     int returnSave = chooserpath.showSaveDialog(this);
+     if(returnSave == JFileChooser.APPROVE_OPTION) {
+     path= chooserpath.getSelectedFile().getPath();
+        
+         if(!path.contains("pdf")){
+             path = path+".pdf";
+         }
+         pattern= pattern.replace("\\", "\\"+"\\");
+         path=path.replace("\\", "\\"+"\\");
+          System.out.println(pattern+" "+path+" "+idd);
+         ReportCreator creator = new ReportCreator();
+         int a = creator.CreateReportDeal(pattern, idd, path);
+         if (a==1){
+             File file = new File(path.toString());
+         try {
+             Desktop.getDesktop().open(file);
+         } catch (IOException ex) {
+             Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         }
+       }
+    }//GEN-LAST:event_ButtonRapportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -999,6 +1052,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Add_Button;
+    private javax.swing.JButton ButtonRapport;
     private javax.swing.JPanel Client_Panel;
     private javax.swing.JButton Delete_Button;
     private javax.swing.JButton Display_Button;
@@ -1011,7 +1065,6 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
