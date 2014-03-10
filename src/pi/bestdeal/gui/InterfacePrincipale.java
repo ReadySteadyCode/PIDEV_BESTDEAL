@@ -752,14 +752,14 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         ImageDAO im = new ImageDAO();
         Deal dea = new Deal();
 
-        int x = (int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
+//        int x = (int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
         System.out.println(x);
         System.out.println(jTable1.getSelectedRow());
         affichage.a = idd;
         //  int id=jTable1.get
         //
-        if (im.DisplayAllImage(x).size() > 0) {
-            img = im.DisplayAllImage(x).get(0);
+        if (im.DisplayAllImage(idd).size() > 0) {
+            img = im.DisplayAllImage(idd).get(0);
             ImageIcon icon = new ImageIcon(img.getImage());
 
             affichage.jLabel8.setIcon(icon);
