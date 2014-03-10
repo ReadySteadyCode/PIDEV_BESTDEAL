@@ -438,7 +438,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private void Add_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_ButtonActionPerformed
 
          Panel_Ajouter panajout = new Panel_Ajouter();
-       y=(int)jTable1.getModel().getValueAt(jTable1.getRowCount()-1 ,0);
+       y=1;
        panajout.w=y;
 
         Deal deal = new Deal();
