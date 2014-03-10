@@ -663,7 +663,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
                 jTable1.removeColumn(jTable1.getColumn("Vendeur"));
                 jTable1.getColumnModel().setColumnMargin(20);
-                jTable1.setRowSelectionInterval(0, 0);
+                  if (!list.displayDeal().isEmpty()) {
+                    jTable1.setRowSelectionInterval(0, 0);
+                }
 
             }
         }
@@ -708,7 +710,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
         jTable1.removeColumn(jTable1.getColumn("Vendeur"));
 
-        jTable1.setRowSelectionInterval(0, 0);
+          if (!list.displayDeal().isEmpty()) {
+                    jTable1.setRowSelectionInterval(0, 0);
+                }
     }//GEN-LAST:event_Search_TextFieldKeyReleased
 
     private void Display_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Display_ButtonActionPerformed
@@ -751,7 +755,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         int x = (int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
         System.out.println(x);
         System.out.println(jTable1.getSelectedRow());
-        affichage.a = x;
+        affichage.a = idd;
         //  int id=jTable1.get
         //
         if (im.DisplayAllImage(x).size() > 0) {
