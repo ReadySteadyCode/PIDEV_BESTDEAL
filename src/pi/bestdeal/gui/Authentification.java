@@ -4,8 +4,6 @@
  */
 package pi.bestdeal.gui;
 
-import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
-import com.jtattoo.plaf.noire.NoireLookAndFeel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.logging.Level;
@@ -89,7 +87,7 @@ public class Authentification extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(227, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(150, 150, 150))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -146,8 +144,9 @@ public class Authentification extends javax.swing.JFrame {
         InterfacePrincipale inter = new InterfacePrincipale();
         int a = admin.verification(log, mo);
         if (a==1)
-            
+        {  
             inter.setVisible(true);
+        this.setVisible(false);}
         else
             JOptionPane.showMessageDialog(null, "Veuillez Verifier", "Connexion Impossible", JOptionPane.ERROR_MESSAGE);
         
@@ -174,11 +173,16 @@ public class Authentification extends javax.swing.JFrame {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(new AluminiumLookAndFeel());
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Authentification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Authentification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Authentification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Authentification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }

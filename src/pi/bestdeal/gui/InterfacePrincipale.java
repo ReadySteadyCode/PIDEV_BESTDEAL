@@ -5,14 +5,18 @@
  */
 package pi.bestdeal.gui;
 
-import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
 import com.jtattoo.plaf.noire.NoireLookAndFeel;
 import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -56,7 +60,8 @@ import pi.bestdeal.utils.ReportCreator;
  * @author Internet
  */
 public class InterfacePrincipale extends javax.swing.JFrame {
-
+    public int x;
+    public int y;
     DealDAO list = DealDAO.getInstance();
     List<Deal> deals = list.displayDeal();
     TableModel tableModel = new DealTableModel(deals);
@@ -117,6 +122,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton5 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -126,7 +132,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         ButtonRapport = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         Search_TextField2 = new javax.swing.JTextPane();
@@ -199,13 +205,20 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        jButton5.setText("Espace Client");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout Client_PanelLayout = new javax.swing.GroupLayout(Client_Panel);
         Client_Panel.setLayout(Client_PanelLayout);
@@ -214,10 +227,12 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             .addGroup(Client_PanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Client_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(Client_PanelLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(Client_PanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Client_PanelLayout.createSequentialGroup()
                         .addComponent(Add_Button)
                         .addGap(47, 47, 47)
                         .addComponent(Update_Button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -225,16 +240,19 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                         .addComponent(Delete_Button)
                         .addGap(40, 40, 40)
                         .addComponent(Display_Button)
-                        .addGap(39, 39, 39))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(39, 39, 39)))
                 .addContainerGap())
+            .addGroup(Client_PanelLayout.createSequentialGroup()
+                .addGap(184, 184, 184)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         Client_PanelLayout.setVerticalGroup(
             Client_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Client_PanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(Client_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -242,7 +260,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                     .addComponent(Update_Button)
                     .addComponent(Delete_Button)
                     .addComponent(Display_Button))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5))
         );
 
         jTabbedPane1.addTab("Gestion des Deals", Client_Panel);
@@ -281,7 +300,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -290,8 +309,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                .addGap(210, 210, 210)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(jButton3))
         );
 
@@ -305,8 +324,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable3);
 
-        jButton4.setText("Statistique");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButton6.setText("Statistique");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
@@ -334,7 +353,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -343,7 +362,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(ButtonRapport)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)))
+                        .addComponent(jButton6)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -356,8 +375,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonRapport)
-                    .addComponent(jButton4))
-                .addContainerGap(97, Short.MAX_VALUE))
+                    .addComponent(jButton6))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Générer les Rapports", jPanel3);
@@ -381,7 +400,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(292, 292, 292)
@@ -392,7 +411,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -410,7 +429,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -418,12 +437,15 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
     private void Add_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_ButtonActionPerformed
 
-        Panel_Ajouter panajout = new Panel_Ajouter();
+         Panel_Ajouter panajout = new Panel_Ajouter();
+       y=(int)jTable1.getModel().getValueAt(jTable1.getRowCount()-1 ,0);
+       panajout.w=y;
 
         Deal deal = new Deal();
 
-        int result = JOptionPane.showConfirmDialog(null, panajout, "Ajout d'un Nouveau Deal",
+        int result = JOptionPane.showConfirmDialog(null, panajout, "Test",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        
         if (result == JOptionPane.OK_OPTION) {
             deal.setTitreDeal_Deal(panajout.txtTitre.getText());
             Vendeur vendeur = new Vendeur();
@@ -443,18 +465,43 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
             java.util.Date d2 = panajout.jdateFin.getCalendar().getTime();
             java.sql.Date sqlDate2 = new java.sql.Date(d2.getTime());
-            if (d1.after(d2)) {
-                JOptionPane.showMessageDialog(null, "La date de Début ne peut pas étre après la date de Fin");
-            } else {
-                deal.setDateDebutDeal_Deal(sqlDate);
-                deal.setDateFinDeal_Deal(sqlDate2);
-                deal.setIdVendeur_Deal(vendeur.getIdVendeur());
-                DealDAO dealdao = DealDAO.getInstance();
+            deal.setDateDebutDeal_Deal(sqlDate);
+            deal.setDateFinDeal_Deal(sqlDate2);
+            deal.setIdVendeur_Deal(vendeur.getIdVendeur());
+            DealDAO dealdao = DealDAO.getInstance();
 
-                dealdao.insertDeal(deal);
+            dealdao.insertDeal(deal);
+            
+            for (int i = 0; i <panajout.fc.getSelectedFiles().length ; i++) {
+                
+            
+           
+            System.out.println(panajout.file[i]);
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(panajout.file[i]);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ImageDeal imgdeal=new ImageDeal();
+        Path path=Paths.get( panajout.file[i].getAbsolutePath());
+        try {
+            imgdeal.setImage(Files.readAllBytes(path));
+            System.out.println( imgdeal.getImage());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println();
+        imgdeal.setIdDeal(y+1);
+       // imgdeal.setIdDealImage(1);
+        ImageDAO im= ImageDAO.getInstance();
+        im.InsertImage(imgdeal);
+        System.out.println(imgdeal.getIdDeal());}
 
-                JOptionPane.showMessageDialog(null, "Ajout terminé");
-            }
+            // ((DealTableModel)tableModel).add(deal);
+            JOptionPane.showMessageDialog(null, "Ajout terminé");
             DealTableModel mymodel = new DealTableModel(list.displayDeal());
             jTable1.setModel(mymodel);
             jTable1.removeColumn(jTable1.getColumn("ID"));
@@ -464,9 +511,13 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             jTable1.removeColumn(jTable1.getColumn("Statut"));
             jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
             jTable1.removeColumn(jTable1.getColumn("Vendeur"));
-            if (!list.displayDeal().isEmpty()) {
-                jTable1.setRowSelectionInterval(0, 0);
-            }
+
+            jTable1.getColumnModel().setColumnMargin(20);
+            jTable1.setRowSelectionInterval(0, 0);
+             y=mymodel.getRowCount();
+             panajout.w=y;
+             System.out.println("la valeur de y est :"+y+"et "+ panajout.w);
+            
 
         } else {
             System.out.println("Cancelled");
@@ -1001,6 +1052,25 @@ public class InterfacePrincipale extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+         // TODO add your handling code here:
+        
+        if (jTable2.getSelectedRow()==-1) {
+           // erreur.setText("Veuillez choisir un client à supprimer");
+            
+        }else  
+        {int result = JOptionPane.showConfirmDialog(null, "Voulez Vous Supprimer", null, JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+        
+        int indice=(int)jTable2.getValueAt(jTable2.getSelectedRow(), jTable2.getSelectedColumn());
+       int a= clinetdao.deleteClient(indice);
+        if (a == 1) {
+                JOptionPane.showMessageDialog(null, "Client Supprimé");
+       
+        DisplayClientTableModel model2=new DisplayClientTableModel(clinetdao.displayClient());
+        jTable2.setModel(model2);
+        }       
+        }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void ButtonRapportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRapportActionPerformed
@@ -1041,6 +1111,13 @@ public class InterfacePrincipale extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_ButtonRapportActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        this.hide();
+        Espace_Client espace_client=new Espace_Client();
+        espace_client.show();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1053,11 +1130,16 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(new AluminiumLookAndFeel());
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(InterfacePrincipale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(InterfacePrincipale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(InterfacePrincipale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InterfacePrincipale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -1094,7 +1176,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
