@@ -755,7 +755,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         int x = (int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
         System.out.println(x);
         System.out.println(jTable1.getSelectedRow());
-        affichage.a = x;
+        affichage.a = idd;
         //  int id=jTable1.get
         //
         if (im.DisplayAllImage(x).size() > 0) {
