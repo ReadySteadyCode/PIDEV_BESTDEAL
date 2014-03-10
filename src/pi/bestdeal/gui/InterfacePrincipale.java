@@ -471,6 +471,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             DealDAO dealdao = DealDAO.getInstance();
 
             dealdao.insertDeal(deal);
+            if (panajout.fc.getSelectedFiles()[0]!=null) {
+                
             
             for (int i = 0; i <panajout.fc.getSelectedFiles().length ; i++) {
                 
@@ -499,9 +501,12 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         ImageDAO im= ImageDAO.getInstance();
         im.InsertImage(imgdeal);
         System.out.println(imgdeal.getIdDeal());}
+           
 
             // ((DealTableModel)tableModel).add(deal);
-            JOptionPane.showMessageDialog(null, "Ajout terminé");
+            JOptionPane.showMessageDialog(null, "Ajout terminé");}
+            else {System.out.println("aucune n'a été choisie");
+            }
             DealTableModel mymodel = new DealTableModel(list.displayDeal());
             jTable1.setModel(mymodel);
             jTable1.removeColumn(jTable1.getColumn("ID"));
