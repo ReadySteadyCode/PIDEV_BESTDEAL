@@ -7,6 +7,7 @@ package pi.bestdeal.gui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 import pi.bestdeal.dao.ClientDAO;
 import pi.bestdeal.entities.Client;
@@ -127,25 +128,34 @@ public class Espace_Client extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        Ajout_Reservation ar = new Ajout_Reservation();
+        if(ar.jTable1.getRowCount()!=0){
      id=(int)jTable2.getValueAt(jTable2.getSelectedRow(), 0);
-     Ajout_Reservation ajout_reservation=new Ajout_Reservation();
-     ajout_reservation.id=id;
+      ar=new Ajout_Reservation();
+     ar.id=id;
      this.hide();
-     ajout_reservation.show();
+     ar.show();}
+        else{
+            JOptionPane.showMessageDialog(null, "la table des deals est vide");
+        }
      
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-       
+        Ajout_consultation ajout_consultation=new Ajout_consultation();
+        if(ajout_consultation.jTable2.getModel().getRowCount()!=0){
          id=(int)jTable2.getValueAt(jTable2.getSelectedRow(), 0);
-           Ajout_consultation ajout_consultation=new Ajout_consultation();
+          
           ajout_consultation.id=this.id;
    
     
      this.hide();
-     ajout_consultation.show();
+     ajout_consultation.show();}
+        else{
+            JOptionPane.showMessageDialog(null, "la table des deals est vide");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

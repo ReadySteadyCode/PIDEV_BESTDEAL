@@ -33,6 +33,16 @@ public class Ajout_consultation extends javax.swing.JFrame {
      */
     public Ajout_consultation() {
         initComponents();
+         if(jTable2.getModel().getRowCount()!=0){
+         jTable2.setRowSelectionInterval(0, 0);
+         jTable2.removeColumn(jTable2.getColumn("ID"));
+        jTable2.removeColumn(jTable2.getColumn("Description"));
+        jTable2.removeColumn(jTable2.getColumn("Achat Actuel"));
+        jTable2.removeColumn(jTable2.getColumn("Etat"));
+        jTable2.removeColumn(jTable2.getColumn("Statut"));
+        jTable2.removeColumn(jTable2.getColumn("Nombre d'Affichage"));
+        jTable2.removeColumn(jTable2.getColumn("Vendeur"));
+       }
     }
 
     /**
@@ -114,6 +124,7 @@ public class Ajout_consultation extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
          Consultation consultation=new Consultation();
+          if(jTable2.getModel().getRowCount()!=0){
         int id_consultaion=(int) jTable2.getValueAt(jTable2.getSelectedRow(), 0);
         consultation.setIdDeal(id_consultaion);
         consultation.setIdClient(this.id);
@@ -131,7 +142,7 @@ public class Ajout_consultation extends javax.swing.JFrame {
       }else {JOptionPane.showConfirmDialog(null, "Erreur lors de l'ajout de réservation", "Erreur",
                 JOptionPane.ERROR_MESSAGE);}
        
-  
+          }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

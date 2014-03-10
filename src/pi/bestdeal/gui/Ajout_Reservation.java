@@ -31,7 +31,16 @@ public class Ajout_Reservation extends javax.swing.JFrame {
      */
     public Ajout_Reservation() {
         initComponents();
+        if(jTable1.getModel().getRowCount()!=0){
          jTable1.setRowSelectionInterval(0, 0);
+        jTable1.removeColumn(jTable1.getColumn("ID"));
+        jTable1.removeColumn(jTable1.getColumn("Description"));
+        jTable1.removeColumn(jTable1.getColumn("Achat Actuel"));
+        jTable1.removeColumn(jTable1.getColumn("Etat"));
+        jTable1.removeColumn(jTable1.getColumn("Statut"));
+        jTable1.removeColumn(jTable1.getColumn("Nombre d'Affichage"));
+        jTable1.removeColumn(jTable1.getColumn("Vendeur"));
+       }
     }
 
     /**
@@ -47,6 +56,7 @@ public class Ajout_Reservation extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ajout Reservation");
@@ -73,26 +83,32 @@ public class Ajout_Reservation extends javax.swing.JFrame {
             }
         });
 
+        jDateChooser1.setDateFormatString("yyyy-MM-dd");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addComponent(jButton1)
-                .addGap(147, 147, 147)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -109,13 +125,14 @@ public class Ajout_Reservation extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Reservation reservation=new Reservation();
+         if(jTable1.getModel().getRowCount()!=0){
         int id_reser=(int) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
        
         reservation.setIdDeal(id_reser);
         reservation.setIdClient(this.id);
         System.out.println(id);
-        Date d1=new Date();
-         java.sql.Date sqlDate = new java.sql.Date(d1.getTime());
+        java.util.Date d1 =jDateChooser1.getCalendar().getTime();
+          java.sql.Date sqlDate = new java.sql.Date(d1.getTime());  
        reservation.setDateRerservation(sqlDate);
         reservation.setDateModification(sqlDate);
       int x= res.insertReservation(reservation);
@@ -129,7 +146,7 @@ public class Ajout_Reservation extends javax.swing.JFrame {
           
                 
     
-       
+         }
         
        
      
@@ -181,6 +198,7 @@ public class Ajout_Reservation extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

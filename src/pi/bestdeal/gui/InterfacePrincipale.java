@@ -757,34 +757,17 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         ImageDAO im = new ImageDAO();
         Deal dea = new Deal();
 
-//        int x = (int) tableModel.getValueAt(jTable1.getSelectedRow(), 0);
+
         System.out.println(x);
         System.out.println(jTable1.getSelectedRow());
         affichage.a = idd;
-        //  int id=jTable1.get
-        //
+      
         if (im.DisplayAllImage(idd).size() > 0) {
             img = im.DisplayAllImage(idd).get(0);
             ImageIcon icon = new ImageIcon(img.getImage());
 
             affichage.jLabel8.setIcon(icon);
-            // panneauAffichage.image.setIcon(icon);
-            // add.jButton3.setEnabled(false);
-            //    JOptionPane.showOptionDialog(null, affichage, "Images deal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, null, null, null);
-//        try {
-//            FileOutputStream file=new FileOutputStream("C:\\Android\\oumayma.jpg");
-//            try {
-//                file.write(img.getImage());
-//                file.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//      
-            // add.image.setIcon(null);
-
+           
         } else {
             System.out.println("aucune image trouvée");
             affichage.jLabel8.setText("aucune image trouvée");
