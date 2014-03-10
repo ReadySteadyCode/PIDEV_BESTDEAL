@@ -62,15 +62,16 @@ public class ImageDAO {
     }
     public int InsertImage(ImageDeal img)
     { String reqString="INSERT INTO `pi_dev`.`dealimage` (`idDeal`, `Image`) VALUES (?, ?);";
+    int a=0;
         try {
             PreparedStatement ps=MySQLConnection.getInstance().prepareStatement(reqString);
             ps.setInt(1, img.getIdDeal());
             ByteArrayInputStream bis = new ByteArrayInputStream(img.getImage());
             ps.setBinaryStream(2, bis);
-            ps.executeUpdate();
+           a=ps.executeUpdate();
             
         } catch (SQLException ex) {
             Logger.getLogger(ImageDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    return 0;}
+    return a;}
 }
