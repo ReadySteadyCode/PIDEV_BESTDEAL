@@ -61,7 +61,7 @@ public class ClientDAO
    public List<Client> displayClient ()
    {
        List<Client> clientListe = new ArrayList<Client>();
-       String sqlrequest = "SELECT idCLient,nom,prenom,email,nbrSignalisation FROM pi_dev.client where nbrSignalisation>5 ;";
+       String sqlrequest = "SELECT idCLient,nom,prenom,email,nbrSignalisation FROM pi_dev.client  ;";
         try {
             PreparedStatement ps = MySQLConnection.getInstance().prepareStatement(sqlrequest);
             ResultSet resultat = ps.executeQuery(sqlrequest);
