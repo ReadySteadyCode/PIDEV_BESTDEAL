@@ -4,6 +4,8 @@
  */
 package pi.bestdeal.gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.table.TableModel;
 import pi.bestdeal.dao.ClientDAO;
@@ -25,6 +27,8 @@ public class Espace_Client extends javax.swing.JFrame {
      */
     public Espace_Client() {
         initComponents();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
 
     /**
@@ -124,7 +128,7 @@ public class Espace_Client extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
      id=(int)jTable2.getValueAt(jTable2.getSelectedRow(), 0);
-     Ajou_Reservation ajout_reservation=new Ajou_Reservation();
+     Ajout_Reservation ajout_reservation=new Ajout_Reservation();
      ajout_reservation.id=id;
      this.hide();
      ajout_reservation.show();

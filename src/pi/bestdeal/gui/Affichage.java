@@ -6,6 +6,8 @@
 
 package pi.bestdeal.gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.ImageIcon;
 import pi.bestdeal.dao.ImageDAO;
@@ -17,7 +19,7 @@ import pi.bestdeal.entities.ImageDeal;
  */
 public class Affichage extends javax.swing.JPanel {
   public int a;
-public int i=0;
+public int i=1;
 
  List<ImageDeal> liste;
  ImageDAO im=new ImageDAO();
@@ -26,6 +28,8 @@ public int i=0;
      */
     public Affichage() {
         initComponents();
+         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -314,7 +318,7 @@ public int i=0;
         // TODO add your handling code here:
          liste=im.DisplayAllImage(a);
         ImageDeal img=new ImageDeal();
-        if((i>=1)&&(i<liste.size()))
+        if((i>=0)&&(i<liste.size()))
         {jButton1.setEnabled(true);
             i--;
             img=liste.get(i);

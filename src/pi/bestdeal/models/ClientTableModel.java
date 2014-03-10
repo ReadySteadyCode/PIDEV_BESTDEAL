@@ -7,10 +7,7 @@ package pi.bestdeal.models;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-import pi.bestdeal.entities.Client;
 import pi.bestdeal.entities.ClientMail;
-import pi.bestdeal.entities.Deal;
 
 /**
  *
@@ -31,7 +28,7 @@ public class ClientTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -45,6 +42,8 @@ public class ClientTableModel extends AbstractTableModel {
                 return "E-Mail";
             case 3:
                 return "Contenu";
+            case 4:
+                return "ID";
             default:
                 return "Error";
         }
@@ -62,6 +61,8 @@ public class ClientTableModel extends AbstractTableModel {
                 return mail.getEmail();
             case 3:
                 return mail.getContenu();
+            case 4: 
+                return mail.getIdMessage();
             default:
                 return 0;
         }
