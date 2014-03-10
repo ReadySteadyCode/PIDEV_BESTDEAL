@@ -7,10 +7,7 @@ package pi.bestdeal.models;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-import pi.bestdeal.entities.Client;
 import pi.bestdeal.entities.ClientMail;
-import pi.bestdeal.entities.Deal;
 
 /**
  *
