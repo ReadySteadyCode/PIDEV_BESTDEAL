@@ -45,20 +45,20 @@ public class Ajout_consultation extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable2 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(tableModel);
-        jTable1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        jTable2.setModel(tableModel);
+        jTable2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jTable1PropertyChange(evt);
+                jTable2PropertyChange(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable2);
 
         jButton1.setText("Ajouter consultation");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -107,22 +107,23 @@ public class Ajout_consultation extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable1PropertyChange
+    private void jTable2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable2PropertyChange
 
-    }//GEN-LAST:event_jTable1PropertyChange
+    }//GEN-LAST:event_jTable2PropertyChange
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
          Consultation consultation=new Consultation();
-        int id_consultaion=(int) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+        int id_consultaion=(int) jTable2.getValueAt(jTable2.getSelectedRow(), 0);
         consultation.setIdDeal(id_consultaion);
         consultation.setIdClient(this.id);
          
-          java.util.Date d1 =jDateChooser1.getDate();
-            java.sql.Date sqlDate = new java.sql.Date(d1.getTime());        
+          java.util.Date d1 =jDateChooser1.getCalendar().getTime();
+          java.sql.Date sqlDate = new java.sql.Date(d1.getTime());        
         consultation.setDateCreation(sqlDate);
      
        x=cons.insertConsultation(consultation);
+         System.out.print(this.id);
          if(x==1)
       {
           JOptionPane.showConfirmDialog(null, "Ajout de réservation effectué avec succès", "Succès",
@@ -180,6 +181,6 @@ public class Ajout_consultation extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTable jTable1;
+    public javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }
