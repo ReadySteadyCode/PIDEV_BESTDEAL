@@ -41,7 +41,7 @@ public class Interface_Mail extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         txa_content = new javax.swing.JTextArea();
 
-        jLabel1.setFont(new java.awt.Font("Arial", 3, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
         jLabel1.setText("Envoyer un e-mail");
 

@@ -15,6 +15,7 @@ public class ClientMail {
     private String prenom;
     private String email;
     private String contenu;
+    private int idMessage;
 
     @Override
     public String toString() {
@@ -54,6 +55,14 @@ public class ClientMail {
     }
 
     public ClientMail() {
+    }
+
+    public int getIdMessage() {
+        return idMessage;
+    }
+
+    public void setIdMessage(int idMessage) {
+        this.idMessage = idMessage;
     }
     
 }

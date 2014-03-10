@@ -7,7 +7,6 @@ package pi.bestdeal.models;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import pi.bestdeal.entities.ClientMail;
 import pi.bestdeal.entities.Deal;
 
 /**
@@ -100,28 +99,6 @@ public class DealTableModel extends AbstractTableModel {
                 return 0;
         }
     }
-
-    public void add(Deal deal) {
-        int size = this.getRowCount();
-        deals.add(deal);
-        fireTableRowsInserted(size, size);
-        
-    }
-    public void update(Deal deal){
-        if(deals.contains(deal)){
-            int index = deals.indexOf(deal);
-            deals.remove(index);
-            deals.add(index,deal);
-        }
-        fireTableStructureChanged();
-    }
-
-    public void remove(Deal deal) {
-        int size = this.getRowCount();
-            int index = deals.indexOf(deal);
-            deals.remove(index-1);
-            fireTableRowsDeleted(index, index);
-        }
 
 }
 

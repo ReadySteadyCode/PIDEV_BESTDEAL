@@ -7,23 +7,15 @@ package pi.bestdeal.gui;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import pi.bestdeal.dao.DealDAO;
-import pi.bestdeal.dao.ImageDAO;
 import pi.bestdeal.dao.VendeurDAO;
 import pi.bestdeal.entities.Deal;
-import pi.bestdeal.entities.ImageDeal;
 import pi.bestdeal.entities.Vendeur;
 
 /**
@@ -44,13 +36,15 @@ public File[] file=null;
         initComponents();
       DefaultListModel listModel = new DefaultListModel();
         VendeurDAO vendeurdao = VendeurDAO.getInstance();
-       if(vendeurdao.displayVendeur().size()!=0){
+       if(!vendeurdao.displayVendeur().isEmpty()){
         for (Vendeur a : vendeurdao.displayVendeur()) {
 
             listModel.addElement(a.getNomCommercial());
         }
        }
         jList1.setModel(listModel);
+        
+        
     }
 
     /**
@@ -113,6 +107,11 @@ public File[] file=null;
         txtDesc.setRows(5);
         jScrollPane1.setViewportView(txtDesc);
 
+        txtPrix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrixActionPerformed(evt);
+            }
+        });
         txtPrix.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPrixKeyTyped(evt);
@@ -168,23 +167,19 @@ public File[] file=null;
                     .addComponent(ajoutImage))
                 .addGap(133, 133, 133)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jdateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jdateDebut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtTitre, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtPrix, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtValidation, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2)
+                        .addComponent(ComboCategorie, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(ComboCategorie, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(70, 70, 70)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jdateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jdateDebut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtTitre, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtPrix, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtValidation, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane2)))
-                        .addContainerGap(54, Short.MAX_VALUE))))
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,10 +230,10 @@ public File[] file=null;
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPrixKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrixKeyTyped
-         if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar()!='.')
+         if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar()!='.' && evt.getKeyChar()!=KeyEvent.VK_BACK_SPACE )
         {
             getToolkit().beep();
-          JOptionPane.showMessageDialog(null, "Le prix est un chiifre pas caractére");
+          JOptionPane.showMessageDialog(null, "Veuillez entrez que des chiffres");
 
             evt.consume();
         }
@@ -256,6 +251,7 @@ public File[] file=null;
         if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE)|| c== KeyEvent.VK_DELETE) )
         {
             getToolkit().beep();
+             JOptionPane.showMessageDialog(null, "Veuillez entrez que des chiffres");
             evt.consume();
         }
     }//GEN-LAST:event_txtValidationKeyTyped
@@ -273,6 +269,10 @@ public File[] file=null;
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtPrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrixActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrixActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

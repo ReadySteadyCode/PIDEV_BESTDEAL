@@ -7,6 +7,7 @@ package pi.bestdeal.gui;
 import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -26,9 +27,9 @@ public class Authentification extends javax.swing.JFrame {
      */
     public Authentification() {
       this.setTitle("BEST DEAL");
-      
-     
-        initComponents();
+      initComponents();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
 
     /**

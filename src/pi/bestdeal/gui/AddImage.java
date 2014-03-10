@@ -5,6 +5,8 @@
 package pi.bestdeal.gui;
 
 import com.jtattoo.plaf.BaseFileChooserUI;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -27,7 +29,8 @@ public int i=0;
      */
     public AddImage() {
         initComponents();
-        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
       
     }
 
