@@ -98,6 +98,7 @@ public class InterfacePrincipale extends javax.swing.JFrame {
         jTable3.removeColumn(jTable3.getColumn("Statut"));
         jTable3.removeColumn(jTable3.getColumn("Nombre d'Affichage"));
         jTable3.removeColumn(jTable3.getColumn("Vendeur"));
+        jTableMessage.removeColumn(jTableMessage.getColumn("ID"));
         if (jTable3.getModel().getRowCount() != 0) {
             jTable3.setRowSelectionInterval(0, 0);
         }
@@ -1139,7 +1140,18 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     }//GEN-LAST:event_GoToClientInterfaceActionPerformed
 
     private void DeleteMessageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteMessageButtonActionPerformed
-        // TODO add your handling code here:
+      int idd;
+      if(jTableMessage.getRowCount()!=0){
+         idd = (int)jTableMessage.getModel().getValueAt(jTableMessage.getSelectedRow(), 4);
+          System.out.println(idd);
+        int a= MessageDAO.getInstance().deleteMessage(idd);
+        if(a==1){
+            JOptionPane.showMessageDialog(null, "Message Effacé");
+            ClientTableModel tbl =new ClientTableModel(MessageDAO.getInstance().displayMessageWithSenderMail());
+            jTableMessage.setModel(tbl);
+            jTableMessage.removeColumn(jTableMessage.getColumn("ID"));
+        }
+      }
     }//GEN-LAST:event_DeleteMessageButtonActionPerformed
 
     /**

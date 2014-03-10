@@ -28,7 +28,7 @@ public class ClientTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -42,6 +42,8 @@ public class ClientTableModel extends AbstractTableModel {
                 return "E-Mail";
             case 3:
                 return "Contenu";
+            case 4:
+                return "ID";
             default:
                 return "Error";
         }
@@ -59,6 +61,8 @@ public class ClientTableModel extends AbstractTableModel {
                 return mail.getEmail();
             case 3:
                 return mail.getContenu();
+            case 4: 
+                return mail.getIdMessage();
             default:
                 return 0;
         }
