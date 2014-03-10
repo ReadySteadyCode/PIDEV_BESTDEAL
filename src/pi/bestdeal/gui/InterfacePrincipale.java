@@ -439,8 +439,8 @@ public class InterfacePrincipale extends javax.swing.JFrame {
     private void Add_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_ButtonActionPerformed
 
         Panel_Ajouter panajout = new Panel_Ajouter();
-        y = (int) jTable1.getModel().getValueAt(jTable1.getRowCount() - 1, 0);
-        panajout.w = y;
+       
+        
 
         Deal deal = new Deal();
 
@@ -472,6 +472,9 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             DealDAO dealdao = DealDAO.getInstance();
 
             dealdao.insertDeal(deal);
+            Deal dd = dealdao.displayDeal().get((dealdao.displayDeal().size()-1));
+           y=dd.getIdDeal_Deal();
+           System.out.println(y);
             if( panajout.fc.getSelectedFiles().length!=0){
             for (int i = 0; i < panajout.fc.getSelectedFiles().length; i++) {
                 //  System.out.println(panajout.file[i]);
@@ -492,11 +495,11 @@ public class InterfacePrincipale extends javax.swing.JFrame {
                     Logger.getLogger(InterfacePrincipale.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 // System.out.println();
-                imgdeal.setIdDeal(y + 1);
+                imgdeal.setIdDeal(y );
                 // imgdeal.setIdDealImage(1);
                 ImageDAO im = ImageDAO.getInstance();
                 im.InsertImage(imgdeal);
-                System.out.println(imgdeal.getIdDeal());
+               // System.out.println(imgdeal.getIdDeal());
             }
             }
             // ((DealTableModel)tableModel).add(deal);
