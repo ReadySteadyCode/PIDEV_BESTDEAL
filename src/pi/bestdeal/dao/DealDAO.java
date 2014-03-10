@@ -97,7 +97,6 @@ public class DealDAO {
                 deal.setNbrAffichage_Deal(resultat.getInt("nbrAffichage"));
                 deal.setIdVendeur_Deal(resultat.getInt("idVendeur"));
                 deal.setCategorie_Deal(resultat.getString("categorie"));
-
                 dealListe.add(deal);
 
             }
