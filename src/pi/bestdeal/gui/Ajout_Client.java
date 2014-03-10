@@ -139,7 +139,7 @@ public class Ajout_Client extends javax.swing.JFrame {
 
         erreur_password.setForeground(new java.awt.Color(204, 0, 0));
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Précédent");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
