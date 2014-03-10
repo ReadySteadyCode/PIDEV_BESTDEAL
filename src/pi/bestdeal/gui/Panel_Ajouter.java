@@ -44,11 +44,12 @@ public File[] file=null;
         initComponents();
       DefaultListModel listModel = new DefaultListModel();
         VendeurDAO vendeurdao = VendeurDAO.getInstance();
-       
+       if(vendeurdao.displayVendeur().size()!=0){
         for (Vendeur a : vendeurdao.displayVendeur()) {
 
             listModel.addElement(a.getNomCommercial());
         }
+       }
         jList1.setModel(listModel);
     }
 
