@@ -451,9 +451,13 @@ public class InterfacePrincipale extends javax.swing.JFrame {
             deal.setTitreDeal_Deal(panajout.txtTitre.getText());
             Vendeur vendeur = new Vendeur();
             VendeurDAO daov = VendeurDAO.getInstance();
+            
             for (Vendeur a : daov.displayvendeurByNom(String.valueOf(panajout.jList1.getSelectedValue()))) {
                 vendeur = a;
             }
+            if(panajout.jList1.getSelectedValue()==null){
+                vendeur.setIdVendeur(0);}
+                
             deal.setDescDeal_Deal(panajout.txtDesc.getText());
             deal.setPrixDeal_Deal(Double.valueOf(panajout.txtPrix.getText()));
             deal.setNbrAchatValidation(Integer.valueOf(panajout.txtValidation.getText()));
