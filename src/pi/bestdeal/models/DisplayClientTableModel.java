@@ -29,7 +29,7 @@ public class DisplayClientTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-      return 4;
+      return 5;
     }
 
     @Override
@@ -38,7 +38,8 @@ public class DisplayClientTableModel extends AbstractTableModel {
             case 0:return "ID";
             case 1:return "Nom";
             case 2:return "Prénom";
-            case 3:return "E-mail";
+            case 3:return "E-mail"; 
+            case 4: return "Nb signalisation";
                 default:return "Autres";
         }
     }
@@ -50,7 +51,8 @@ public class DisplayClientTableModel extends AbstractTableModel {
             case 0:return client.getIdClient();
             case 1:return client.getNom();
             case 2:return client.getPrenom();
-            case 3:return client.getEmail();
+            case 3:return client.getEmail(); 
+            case 4: return client.getNbrSignalisation();
             default:return 0;
         }
     }
