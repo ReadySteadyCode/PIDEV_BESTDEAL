@@ -24,7 +24,7 @@ public class Ajout_Reservation extends javax.swing.JFrame {
     DealDAO list = DealDAO.getInstance();
      ReservationDAO res=ReservationDAO.getInstance();
     List<Deal> deals = list.displayDeal();
-    TableModel tableModel = new DealTableModel(deals); 
+    DealTableModel tableModel = new DealTableModel(deals); 
 
     /**
      * Creates new form Ajou_Reservation
@@ -125,11 +125,12 @@ public class Ajout_Reservation extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Reservation reservation=new Reservation();
-         if(jTable1.getModel().getRowCount()!=0){
-        int id_reser=(int) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+         if(jTable1.getModel().getRowCount()>0){
+        System.out.println(this.jTable1.getModel().getValueAt(this.jTable1.getSelectedRow(), 0));
+        int id_reser=(int)this.jTable1.getModel().getValueAt(this.jTable1.getSelectedRow(), 0);
        
         reservation.setIdDeal(id_reser);
-        reservation.setIdClient(this.id);
+        reservation.setIdClient(id);
         System.out.println(id);
         java.util.Date d1 =jDateChooser1.getCalendar().getTime();
           java.sql.Date sqlDate = new java.sql.Date(d1.getTime());  

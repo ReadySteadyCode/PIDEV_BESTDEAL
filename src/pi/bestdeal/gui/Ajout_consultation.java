@@ -26,7 +26,7 @@ public class Ajout_consultation extends javax.swing.JFrame {
     DealDAO list = DealDAO.getInstance();
      ConsultationDAO cons=ConsultationDAO.getInstance();
     List<Deal> deals = list.displayDeal();
-    TableModel tableModel = new DealTableModel(deals); 
+    DealTableModel tableModel = new DealTableModel(deals); 
 
     /**
      * Creates new form Ajout_consultation
@@ -124,8 +124,9 @@ public class Ajout_consultation extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
          Consultation consultation=new Consultation();
-          if(jTable2.getModel().getRowCount()!=0){
-        int id_consultaion=(int) jTable2.getValueAt(jTable2.getSelectedRow(), 0);
+          if(jTable2.getModel().getRowCount()>0){
+              System.out.println(jTable2.getModel().getValueAt(jTable2.getSelectedRow(), 0));
+        int id_consultaion= (int) jTable2.getModel().getValueAt(jTable2.getSelectedRow(), 0);
         consultation.setIdDeal(id_consultaion);
         consultation.setIdClient(this.id);
          
